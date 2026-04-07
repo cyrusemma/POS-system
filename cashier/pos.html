@@ -210,6 +210,49 @@
               </div>
             </div>
 
+            <!-- Cash Change Calculator -->
+            <div id="cashPanel" class="payment-extra-panel">
+              <div class="form-group">
+                <label class="form-label">Amount Tendered (GH₵)</label>
+                <input
+                  type="number"
+                  id="amountTendered"
+                  class="form-control"
+                  placeholder="0.00"
+                  min="0"
+                  step="0.01"
+                  oninput="calcChange()"
+                />
+              </div>
+              <div class="change-display" id="changeDisplay" style="display:none">
+                <span class="change-label">Change</span>
+                <span class="change-amount" id="changeAmount">GH₵ 0.00</span>
+              </div>
+            </div>
+
+            <!-- MoMo Details -->
+            <div id="momoPanel" class="payment-extra-panel" style="display:none">
+              <div class="form-group">
+                <label class="form-label">MoMo Number</label>
+                <input
+                  type="tel"
+                  id="momoNumber"
+                  class="form-control"
+                  placeholder="e.g. 0241234567"
+                  maxlength="13"
+                />
+              </div>
+              <div class="form-group">
+                <label class="form-label">Account Name</label>
+                <input
+                  type="text"
+                  id="momoName"
+                  class="form-control"
+                  placeholder="Name on the account"
+                />
+              </div>
+            </div>
+
             <button
               class="checkout-btn"
               id="checkoutBtn"
@@ -673,6 +716,37 @@
           .querySelectorAll(".pay-option")
           .forEach((e) => e.classList.remove("active"));
         el.classList.add("active");
+
+        document.getElementById("cashPanel").style.display =
+          method === "cash" ? "" : "none";
+        document.getElementById("momoPanel").style.display =
+          method === "mobile_money" ? "" : "none";
+
+        if (method === "cash") calcChange();
+      }
+
+      function calcChange() {
+        const total = cart.reduce((s, i) => s + i.price * i.qty, 0);
+        const tax = total * 0.15;
+        const discPct = Math.min(Math.max(parseFloat(DOM.discountPct.value) || 0, 0), 100);
+        const discount = (total * discPct) / 100;
+        const grandTotal = total + tax - discount;
+
+        const tendered = parseFloat(document.getElementById("amountTendered").value) || 0;
+        const changeDisplay = document.getElementById("changeDisplay");
+        const changeAmount = document.getElementById("changeAmount");
+
+        if (tendered > 0) {
+          const change = tendered - grandTotal;
+          changeDisplay.style.display = "flex";
+          changeAmount.textContent = formatCurrency(Math.max(change, 0));
+          changeAmount.style.color = change < 0 ? "var(--danger)" : "var(--success)";
+          if (change < 0) {
+            changeAmount.textContent = "Short by " + formatCurrency(Math.abs(change));
+          }
+        } else {
+          changeDisplay.style.display = "none";
+        }
       }
 
       /* ── Customer Search ───────────────────────────────– */
@@ -768,6 +842,15 @@
 
       async function saveSale(subtotal, tax, discount, total, paystackRef) {
         const saleRef = generateSaleRef();
+
+        const tendered = parseFloat(document.getElementById("amountTendered").value) || null;
+        const changeGiven = (selectedMethod === "cash" && tendered)
+          ? parseFloat(Math.max(tendered - total, 0).toFixed(2)) : null;
+        const momoNumber = selectedMethod === "mobile_money"
+          ? (document.getElementById("momoNumber").value.trim() || null) : null;
+        const momoName = selectedMethod === "mobile_money"
+          ? (document.getElementById("momoName").value.trim() || null) : null;
+
         try {
           const { data: saleData, error: saleErr } = await db
             .from("sales")
@@ -782,6 +865,10 @@
               payment_method: selectedMethod,
               payment_status: "paid",
               paystack_ref: paystackRef || null,
+              amount_tendered: tendered,
+              change_given: changeGiven,
+              momo_number: momoNumber,
+              momo_name: momoName,
             })
             .select("id")
             .single();
@@ -982,6 +1069,12 @@ ${LINE}`;
         DOM.customerSearch.value = "";
         DOM.selectedCustomerLabel.textContent = "";
         DOM.discountPct.value = "0";
+        document.getElementById("amountTendered").value = "";
+        document.getElementById("changeDisplay").style.display = "none";
+        document.getElementById("momoNumber").value = "";
+        document.getElementById("momoName").value = "";
+        document.getElementById("cashPanel").style.display = "";
+        document.getElementById("momoPanel").style.display = "none";
         document
           .querySelectorAll(".pay-option")
           .forEach((e) => e.classList.remove("active"));

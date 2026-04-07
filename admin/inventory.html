@@ -329,6 +329,12 @@
             <div class="form-error" id="restockQtyErr"></div>
           </div>
           <div class="form-group">
+            <label class="form-label" for="restockSupplier">Supplier (optional)</label>
+            <select id="restockSupplier" class="form-control">
+              <option value="">No supplier / Unknown</option>
+            </select>
+          </div>
+          <div class="form-group">
             <label class="form-label" for="restockNote">Note (optional)</label>
             <input
               type="text"
@@ -426,15 +432,23 @@
         currentUser = await requireAuth(["admin"]);
         if (!currentUser) return;
         populateSidebarUser(currentUser);
+        await loadSuppliers();
         loadInventory();
       });
+
+      async function loadSuppliers() {
+        const { data } = await db.from("suppliers").select("id,name").eq("status","active").order("name");
+        const opts = '<option value="">No supplier / Unknown</option>' +
+          (data || []).map(s => `<option value="${s.id}">${escHtml(s.name)}</option>`).join('');
+        document.getElementById("restockSupplier").innerHTML = opts;
+      }
 
       async function loadInventory() {
         document.getElementById("inventoryBody").innerHTML =
           '<tr><td colspan="5" class="table-loading">Loading…</td></tr>';
         const { data, error } = await db
           .from("products")
-          .select("*, categories(name)")
+          .select("*, categories(name), suppliers(name)")
           .order("name");
         if (error) {
           showAlert("pageAlert", "Error: " + error.message);
@@ -490,6 +504,7 @@
           p.name + " — Current stock: " + p.stock;
         document.getElementById("restockQty").value = "";
         document.getElementById("restockNote").value = "";
+        document.getElementById("restockSupplier").value = p.supplier_id || "";
         document.getElementById("restockQtyErr").textContent = "";
         hideAlert("restockAlert");
         openModal("restockModal");
@@ -500,6 +515,12 @@
         const id = parseInt(document.getElementById("restockProductId").value);
         const qty = parseInt(document.getElementById("restockQty").value);
         const note = document.getElementById("restockNote").value.trim();
+        const supplierSel = document.getElementById("restockSupplier");
+        const supplierName = supplierSel.options[supplierSel.selectedIndex]?.text;
+        const supplierNote = supplierSel.value
+          ? (note ? note + ' — Supplier: ' + supplierName : 'Supplier: ' + supplierName)
+          : (note || "Restock");
+
         if (!qty || qty < 1) {
           document.getElementById("restockQtyErr").textContent =
             "Enter a valid quantity (≥ 1).";
@@ -522,7 +543,7 @@
             product_id: id,
             change_type: "restock",
             quantity_change: qty,
-            note: note || "Restock",
+            note: supplierNote,
             created_by: currentUser.id,
           });
           if (logErr) console.warn("Log insert failed:", logErr.message);

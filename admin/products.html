@@ -400,12 +400,20 @@
               placeholder="e.g. 6001234567890"
             />
           </div>
-          <div class="form-group">
-            <label class="form-label" for="addStatus">Status</label>
-            <select id="addStatus" class="form-control">
-              <option value="active">Active</option>
-              <option value="inactive">Inactive</option>
-            </select>
+          <div class="grid-2">
+            <div class="form-group">
+              <label class="form-label" for="addSupplier">Supplier (optional)</label>
+              <select id="addSupplier" class="form-control">
+                <option value="">No supplier</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="addStatus">Status</label>
+              <select id="addStatus" class="form-control">
+                <option value="active">Active</option>
+                <option value="inactive">Inactive</option>
+              </select>
+            </div>
           </div>
         </div>
         <div class="modal-footer">
@@ -479,12 +487,20 @@
             <label class="form-label" for="editBarcode">Barcode</label>
             <input type="text" id="editBarcode" class="form-control" />
           </div>
-          <div class="form-group">
-            <label class="form-label" for="editStatus">Status</label>
-            <select id="editStatus" class="form-control">
-              <option value="active">Active</option>
-              <option value="inactive">Inactive</option>
-            </select>
+          <div class="grid-2">
+            <div class="form-group">
+              <label class="form-label" for="editSupplier">Supplier (optional)</label>
+              <select id="editSupplier" class="form-control">
+                <option value="">No supplier</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="editStatus">Status</label>
+              <select id="editStatus" class="form-control">
+                <option value="active">Active</option>
+                <option value="inactive">Inactive</option>
+              </select>
+            </div>
           </div>
         </div>
         <div class="modal-footer">
@@ -502,6 +518,7 @@
       let currentUser = null;
       let allProducts = [];
       let categories = [];
+      let allSuppliers = [];
 
       window.addEventListener("DOMContentLoaded", async () => {
         initTheme();
@@ -510,26 +527,28 @@
         currentUser = await requireAuth(["admin"]);
         if (!currentUser) return;
         populateSidebarUser(currentUser);
-        await loadCategories();
+        await Promise.all([loadCategories(), loadSuppliers()]);
         loadProducts();
       });
 
       async function loadCategories() {
         const { data } = await db.from("categories").select("*").order("name");
         categories = data || [];
-        // Populate filter
         const filter = document.getElementById("categoryFilter");
-        const opt = categories
-          .map((c) => `<option value="${c.id}">${escHtml(c.name)}</option>`)
-          .join("");
+        const opt = categories.map((c) => `<option value="${c.id}">${escHtml(c.name)}</option>`).join("");
         filter.innerHTML = '<option value="">All Categories</option>' + opt;
-        // Populate add/edit selects
-        const sel = categories
-          .map((c) => `<option value="${c.id}">${escHtml(c.name)}</option>`)
-          .join("");
-        document.getElementById("addCategory").innerHTML =
-          '<option value="">Select category</option>' + sel;
+        const sel = categories.map((c) => `<option value="${c.id}">${escHtml(c.name)}</option>`).join("");
+        document.getElementById("addCategory").innerHTML = '<option value="">Select category</option>' + sel;
         document.getElementById("editCategory").innerHTML = sel;
+      }
+
+      async function loadSuppliers() {
+        const { data } = await db.from("suppliers").select("id,name").eq("status","active").order("name");
+        allSuppliers = data || [];
+        const opts = '<option value="">No supplier</option>' +
+          allSuppliers.map(s => `<option value="${s.id}">${escHtml(s.name)}</option>`).join('');
+        document.getElementById("addSupplier").innerHTML = opts;
+        document.getElementById("editSupplier").innerHTML = opts;
       }
 
       async function loadProducts() {
@@ -636,6 +655,7 @@
         const btn = document.getElementById("addBtn");
         btn.disabled = true;
         btn.textContent = "Adding…";
+        const supplierId = document.getElementById("addSupplier").value || null;
         try {
           const { error } = await db
             .from("products")
@@ -646,6 +666,7 @@
               stock,
               barcode,
               status,
+              supplier_id: supplierId ? parseInt(supplierId) : null,
             });
           if (error) throw error;
           closeModal("addModal");
@@ -668,6 +689,7 @@
         document.getElementById("editPrice").value = p.price;
         document.getElementById("editStock").value = p.stock;
         document.getElementById("editBarcode").value = p.barcode || "";
+        document.getElementById("editSupplier").value = p.supplier_id || "";
         document.getElementById("editStatus").value = p.status;
         ["editNameErr", "editPriceErr"].forEach(
           (id) => (document.getElementById(id).textContent = ""),
@@ -698,13 +720,14 @@
         }
         if (!valid) return;
 
+        const supplierId = document.getElementById("editSupplier").value || null;
         const btn = document.getElementById("editBtn");
         btn.disabled = true;
         btn.textContent = "Saving…";
         try {
           const { error } = await db
             .from("products")
-            .update({ name, category_id: catId, price, stock, barcode, status })
+            .update({ name, category_id: catId, price, stock, barcode, status, supplier_id: supplierId ? parseInt(supplierId) : null })
             .eq("id", id);
           if (error) throw error;
           closeModal("editModal");

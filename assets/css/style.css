@@ -1578,6 +1578,85 @@ tr.low-stock td {
   cursor: not-allowed;
 }
 
+/* Payment Extra Panels (Cash / MoMo) */
+.payment-extra-panel {
+  margin-top: 10px;
+  padding: 12px;
+  background: rgba(255,255,255,0.05);
+  border: 1px solid var(--glass-border);
+  border-radius: 10px;
+}
+
+.payment-extra-panel .form-group {
+  margin-bottom: 8px;
+}
+
+.payment-extra-panel .form-group:last-child {
+  margin-bottom: 0;
+}
+
+.payment-extra-panel .form-label {
+  color: rgba(255,255,255,0.7);
+  font-size: 11px;
+}
+
+.payment-extra-panel .form-control {
+  background: rgba(255,255,255,0.08);
+  border: 1px solid rgba(255,255,255,0.15);
+  color: #fff;
+  padding: 8px 10px;
+  font-size: 13px;
+}
+
+.payment-extra-panel .form-control::placeholder {
+  color: rgba(255,255,255,0.35);
+}
+
+.change-display {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 10px;
+  padding: 8px 12px;
+  background: rgba(30,132,73,0.15);
+  border: 1px solid rgba(30,132,73,0.3);
+  border-radius: 8px;
+}
+
+.change-label {
+  font-size: 12px;
+  font-weight: 600;
+  color: rgba(255,255,255,0.7);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.change-amount {
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--success);
+}
+
+[data-theme="light"] .payment-extra-panel {
+  background: #f8f9fc;
+  border-color: #eef0f4;
+}
+
+[data-theme="light"] .payment-extra-panel .form-control {
+  background: #fff;
+  border-color: #d0d5dd;
+  color: #1a1a2e;
+}
+
+[data-theme="light"] .payment-extra-panel .form-label {
+  color: #555;
+}
+
+[data-theme="light"] .change-display {
+  background: rgba(30,132,73,0.08);
+  border-color: rgba(30,132,73,0.25);
+}
+
 /* Receipt Modal */
 .receipt-body {
   font-family: 'Courier New', monospace;
