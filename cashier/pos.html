@@ -477,6 +477,7 @@
 
         attachEventListeners();
         initMobileCart();
+        initRealtimeStock();
         console.log("✅ POS system ready!");
       });
 
@@ -925,7 +926,7 @@
           const saleId = saleData.id;
 
           for (const item of cart) {
-            await db.from("sale_items").insert({
+            const { error: itemErr } = await db.from("sale_items").insert({
               sale_id: saleId,
               product_id: item.productId,
               product_name: item.name,
@@ -933,25 +934,30 @@
               unit_price: parseFloat(item.price.toFixed(2)),
               total_price: parseFloat((item.price * item.qty).toFixed(2)),
             });
+            if (itemErr) throw new Error("Sale item insert failed (" + item.name + "): " + itemErr.message);
 
-            const { data: cur } = await db
+            const { data: cur, error: fetchErr } = await db
               .from("products")
               .select("stock")
               .eq("id", item.productId)
               .single();
+            if (fetchErr) throw new Error("Stock fetch failed (" + item.name + "): " + fetchErr.message);
+
             const newStock = Math.max((cur ? cur.stock : 0) - item.qty, 0);
-            await db
+            const { error: stockErr } = await db
               .from("products")
               .update({ stock: newStock })
               .eq("id", item.productId);
+            if (stockErr) throw new Error("Stock update failed (" + item.name + "): " + stockErr.message);
 
-            await db.from("inventory_log").insert({
+            const { error: logErr } = await db.from("inventory_log").insert({
               product_id: item.productId,
               change_type: "sale",
               quantity_change: -item.qty,
               note: "Sale " + saleRef,
               created_by: currentUser.id,
             });
+            if (logErr) console.warn("Inventory log failed:", logErr.message);
           }
 
           if (selectedCustomer && selectedCustomer.id) {
@@ -1159,6 +1165,33 @@ ${LINE}`;
         DOM.toastTimer = setTimeout(() => {
           DOM.posToast.classList.remove("show");
         }, 4000);
+      }
+
+      /* ── Realtime Stock Sync ──────────────────────────────── */
+      function initRealtimeStock() {
+        db
+          .channel("products-stock")
+          .on(
+            "postgres_changes",
+            { event: "UPDATE", schema: "public", table: "products" },
+            (payload) => {
+              const updated = payload.new;
+              const idx = allProducts.findIndex((p) => p.id === updated.id);
+              if (idx !== -1) {
+                allProducts[idx].stock = updated.stock;
+                // Also update maxQty of any cart item for this product
+                const cartItem = cart.find((i) => i.productId === updated.id);
+                if (cartItem) cartItem.maxQty = updated.stock;
+                filterProducts();
+                if (cartItem) renderCart();
+              }
+            },
+          )
+          .subscribe((status) => {
+            if (status === "SUBSCRIBED") {
+              console.log("✅ Realtime stock sync active");
+            }
+          });
       }
 
       /* ── Mobile Cart Sheet ─────────────────────────────────── */
