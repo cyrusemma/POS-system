@@ -315,6 +315,7 @@
             id="statusFilter"
             class="form-control form-select-w-auto"
             onchange="filterOrders()"
+            aria-label="Filter orders by status"
           >
             <option value="">All Statuses</option>
             <option value="pending">Pending</option>
@@ -398,7 +399,7 @@
           <!-- Order Items -->
           <div class="mb-12">
             <div class="flex flex-between mb-8">
-              <label class="form-label" style="margin: 0">Order Items *</label>
+              <label class="form-label m-0">Order Items *</label>
               <button
                 class="btn btn-sm btn-secondary"
                 onclick="addOrderItem()"

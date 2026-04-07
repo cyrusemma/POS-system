@@ -233,22 +233,14 @@
                   oninput="calcChange()"
                 />
               </div>
-              <div
-                class="change-display"
-                id="changeDisplay"
-                style="display: none"
-              >
+              <div class="change-display" id="changeDisplay">
                 <span class="change-label">Change</span>
                 <span class="change-amount" id="changeAmount">GH₵ 0.00</span>
               </div>
             </div>
 
             <!-- MoMo Details -->
-            <div
-              id="momoPanel"
-              class="payment-extra-panel"
-              style="display: none"
-            >
+            <div id="momoPanel" class="payment-extra-panel">
               <div class="form-group">
                 <label class="form-label">MoMo Number</label>
                 <input
@@ -473,14 +465,32 @@
 
       /* ── Event Listeners ───────────────────────────────– */
       function attachEventListeners() {
-        // Customer search (no inline handler on this input)
+        // Discount input
+        DOM.discountPct.addEventListener("input", updateTotals);
+
+        // Customer search
         DOM.customerSearch.addEventListener("input", searchCustomers);
 
-        // Customer dropdown close on outside click
+        // Product search
+        document
+          .getElementById("productSearch")
+          .addEventListener("input", filterProducts);
+
+        // Payment options
+        document.querySelectorAll(".pay-option").forEach((btn) => {
+          btn.addEventListener("click", function () {
+            selectPayment(this.dataset.method, this);
+          });
+        });
+
+        // Customer dropdown close
         document.addEventListener("click", (e) => {
           if (!e.target.closest(".customer-select-area"))
             hideCustomerDropdown();
         });
+
+        // Checkout button
+        DOM.checkoutBtn.addEventListener("click", checkout);
       }
 
       /* ── Categories ────────────────────────────────────── */
@@ -711,6 +721,8 @@
       <path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
     </svg> Charge ${formatCurrency(total)}`;
         }
+
+        if (selectedMethod === "cash") calcChange();
       }
 
       /* ── Payment ───────────────────────────────────────── */
@@ -1057,7 +1069,24 @@ Discount:     ${formatCurrency(discount).padStart(18)}
 ${DASH}
 TOTAL:        ${formatCurrency(total).padStart(18)}
 ${DASH}
-Payment: ${selectedMethod.replace("_", " ").toUpperCase()}
+Payment: ${selectedMethod.replace("_", " ").toUpperCase()}${(function() {
+          if (selectedMethod === "cash") {
+            var tendered = parseFloat(document.getElementById("amountTendered").value) || 0;
+            if (tendered > 0) {
+              var change = tendered - total;
+              return "\nTendered:     " + formatCurrency(tendered).padStart(18) +
+                "\nChange:       " + formatCurrency(Math.max(change, 0)).padStart(18);
+            }
+          } else if (selectedMethod === "mobile_money") {
+            var num = (document.getElementById("momoNumber").value || "").trim();
+            var name = (document.getElementById("momoName").value || "").trim();
+            var lines = "";
+            if (num) lines += "\nMoMo No:  " + num;
+            if (name) lines += "\nAccount:  " + name;
+            return lines;
+          }
+          return "";
+        })()}
 ${DASH}
      Thank you for shopping!
 ${LINE}`;
