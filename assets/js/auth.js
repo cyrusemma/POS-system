@@ -163,3 +163,63 @@ function applyLoginRateLimit() {
   }
   return false;
 }
+
+/* ── MOBILE SIDEBAR MENU ─────────────────────────────────────── */
+document.addEventListener('DOMContentLoaded', function () {
+  var sidebar = document.querySelector('.sidebar');
+  var mainContent = document.querySelector('.main-content');
+  if (!sidebar || !mainContent) return; // POS page or auth page — skip
+
+  // Inject overlay
+  var overlay = document.createElement('div');
+  overlay.className = 'mob-overlay';
+  overlay.id = 'mobOverlay';
+  document.body.appendChild(overlay);
+
+  // Inject hamburger button as first child of main-content
+  var ham = document.createElement('button');
+  ham.className = 'mob-menu-btn';
+  ham.id = 'mobMenuBtn';
+  ham.setAttribute('aria-label', 'Toggle navigation');
+  ham.innerHTML = '<span></span><span></span><span></span>';
+
+  // Insert at the start of the first .page-header, or before main content
+  var pageHeader = mainContent.querySelector('.page-header');
+  if (pageHeader) {
+    pageHeader.insertBefore(ham, pageHeader.firstChild);
+  } else {
+    mainContent.insertBefore(ham, mainContent.firstChild);
+  }
+
+  function openSidebar() {
+    sidebar.classList.add('mob-open');
+    overlay.classList.add('show');
+    ham.classList.add('active');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeSidebar() {
+    sidebar.classList.remove('mob-open');
+    overlay.classList.remove('show');
+    ham.classList.remove('active');
+    document.body.style.overflow = '';
+  }
+
+  ham.addEventListener('click', function () {
+    sidebar.classList.contains('mob-open') ? closeSidebar() : openSidebar();
+  });
+
+  overlay.addEventListener('click', closeSidebar);
+
+  // Close on nav link tap (mobile navigation)
+  sidebar.querySelectorAll('.nav-link').forEach(function (link) {
+    link.addEventListener('click', function () {
+      if (window.innerWidth <= 768) closeSidebar();
+    });
+  });
+
+  // Close on resize if desktop
+  window.addEventListener('resize', function () {
+    if (window.innerWidth > 768) closeSidebar();
+  });
+});

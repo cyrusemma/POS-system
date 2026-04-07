@@ -111,12 +111,28 @@
         </div>
       </div>
 
+      <!-- ── MOBILE CART FAB ──────────────────────────────────── -->
+      <button class="mob-cart-fab" id="mobCartFab" aria-label="View cart">
+        <svg width="22" height="22" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"/>
+        </svg>
+        <span class="fab-count" id="fabCount">0</span>
+      </button>
+
+      <!-- ── MOBILE CART OVERLAY ───────────────────────────────── -->
+      <div class="mob-cart-overlay" id="mobCartOverlay"></div>
+
       <!-- ── RIGHT PANEL — Cart ─────────────────────────────── -->
-      <div class="pos-right">
+      <div class="pos-right" id="posRight">
         <div class="cart-panel">
           <div class="cart-header">
             <h2>Cart</h2>
-            <span class="cart-count" id="cartCount">0</span>
+            <div style="display:flex;align-items:center;gap:10px;">
+              <span class="cart-count" id="cartCount">0</span>
+              <button id="mobCartClose" onclick="closeMobCart()" aria-label="Close cart" style="display:none;align-items:center;justify-content:center;width:32px;height:32px;border-radius:10px;border:1px solid rgba(255,255,255,0.18);background:rgba(255,255,255,0.08);color:#fff;cursor:pointer;">
+                <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/></svg>
+              </button>
+            </div>
           </div>
 
           <div class="cart-items" id="cartItems">
@@ -460,6 +476,7 @@
         console.log("✅ Products loaded");
 
         attachEventListeners();
+        initMobileCart();
         console.log("✅ POS system ready!");
       });
 
@@ -665,6 +682,7 @@
       function renderCart() {
         const totalQty = cart.reduce((s, i) => s + i.qty, 0);
         DOM.cartCount.textContent = totalQty;
+        updateFabCount(totalQty);
 
         if (!cart.length) {
           DOM.cartItems.innerHTML = `<div class="cart-empty">
@@ -1141,6 +1159,65 @@ ${LINE}`;
         DOM.toastTimer = setTimeout(() => {
           DOM.posToast.classList.remove("show");
         }, 4000);
+      }
+
+      /* ── Mobile Cart Sheet ─────────────────────────────────── */
+      function initMobileCart() {
+        var fab = document.getElementById("mobCartFab");
+        var overlay = document.getElementById("mobCartOverlay");
+        var closeBtn = document.getElementById("mobCartClose");
+        if (!fab) return;
+
+        fab.addEventListener("click", function () {
+          if (document.getElementById("posRight").classList.contains("mob-cart-open")) {
+            closeMobCart();
+          } else {
+            openMobCart();
+          }
+        });
+
+        if (overlay) overlay.addEventListener("click", closeMobCart);
+
+        // Show/hide close button based on viewport
+        function updateMobileUI() {
+          var isMobile = window.matchMedia("(max-width: 768px)").matches;
+          if (closeBtn) closeBtn.style.display = isMobile ? "flex" : "none";
+          if (!isMobile) {
+            document.getElementById("posRight").classList.remove("mob-cart-open");
+            overlay.classList.remove("show");
+            document.body.style.overflow = "";
+          }
+        }
+
+        window.addEventListener("resize", updateMobileUI);
+        updateMobileUI();
+      }
+
+      function openMobCart() {
+        var posRight = document.getElementById("posRight");
+        var overlay = document.getElementById("mobCartOverlay");
+        if (posRight) posRight.classList.add("mob-cart-open");
+        if (overlay) { overlay.style.display = "block"; overlay.classList.add("show"); }
+        document.body.style.overflow = "hidden";
+      }
+
+      function closeMobCart() {
+        var posRight = document.getElementById("posRight");
+        var overlay = document.getElementById("mobCartOverlay");
+        if (posRight) posRight.classList.remove("mob-cart-open");
+        if (overlay) { overlay.classList.remove("show"); setTimeout(function(){ overlay.style.display = "none"; }, 300); }
+        document.body.style.overflow = "";
+      }
+
+      function updateFabCount(count) {
+        var fab = document.getElementById("mobCartFab");
+        var badge = document.getElementById("fabCount");
+        if (!badge) return;
+        badge.textContent = count;
+        if (count > 0) {
+          badge.classList.add("bump");
+          setTimeout(function () { badge.classList.remove("bump"); }, 300);
+        }
       }
 
       function escHtml(s) {

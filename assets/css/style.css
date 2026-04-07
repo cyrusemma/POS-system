@@ -3061,3 +3061,488 @@ tr.low-stock td {
 [data-theme="light"] .modal-footer-flex {
   border-top: 1px solid #e2e8f0;
 }
+
+/* ============================================================
+   MOBILE RESPONSIVE — HAMBURGER + SIDEBAR DRAWER
+   ============================================================ */
+
+/* Hamburger button — hidden on desktop */
+.mob-menu-btn {
+  display: none;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  background: rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  cursor: pointer;
+  flex-direction: column;
+  gap: 5px;
+  flex-shrink: 0;
+  transition: background 0.2s;
+}
+
+.mob-menu-btn:hover {
+  background: rgba(255, 255, 255, 0.15);
+}
+
+.mob-menu-btn span {
+  display: block;
+  width: 18px;
+  height: 2px;
+  background: rgba(255, 255, 255, 0.85);
+  border-radius: 2px;
+  transition: transform 0.25s ease, opacity 0.2s;
+  transform-origin: center;
+}
+
+.mob-menu-btn.active span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+.mob-menu-btn.active span:nth-child(2) { opacity: 0; transform: scaleX(0); }
+.mob-menu-btn.active span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+[data-theme="light"] .mob-menu-btn {
+  border-color: rgba(0,0,0,0.12);
+  background: rgba(0,0,0,0.05);
+}
+[data-theme="light"] .mob-menu-btn span {
+  background: #1a1a2e;
+}
+
+/* Sidebar overlay */
+.mob-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.55);
+  backdrop-filter: blur(3px);
+  -webkit-backdrop-filter: blur(3px);
+  z-index: 250;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+.mob-overlay.show {
+  opacity: 1;
+  pointer-events: all;
+}
+
+/* Cart sheet overlay (POS mobile) */
+.mob-cart-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.45);
+  backdrop-filter: blur(2px);
+  -webkit-backdrop-filter: blur(2px);
+  z-index: 80;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+.mob-cart-overlay.show {
+  opacity: 1;
+  pointer-events: all;
+}
+
+/* ============================================================
+   MOBILE — ADMIN / MANAGER PAGES  (≤ 768px)
+   ============================================================ */
+@media (max-width: 768px) {
+  /* Show hamburger */
+  .mob-menu-btn {
+    display: flex;
+  }
+
+  /* Show overlay element */
+  .mob-overlay {
+    display: block;
+    pointer-events: none;
+  }
+
+  /* Sidebar becomes slide-out drawer */
+  .sidebar {
+    transform: translateX(-100%);
+    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    z-index: 300;
+    /* Liquid glass sidebar */
+    background: rgba(12, 68, 124, 0.92);
+    backdrop-filter: blur(32px) saturate(180%);
+    -webkit-backdrop-filter: blur(32px) saturate(180%);
+    border-right: 1px solid rgba(255, 255, 255, 0.15);
+    box-shadow: 4px 0 40px rgba(0, 0, 0, 0.4);
+  }
+
+  .sidebar.mob-open {
+    transform: translateX(0);
+  }
+
+  /* Main content goes full width */
+  .main-content {
+    margin-left: 0;
+    padding: 16px;
+  }
+
+  /* Page header adjustments */
+  .page-header {
+    gap: 10px;
+    flex-wrap: wrap;
+    margin-bottom: 16px;
+  }
+
+  .page-header-actions {
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+
+  .page-title {
+    font-size: 18px;
+  }
+
+  /* Cards go single column */
+  .grid-2, .grid-3, .grid-4 {
+    grid-template-columns: 1fr;
+  }
+
+  /* Stat cards: 2-col grid */
+  .stats-grid {
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+  }
+
+  /* Tables scroll horizontally */
+  .table-wrap {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  table {
+    min-width: 500px;
+  }
+
+  /* Modals full-width on mobile */
+  .modal-box {
+    width: calc(100vw - 24px);
+    max-width: 100%;
+    margin: 12px;
+    max-height: 90vh;
+    overflow-y: auto;
+    border-radius: 20px;
+    /* Liquid glass modal */
+    background: rgba(20, 18, 50, 0.88);
+    backdrop-filter: blur(40px) saturate(200%);
+    -webkit-backdrop-filter: blur(40px) saturate(200%);
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    box-shadow:
+      0 0 0 1px rgba(255,255,255,0.06) inset,
+      0 32px 80px rgba(0,0,0,0.6);
+  }
+
+  [data-theme="light"] .modal-box {
+    background: rgba(255, 255, 255, 0.88);
+    border-color: rgba(0,0,0,0.1);
+    box-shadow:
+      0 0 0 1px rgba(255,255,255,0.9) inset,
+      0 32px 80px rgba(0,0,0,0.18);
+  }
+
+  .modal-body {
+    padding: 16px;
+  }
+
+  .modal-header {
+    padding: 16px 16px 0;
+  }
+
+  .modal-footer {
+    padding: 12px 16px 16px;
+  }
+
+  /* Form controls full width on mobile */
+  .form-row {
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  /* Filters bar wraps */
+  .filters-bar {
+    flex-direction: column;
+    gap: 10px;
+    align-items: stretch;
+  }
+
+  .search-box {
+    width: 100%;
+  }
+}
+
+/* ============================================================
+   MOBILE — POS PAGE  (≤ 768px)
+   ============================================================ */
+@media (max-width: 768px) {
+  .pos-layout {
+    flex-direction: column;
+    height: 100dvh;
+    overflow: hidden;
+  }
+
+  /* Left panel: products — full width, full height */
+  .pos-left {
+    flex: 1;
+    padding: 14px 14px 0;
+    overflow: hidden;
+    min-height: 0;
+  }
+
+  .pos-header h1 {
+    font-size: 15px;
+  }
+
+  .pos-header .pos-user {
+    font-size: 11px;
+  }
+
+  .page-header-actions {
+    gap: 6px;
+  }
+
+  /* Product grid adapts to mobile width */
+  .product-grid {
+    grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+    gap: 10px;
+  }
+
+  .product-card {
+    padding: 12px 10px;
+  }
+
+  .prod-name {
+    font-size: 12px;
+  }
+
+  .prod-price {
+    font-size: 14px;
+  }
+
+  .prod-stock {
+    font-size: 11px;
+  }
+
+  /* Right panel: LIQUID GLASS BOTTOM SHEET */
+  .pos-right {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    width: 100%;
+    height: 82vh;
+    max-height: 82vh;
+    padding: 0;
+    transform: translateY(100%);
+    transition: transform 0.38s cubic-bezier(0.34, 1.12, 0.64, 1);
+    z-index: 90;
+    border-radius: 28px 28px 0 0;
+    /* Liquid glass */
+    background: rgba(10, 8, 35, 0.82);
+    backdrop-filter: blur(40px) saturate(200%);
+    -webkit-backdrop-filter: blur(40px) saturate(200%);
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    border-bottom: none;
+    box-shadow:
+      0 0 0 1px rgba(255, 255, 255, 0.08) inset,
+      0 -8px 60px rgba(0, 0, 0, 0.5),
+      0 0 80px rgba(24, 95, 165, 0.15);
+    overflow: hidden;
+  }
+
+  .pos-right.mob-cart-open {
+    transform: translateY(0);
+  }
+
+  /* Drag handle pill on cart sheet */
+  .pos-right::before {
+    content: '';
+    display: block;
+    width: 40px;
+    height: 4px;
+    background: rgba(255, 255, 255, 0.25);
+    border-radius: 2px;
+    margin: 12px auto 0;
+    flex-shrink: 0;
+  }
+
+  .cart-panel {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    padding-top: 4px;
+    overflow: hidden;
+  }
+
+  .cart-header {
+    padding: 10px 20px 10px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    flex-shrink: 0;
+  }
+
+  .cart-items {
+    flex: 1;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+    padding: 10px 16px;
+  }
+
+  .cart-footer {
+    overflow-y: auto;
+    max-height: 50%;
+    -webkit-overflow-scrolling: touch;
+    padding: 10px 16px 20px;
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+  }
+
+  /* Floating cart FAB */
+  .mob-cart-fab {
+    display: flex !important;
+  }
+
+  /* Floating bottom bar showing total when cart is closed */
+  .mob-cart-bar {
+    display: flex !important;
+  }
+}
+
+/* ============================================================
+   CART FAB + BOTTOM BAR (POS Mobile)
+   ============================================================ */
+
+/* Cart FAB — hidden by default, shown on mobile via JS */
+.mob-cart-fab {
+  display: none;
+  position: fixed;
+  bottom: 24px;
+  right: 20px;
+  width: 60px;
+  height: 60px;
+  border-radius: 18px;
+  background: rgba(24, 95, 165, 0.9);
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  box-shadow:
+    0 0 0 1px rgba(255,255,255,0.1) inset,
+    0 8px 32px rgba(24, 95, 165, 0.5),
+    0 2px 8px rgba(0,0,0,0.3);
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 85;
+  transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.2s;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.mob-cart-fab:active {
+  transform: scale(0.92);
+}
+
+.mob-cart-fab svg {
+  color: #fff;
+}
+
+.mob-cart-fab .fab-count {
+  position: absolute;
+  top: -6px;
+  right: -6px;
+  min-width: 22px;
+  height: 22px;
+  background: #ff4757;
+  border: 2px solid rgba(10, 8, 35, 0.9);
+  border-radius: 11px;
+  font-size: 11px;
+  font-weight: 700;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 5px;
+  transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.mob-cart-fab .fab-count.bump {
+  transform: scale(1.4);
+}
+
+/* Show cart FAB overlay */
+.mob-cart-overlay {
+  display: none;
+}
+
+/* ============================================================
+   EXTRA SMALL (≤ 480px)
+   ============================================================ */
+@media (max-width: 480px) {
+  .stats-grid {
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+  }
+
+  .stat-card {
+    padding: 14px;
+  }
+
+  .stat-value {
+    font-size: 20px;
+  }
+
+  .pos-header h1 {
+    font-size: 13px;
+  }
+
+  .product-grid {
+    grid-template-columns: repeat(auto-fill, minmax(110px, 1fr));
+  }
+
+  /* Receipt modal full screen */
+  .modal-overlay.open .modal-box {
+    width: 100vw;
+    height: 100dvh;
+    max-height: 100dvh;
+    margin: 0;
+    border-radius: 0;
+  }
+
+  .pay-options {
+    gap: 6px;
+  }
+
+  .pay-option {
+    font-size: 12px;
+    padding: 8px 10px;
+  }
+}
+
+/* ============================================================
+   LIQUID GLASS — LIGHT THEME MOBILE OVERRIDES
+   ============================================================ */
+@media (max-width: 768px) {
+  [data-theme="light"] .pos-right {
+    background: rgba(240, 244, 248, 0.88);
+    border-color: rgba(0, 0, 0, 0.1);
+    box-shadow:
+      0 0 0 1px rgba(255,255,255,0.8) inset,
+      0 -8px 60px rgba(0, 0, 0, 0.15);
+  }
+
+  [data-theme="light"] .pos-right::before {
+    background: rgba(0, 0, 0, 0.18);
+  }
+
+  [data-theme="light"] .mob-cart-fab {
+    background: rgba(24, 95, 165, 0.95);
+  }
+
+  [data-theme="light"] .mob-menu-btn {
+    border-color: rgba(0,0,0,0.12);
+    background: rgba(0,0,0,0.06);
+  }
+}
