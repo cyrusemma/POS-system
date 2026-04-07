@@ -4,9 +4,15 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Purchase Orders — Admin</title>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
     <link rel="stylesheet" href="../assets/css/style.css" />
-    <script defer src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script
+      defer
+      src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"
+    ></script>
     <script defer src="../config/supabase.js"></script>
     <script defer src="../assets/js/auth.js"></script>
   </head>
@@ -17,8 +23,19 @@
         <div class="sidebar-logo">
           <div class="brand">
             <div class="brand-icon">
-              <svg width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="white" stroke-width="2">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
+              <svg
+                width="20"
+                height="20"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="white"
+                stroke-width="2"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"
+                />
               </svg>
             </div>
             <div>
@@ -29,26 +46,189 @@
         </div>
         <nav class="sidebar-nav">
           <div class="nav-section-label">Main</div>
-          <a href="dashboard.html" class="nav-link"><svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/></svg>Dashboard</a>
-          <a href="users.html" class="nav-link"><svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"/></svg>Users</a>
+          <a href="dashboard.html" class="nav-link"
+            ><svg
+              width="16"
+              height="16"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              stroke-width="2"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"
+              /></svg
+            >Dashboard</a
+          >
+          <a href="users.html" class="nav-link"
+            ><svg
+              width="16"
+              height="16"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              stroke-width="2"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"
+              /></svg
+            >Users</a
+          >
           <div class="nav-section-label">Inventory</div>
-          <a href="products.html" class="nav-link"><svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"/></svg>Products</a>
-          <a href="categories.html" class="nav-link"><svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A2 2 0 013 12V7a4 4 0 014-4z"/></svg>Categories</a>
-          <a href="inventory.html" class="nav-link"><svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/></svg>Inventory</a>
-          <a href="suppliers.html" class="nav-link"><svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M8 7v8a2 2 0 002 2h6M8 7V5a2 2 0 012-2h4.586a1 1 0 01.707.293l4.414 4.414a1 1 0 01.293.707V15a2 2 0 01-2 2h-2M8 7H6a2 2 0 00-2 2v10a2 2 0 002 2h8a2 2 0 002-2v-2"/></svg>Suppliers</a>
-          <a href="purchase-orders.html" class="nav-link active"><svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>Purchase Orders</a>
+          <a href="products.html" class="nav-link"
+            ><svg
+              width="16"
+              height="16"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              stroke-width="2"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"
+              /></svg
+            >Products</a
+          >
+          <a href="categories.html" class="nav-link"
+            ><svg
+              width="16"
+              height="16"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              stroke-width="2"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A2 2 0 013 12V7a4 4 0 014-4z"
+              /></svg
+            >Categories</a
+          >
+          <a href="inventory.html" class="nav-link"
+            ><svg
+              width="16"
+              height="16"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              stroke-width="2"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"
+              /></svg
+            >Inventory</a
+          >
+          <a href="suppliers.html" class="nav-link"
+            ><svg
+              width="16"
+              height="16"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              stroke-width="2"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M8 7v8a2 2 0 002 2h6M8 7V5a2 2 0 012-2h4.586a1 1 0 01.707.293l4.414 4.414a1 1 0 01.293.707V15a2 2 0 01-2 2h-2M8 7H6a2 2 0 00-2 2v10a2 2 0 002 2h8a2 2 0 002-2v-2"
+              /></svg
+            >Suppliers</a
+          >
+          <a href="purchase-orders.html" class="nav-link active"
+            ><svg
+              width="16"
+              height="16"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              stroke-width="2"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
+              /></svg
+            >Purchase Orders</a
+          >
           <div class="nav-section-label">Sales</div>
-          <a href="customers.html" class="nav-link"><svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/></svg>Customers</a>
-          <a href="sales.html" class="nav-link"><svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>Sales</a>
-          <a href="reports.html" class="nav-link"><svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/></svg>Reports</a>
+          <a href="customers.html" class="nav-link"
+            ><svg
+              width="16"
+              height="16"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              stroke-width="2"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"
+              /></svg
+            >Customers</a
+          >
+          <a href="sales.html" class="nav-link"
+            ><svg
+              width="16"
+              height="16"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              stroke-width="2"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
+              /></svg
+            >Sales</a
+          >
+          <a href="reports.html" class="nav-link"
+            ><svg
+              width="16"
+              height="16"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              stroke-width="2"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"
+              /></svg
+            >Reports</a
+          >
         </nav>
         <div class="sidebar-footer">
           <div class="sidebar-user">
             <div class="user-name" id="sidebarUserName">Loading…</div>
             <div class="user-role" id="sidebarUserRole"></div>
           </div>
-          <button class="logout-btn" onclick="logout()">
-            <svg width="15" height="15" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"/></svg>
+          <button class="logout-btn" onclick="logout()" aria-label="Logout">
+            <svg
+              width="15"
+              height="15"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              stroke-width="2"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"
+              />
+            </svg>
             Logout
           </button>
         </div>
@@ -58,30 +238,84 @@
         <div class="page-header">
           <div>
             <h1 class="page-title">Purchase Orders</h1>
-            <p class="page-subtitle">Create and manage supplier purchase orders.</p>
+            <p class="page-subtitle">
+              Create and manage supplier purchase orders.
+            </p>
           </div>
           <div class="page-header-actions">
-            <button class="theme-toggle" id="themeToggleBtn" title="Switch theme">
-              <svg id="themeIcon" width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <button
+              class="theme-toggle"
+              id="themeToggleBtn"
+              title="Switch theme"
+              aria-label="Toggle dark/light theme"
+            >
+              <svg
+                id="themeIcon"
+                width="16"
+                height="16"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+                stroke-width="2"
+              >
                 <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" />
               </svg>
             </button>
-            <button class="btn btn-primary" onclick="openCreateModal()">
-              <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4"/></svg>
+            <button
+              class="btn btn-primary"
+              onclick="openCreateModal()"
+              aria-label="Create new purchase order"
+            >
+              <svg
+                width="16"
+                height="16"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+                stroke-width="2"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  d="M12 4v16m8-8H4"
+                />
+              </svg>
               New Order
             </button>
           </div>
         </div>
 
-        <div id="pageAlert" class="alert hidden" style="margin-bottom:16px"></div>
+        <div id="pageAlert" class="alert hidden mb-16"></div>
 
         <!-- Status Filter -->
         <div class="table-toolbar">
           <div class="search-box">
-            <svg width="15" height="15" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
-            <input type="text" id="searchInput" placeholder="Search by ref or supplier…" oninput="filterOrders()" />
+            <svg
+              width="15"
+              height="15"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              stroke-width="2"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
+              />
+            </svg>
+            <input
+              type="text"
+              id="searchInput"
+              placeholder="Search by ref or supplier…"
+              oninput="filterOrders()"
+            />
           </div>
-          <select id="statusFilter" class="form-control" style="width:auto" onchange="filterOrders()">
+          <select
+            id="statusFilter"
+            class="form-control form-select-w-auto"
+            onchange="filterOrders()"
+          >
             <option value="">All Statuses</option>
             <option value="pending">Pending</option>
             <option value="ordered">Ordered</option>
@@ -105,7 +339,9 @@
               </tr>
             </thead>
             <tbody id="ordersBody">
-              <tr><td colspan="7" class="table-empty">Loading…</td></tr>
+              <tr>
+                <td colspan="7" class="table-empty">Loading…</td>
+              </tr>
             </tbody>
           </table>
         </div>
@@ -117,13 +353,30 @@
       <div class="modal modal-lg">
         <div class="modal-header">
           <span class="modal-title">New Purchase Order</span>
-          <button class="modal-close" onclick="closeModal('createModal')">
-            <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/></svg>
+          <button
+            class="modal-close"
+            onclick="closeModal('createModal')"
+            aria-label="Close modal"
+          >
+            <svg
+              width="14"
+              height="14"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              stroke-width="2.5"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M6 18L18 6M6 6l12 12"
+              />
+            </svg>
           </button>
         </div>
         <div class="modal-body">
           <div id="createAlert" class="alert hidden"></div>
-          <div class="grid-2" style="margin-bottom:16px">
+          <div class="grid-2 mb-16">
             <div class="form-group">
               <label class="form-label" for="createSupplier">Supplier *</label>
               <select id="createSupplier" class="form-control">
@@ -133,15 +386,26 @@
             </div>
             <div class="form-group">
               <label class="form-label" for="createNotes">Notes</label>
-              <input type="text" id="createNotes" class="form-control" placeholder="Optional notes…" />
+              <input
+                type="text"
+                id="createNotes"
+                class="form-control"
+                placeholder="Optional notes…"
+              />
             </div>
           </div>
 
           <!-- Order Items -->
-          <div style="margin-bottom:12px">
-            <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px">
-              <label class="form-label" style="margin:0">Order Items *</label>
-              <button class="btn btn-sm btn-secondary" onclick="addOrderItem()">+ Add Item</button>
+          <div class="mb-12">
+            <div class="flex flex-between mb-8">
+              <label class="form-label" style="margin: 0">Order Items *</label>
+              <button
+                class="btn btn-sm btn-secondary"
+                onclick="addOrderItem()"
+                aria-label="Add item to order"
+              >
+                + Add Item
+              </button>
             </div>
             <div id="orderItemsList">
               <!-- rows added dynamically -->
@@ -150,14 +414,24 @@
           </div>
 
           <!-- Order Total -->
-          <div style="text-align:right;padding:10px 0;border-top:1px solid var(--glass-border)">
-            <span style="font-size:13px;color:var(--text-muted)">Total Cost: </span>
-            <span id="createTotalDisplay" style="font-size:16px;font-weight:700">GH₵ 0.00</span>
+          <div class="text-right py-10 border-t-glass">
+            <span class="text-13px text-muted">Total Cost: </span>
+            <span id="createTotalDisplay" class="text-16px fw-700"
+              >GH₵ 0.00</span
+            >
           </div>
         </div>
         <div class="modal-footer">
-          <button class="btn btn-secondary" onclick="closeModal('createModal')">Cancel</button>
-          <button class="btn btn-primary" id="createBtn" onclick="createOrder()">Create Order</button>
+          <button class="btn btn-secondary" onclick="closeModal('createModal')">
+            Cancel
+          </button>
+          <button
+            class="btn btn-primary"
+            id="createBtn"
+            onclick="createOrder()"
+          >
+            Create Order
+          </button>
         </div>
       </div>
     </div>
@@ -167,14 +441,29 @@
       <div class="modal modal-lg">
         <div class="modal-header">
           <span class="modal-title" id="viewModalTitle">Order Details</span>
-          <button class="modal-close" onclick="closeModal('viewModal')">
-            <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/></svg>
+          <button
+            class="modal-close"
+            onclick="closeModal('viewModal')"
+            aria-label="Close modal"
+          >
+            <svg
+              width="14"
+              height="14"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              stroke-width="2.5"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M6 18L18 6M6 6l12 12"
+              />
+            </svg>
           </button>
         </div>
-        <div class="modal-body" id="viewModalBody">
-        </div>
-        <div class="modal-footer" id="viewModalFooter">
-        </div>
+        <div class="modal-body" id="viewModalBody"></div>
+        <div class="modal-footer" id="viewModalFooter"></div>
       </div>
     </div>
 
@@ -185,10 +474,12 @@
       let allProducts = [];
       let orderItems = []; // [{productId, productName, qty, unitCost}]
 
-      window.addEventListener('DOMContentLoaded', async () => {
+      window.addEventListener("DOMContentLoaded", async () => {
         initTheme();
-        document.getElementById('themeToggleBtn').addEventListener('click', toggleTheme);
-        currentUser = await requireAuth(['admin']);
+        document
+          .getElementById("themeToggleBtn")
+          .addEventListener("click", toggleTheme);
+        currentUser = await requireAuth(["admin"]);
         if (!currentUser) return;
         populateSidebarUser(currentUser);
         await Promise.all([loadSuppliers(), loadProducts(), loadOrders()]);
@@ -196,81 +487,115 @@
 
       /* ── Data Loading ──────────────────────────────── */
       async function loadSuppliers() {
-        const { data } = await db.from('suppliers').select('id,name').eq('status','active').order('name');
+        const { data } = await db
+          .from("suppliers")
+          .select("id,name")
+          .eq("status", "active")
+          .order("name");
         allSuppliers = data || [];
-        const sel = document.getElementById('createSupplier');
-        sel.innerHTML = '<option value="">Select supplier…</option>' +
-          allSuppliers.map(s => `<option value="${s.id}">${escHtml(s.name)}</option>`).join('');
+        const sel = document.getElementById("createSupplier");
+        sel.innerHTML =
+          '<option value="">Select supplier…</option>' +
+          allSuppliers
+            .map((s) => `<option value="${s.id}">${escHtml(s.name)}</option>`)
+            .join("");
       }
 
       async function loadProducts() {
-        const { data } = await db.from('products').select('id,name,price').eq('status','active').order('name');
+        const { data } = await db
+          .from("products")
+          .select("id,name,price")
+          .eq("status", "active")
+          .order("name");
         allProducts = data || [];
       }
 
       async function loadOrders() {
         const { data, error } = await db
-          .from('purchase_orders')
-          .select('*, suppliers(name), purchase_order_items(id)')
-          .order('created_at', { ascending: false });
-        if (error) { showAlert('pageAlert', 'Failed to load orders: ' + error.message); return; }
+          .from("purchase_orders")
+          .select("*, suppliers(name), purchase_order_items(id)")
+          .order("created_at", { ascending: false });
+        if (error) {
+          showAlert("pageAlert", "Failed to load orders: " + error.message);
+          return;
+        }
         allOrders = data || [];
         renderOrders(allOrders);
       }
 
       /* ── Render ────────────────────────────────────── */
       function filterOrders() {
-        const q = document.getElementById('searchInput').value.toLowerCase();
-        const status = document.getElementById('statusFilter').value;
-        renderOrders(allOrders.filter(o =>
-          (o.order_ref || '').toLowerCase().includes(q) ||
-          (o.suppliers?.name || '').toLowerCase().includes(q)
-        ).filter(o => !status || o.status === status));
+        const q = document.getElementById("searchInput").value.toLowerCase();
+        const status = document.getElementById("statusFilter").value;
+        renderOrders(
+          allOrders
+            .filter(
+              (o) =>
+                (o.order_ref || "").toLowerCase().includes(q) ||
+                (o.suppliers?.name || "").toLowerCase().includes(q),
+            )
+            .filter((o) => !status || o.status === status),
+        );
       }
 
-      const statusColors = { pending: 'warning', ordered: 'primary', delivered: 'success', cancelled: 'danger' };
+      const statusColors = {
+        pending: "warning",
+        ordered: "primary",
+        delivered: "success",
+        cancelled: "danger",
+      };
 
       function renderOrders(list) {
-        const body = document.getElementById('ordersBody');
+        const body = document.getElementById("ordersBody");
         if (!list.length) {
-          body.innerHTML = '<tr><td colspan="7" class="table-empty">No orders found.</td></tr>';
+          body.innerHTML =
+            '<tr><td colspan="7" class="table-empty">No orders found.</td></tr>';
           return;
         }
-        body.innerHTML = list.map(o => `
+        body.innerHTML = list
+          .map(
+            (o) => `
           <tr>
             <td><span class="fw-600">${escHtml(o.order_ref)}</span></td>
-            <td>${escHtml(o.suppliers?.name || '—')}</td>
+            <td>${escHtml(o.suppliers?.name || "—")}</td>
             <td class="text-muted">${(o.purchase_order_items || []).length} item(s)</td>
             <td>${formatCurrency(o.total_cost || 0)}</td>
-            <td><span class="badge badge-${statusColors[o.status] || 'secondary'}">${o.status}</span></td>
+            <td><span class="badge badge-${statusColors[o.status] || "secondary"}">${o.status}</span></td>
             <td class="text-muted">${formatDate(o.created_at)}</td>
             <td>
               <div class="action-btns">
                 <button class="btn btn-sm btn-secondary" onclick="viewOrder(${o.id})">View</button>
-                ${o.status === 'pending' ? `<button class="btn btn-sm btn-primary" onclick="markOrdered(${o.id})">Mark Ordered</button>` : ''}
-                ${o.status === 'ordered' ? `<button class="btn btn-sm btn-success" onclick="confirmDeliver(${o.id})">Mark Delivered</button>` : ''}
-                ${(o.status === 'pending' || o.status === 'ordered') ? `<button class="btn btn-sm btn-danger" onclick="cancelOrder(${o.id})">Cancel</button>` : ''}
+                ${o.status === "pending" ? `<button class="btn btn-sm btn-primary" onclick="markOrdered(${o.id})">Mark Ordered</button>` : ""}
+                ${o.status === "ordered" ? `<button class="btn btn-sm btn-success" onclick="confirmDeliver(${o.id})">Mark Delivered</button>` : ""}
+                ${o.status === "pending" || o.status === "ordered" ? `<button class="btn btn-sm btn-danger" onclick="cancelOrder(${o.id})">Cancel</button>` : ""}
               </div>
             </td>
           </tr>
-        `).join('');
+        `,
+          )
+          .join("");
       }
 
       /* ── Create Order ──────────────────────────────── */
       function openCreateModal() {
-        hideAlert('createAlert');
-        document.getElementById('createSupplier').value = '';
-        document.getElementById('createNotes').value = '';
-        document.getElementById('createSupplierErr').textContent = '';
-        document.getElementById('createItemsErr').textContent = '';
+        hideAlert("createAlert");
+        document.getElementById("createSupplier").value = "";
+        document.getElementById("createNotes").value = "";
+        document.getElementById("createSupplierErr").textContent = "";
+        document.getElementById("createItemsErr").textContent = "";
         orderItems = [];
         renderOrderItems();
         addOrderItem();
-        openModal('createModal');
+        openModal("createModal");
       }
 
       function addOrderItem() {
-        orderItems.push({ productId: '', productName: '', qty: 1, unitCost: 0 });
+        orderItems.push({
+          productId: "",
+          productName: "",
+          qty: 1,
+          unitCost: 0,
+        });
         renderOrderItems();
       }
 
@@ -280,30 +605,35 @@
       }
 
       function renderOrderItems() {
-        const container = document.getElementById('orderItemsList');
+        const container = document.getElementById("orderItemsList");
         if (!orderItems.length) {
-          container.innerHTML = '<div class="text-muted" style="font-size:12px;padding:8px 0">No items added yet.</div>';
+          container.innerHTML =
+            '<div class="text-muted text-12px p-2">No items added yet.</div>';
           updateCreateTotal();
           return;
         }
-        container.innerHTML = orderItems.map((item, idx) => `
-          <div class="order-item-row" style="display:grid;grid-template-columns:1fr 70px 110px 30px;gap:8px;align-items:center;margin-bottom:8px">
-            <select class="form-control" onchange="onItemProductChange(${idx}, this.value)" style="font-size:13px">
+        container.innerHTML = orderItems
+          .map(
+            (item, idx) => `
+          <div class="order-item-row grid-1-70-110-30 mb-8">
+            <select class="form-control text-13px" onchange="onItemProductChange(${idx}, this.value)">
               <option value="">Select product…</option>
-              ${allProducts.map(p => `<option value="${p.id}" ${item.productId == p.id ? 'selected' : ''}>${escHtml(p.name)}</option>`).join('')}
+              ${allProducts.map((p) => `<option value="${p.id}" ${item.productId == p.id ? "selected" : ""}>${escHtml(p.name)}</option>`).join("")}
             </select>
-            <input type="number" class="form-control" placeholder="Qty" min="1" value="${item.qty}" onchange="onItemQtyChange(${idx}, this.value)" style="font-size:13px" />
-            <input type="number" class="form-control" placeholder="Unit Cost" min="0" step="0.01" value="${item.unitCost || ''}" onchange="onItemCostChange(${idx}, this.value)" style="font-size:13px" />
-            <button class="btn btn-sm btn-danger" onclick="removeOrderItem(${idx})" style="padding:6px 8px">×</button>
+            <input type="number" class="form-control text-13px" placeholder="Qty" min="1" value="${item.qty}" onchange="onItemQtyChange(${idx}, this.value)" />
+            <input type="number" class="form-control text-13px" placeholder="Unit Cost" min="0" step="0.01" value="${item.unitCost || ""}" onchange="onItemCostChange(${idx}, this.value)" />
+            <button class="btn btn-sm btn-danger" onclick="removeOrderItem(${idx})" aria-label="Remove item">×</button>
           </div>
-        `).join('');
+        `,
+          )
+          .join("");
         updateCreateTotal();
       }
 
       function onItemProductChange(idx, val) {
-        const prod = allProducts.find(p => p.id == val);
+        const prod = allProducts.find((p) => p.id == val);
         orderItems[idx].productId = val;
-        orderItems[idx].productName = prod ? prod.name : '';
+        orderItems[idx].productName = prod ? prod.name : "";
         if (prod && !orderItems[idx].unitCost) {
           orderItems[idx].unitCost = prod.price;
           renderOrderItems();
@@ -321,40 +651,58 @@
       }
 
       function updateCreateTotal() {
-        const total = orderItems.reduce((s, i) => s + (i.qty * i.unitCost), 0);
-        document.getElementById('createTotalDisplay').textContent = formatCurrency(total);
+        const total = orderItems.reduce((s, i) => s + i.qty * i.unitCost, 0);
+        document.getElementById("createTotalDisplay").textContent =
+          formatCurrency(total);
       }
 
       async function createOrder() {
-        hideAlert('createAlert');
-        const supplierId = document.getElementById('createSupplier').value;
-        document.getElementById('createSupplierErr').textContent = '';
-        document.getElementById('createItemsErr').textContent = '';
+        hideAlert("createAlert");
+        const supplierId = document.getElementById("createSupplier").value;
+        document.getElementById("createSupplierErr").textContent = "";
+        document.getElementById("createItemsErr").textContent = "";
 
         let valid = true;
-        if (!supplierId) { document.getElementById('createSupplierErr').textContent = 'Select a supplier.'; valid = false; }
-        const validItems = orderItems.filter(i => i.productId && i.qty > 0);
-        if (!validItems.length) { document.getElementById('createItemsErr').textContent = 'Add at least one item.'; valid = false; }
+        if (!supplierId) {
+          document.getElementById("createSupplierErr").textContent =
+            "Select a supplier.";
+          valid = false;
+        }
+        const validItems = orderItems.filter((i) => i.productId && i.qty > 0);
+        if (!validItems.length) {
+          document.getElementById("createItemsErr").textContent =
+            "Add at least one item.";
+          valid = false;
+        }
         if (!valid) return;
 
-        const totalCost = validItems.reduce((s, i) => s + (i.qty * i.unitCost), 0);
-        const orderRef = 'PO-' + Date.now().toString(36).toUpperCase();
+        const totalCost = validItems.reduce(
+          (s, i) => s + i.qty * i.unitCost,
+          0,
+        );
+        const orderRef = "PO-" + Date.now().toString(36).toUpperCase();
 
-        const btn = document.getElementById('createBtn');
-        btn.disabled = true; btn.textContent = 'Creating…';
+        const btn = document.getElementById("createBtn");
+        btn.disabled = true;
+        btn.textContent = "Creating…";
         try {
-          const { data: order, error: orderErr } = await db.from('purchase_orders').insert({
-            order_ref: orderRef,
-            supplier_id: parseInt(supplierId),
-            status: 'pending',
-            total_cost: parseFloat(totalCost.toFixed(2)),
-            notes: document.getElementById('createNotes').value.trim() || null,
-            ordered_by: currentUser.id,
-          }).select('id').single();
+          const { data: order, error: orderErr } = await db
+            .from("purchase_orders")
+            .insert({
+              order_ref: orderRef,
+              supplier_id: parseInt(supplierId),
+              status: "pending",
+              total_cost: parseFloat(totalCost.toFixed(2)),
+              notes:
+                document.getElementById("createNotes").value.trim() || null,
+              ordered_by: currentUser.id,
+            })
+            .select("id")
+            .single();
           if (orderErr) throw orderErr;
 
           for (const item of validItems) {
-            await db.from('purchase_order_items').insert({
+            await db.from("purchase_order_items").insert({
               order_id: order.id,
               product_id: parseInt(item.productId),
               product_name: item.productName,
@@ -364,127 +712,185 @@
             });
           }
 
-          closeModal('createModal');
-          showAlert('pageAlert', 'Purchase order ' + orderRef + ' created.', 'success');
+          closeModal("createModal");
+          showAlert(
+            "pageAlert",
+            "Purchase order " + orderRef + " created.",
+            "success",
+          );
           await loadOrders();
         } catch (err) {
-          showAlert('createAlert', err.message);
+          showAlert("createAlert", err.message);
         } finally {
-          btn.disabled = false; btn.textContent = 'Create Order';
+          btn.disabled = false;
+          btn.textContent = "Create Order";
         }
       }
 
       /* ── View Order ────────────────────────────────── */
       async function viewOrder(id) {
         const { data: order, error } = await db
-          .from('purchase_orders')
-          .select('*, suppliers(name,phone,email), purchase_order_items(*, products(name))')
-          .eq('id', id)
+          .from("purchase_orders")
+          .select(
+            "*, suppliers(name,phone,email), purchase_order_items(*, products(name))",
+          )
+          .eq("id", id)
           .single();
-        if (error) { showAlert('pageAlert', error.message); return; }
+        if (error) {
+          showAlert("pageAlert", error.message);
+          return;
+        }
 
-        document.getElementById('viewModalTitle').textContent = 'Order: ' + order.order_ref;
+        document.getElementById("viewModalTitle").textContent =
+          "Order: " + order.order_ref;
         const items = order.purchase_order_items || [];
-        document.getElementById('viewModalBody').innerHTML = `
-          <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:16px">
+        document.getElementById("viewModalBody").innerHTML = `
+          <div class="grid-1-1 gap-12 mb-16">
             <div>
               <div class="form-label">Supplier</div>
-              <div class="fw-600">${escHtml(order.suppliers?.name || '—')}</div>
-              ${order.suppliers?.phone ? '<div class="text-muted" style="font-size:12px">' + escHtml(order.suppliers.phone) + '</div>' : ''}
-              ${order.suppliers?.email ? '<div class="text-muted" style="font-size:12px">' + escHtml(order.suppliers.email) + '</div>' : ''}
+              <div class="fw-600">${escHtml(order.suppliers?.name || "—")}</div>
+              ${order.suppliers?.phone ? '<div class="text-muted text-12px">' + escHtml(order.suppliers.phone) + "</div>" : ""}
+              ${order.suppliers?.email ? '<div class="text-muted text-12px">' + escHtml(order.suppliers.email) + "</div>" : ""}
             </div>
             <div>
               <div class="form-label">Status</div>
-              <span class="badge badge-${statusColors[order.status] || 'secondary'}">${order.status}</span>
-              <div class="text-muted" style="font-size:12px;margin-top:4px">Created: ${formatDate(order.created_at)}</div>
-              ${order.delivered_at ? '<div class="text-muted" style="font-size:12px">Delivered: ' + formatDate(order.delivered_at) + '</div>' : ''}
+              <span class="badge badge-${statusColors[order.status] || "secondary"}">${order.status}</span>
+              <div class="text-muted text-12px mt-4">Created: ${formatDate(order.created_at)}</div>
+              ${order.delivered_at ? '<div class="text-muted text-12px">Delivered: ' + formatDate(order.delivered_at) + "</div>" : ""}
             </div>
           </div>
-          ${order.notes ? '<div style="margin-bottom:16px"><div class="form-label">Notes</div><div class="text-muted">' + escHtml(order.notes) + '</div></div>' : ''}
-          <table class="data-table" style="margin-bottom:12px">
+          ${order.notes ? '<div class="mb-16"><div class="form-label">Notes</div><div class="text-muted">' + escHtml(order.notes) + "</div></div>" : ""}
+          <table class="data-table mb-12">
             <thead><tr><th>Product</th><th>Qty</th><th>Unit Cost</th><th>Total</th></tr></thead>
             <tbody>
-              ${items.map(i => `<tr>
+              ${items
+                .map(
+                  (i) => `<tr>
                 <td>${escHtml(i.product_name)}</td>
                 <td>${i.quantity}</td>
                 <td>${formatCurrency(i.unit_cost)}</td>
                 <td>${formatCurrency(i.total_cost)}</td>
-              </tr>`).join('')}
+              </tr>`,
+                )
+                .join("")}
             </tbody>
           </table>
-          <div style="text-align:right;font-size:15px;font-weight:700">Total: ${formatCurrency(order.total_cost)}</div>
+          <div class="text-right text-15px fw-700">Total: ${formatCurrency(order.total_cost)}</div>
         `;
 
-        const footer = document.getElementById('viewModalFooter');
-        let btns = '<button class="btn btn-secondary" onclick="closeModal(\'viewModal\')">Close</button>';
-        if (order.status === 'pending') btns += `<button class="btn btn-primary" onclick="closeModal('viewModal');markOrdered(${order.id})">Mark as Ordered</button>`;
-        if (order.status === 'ordered') btns += `<button class="btn btn-success" onclick="closeModal('viewModal');confirmDeliver(${order.id})">Mark as Delivered</button>`;
+        const footer = document.getElementById("viewModalFooter");
+        let btns =
+          '<button class="btn btn-secondary" onclick="closeModal(\'viewModal\')">Close</button>';
+        if (order.status === "pending")
+          btns += `<button class="btn btn-primary" onclick="closeModal('viewModal');markOrdered(${order.id})">Mark as Ordered</button>`;
+        if (order.status === "ordered")
+          btns += `<button class="btn btn-success" onclick="closeModal('viewModal');confirmDeliver(${order.id})">Mark as Delivered</button>`;
         footer.innerHTML = btns;
 
-        openModal('viewModal');
+        openModal("viewModal");
       }
 
       /* ── Status Changes ────────────────────────────── */
       async function markOrdered(id) {
-        const { error } = await db.from('purchase_orders').update({ status: 'ordered' }).eq('id', id);
-        if (error) { showAlert('pageAlert', error.message); return; }
-        showAlert('pageAlert', 'Order marked as ordered.', 'success');
+        const { error } = await db
+          .from("purchase_orders")
+          .update({ status: "ordered" })
+          .eq("id", id);
+        if (error) {
+          showAlert("pageAlert", error.message);
+          return;
+        }
+        showAlert("pageAlert", "Order marked as ordered.", "success");
         await loadOrders();
       }
 
       async function confirmDeliver(id) {
-        const order = allOrders.find(o => o.id === id);
-        if (!confirm('Mark order ' + (order?.order_ref || '') + ' as delivered?\n\nThis will automatically add the ordered quantities to product stock.')) return;
+        const order = allOrders.find((o) => o.id === id);
+        if (
+          !confirm(
+            "Mark order " +
+              (order?.order_ref || "") +
+              " as delivered?\n\nThis will automatically add the ordered quantities to product stock.",
+          )
+        )
+          return;
         await deliverOrder(id);
       }
 
       async function deliverOrder(id) {
         const { data: order, error } = await db
-          .from('purchase_orders')
-          .select('*, purchase_order_items(*)')
-          .eq('id', id)
+          .from("purchase_orders")
+          .select("*, purchase_order_items(*)")
+          .eq("id", id)
           .single();
-        if (error) { showAlert('pageAlert', error.message); return; }
+        if (error) {
+          showAlert("pageAlert", error.message);
+          return;
+        }
 
         try {
           // Update stock for each item
-          for (const item of (order.purchase_order_items || [])) {
+          for (const item of order.purchase_order_items || []) {
             if (!item.product_id) continue;
-            const { data: prod } = await db.from('products').select('stock').eq('id', item.product_id).single();
+            const { data: prod } = await db
+              .from("products")
+              .select("stock")
+              .eq("id", item.product_id)
+              .single();
             const newStock = (prod ? prod.stock : 0) + item.quantity;
-            await db.from('products').update({ stock: newStock }).eq('id', item.product_id);
-            await db.from('inventory_log').insert({
+            await db
+              .from("products")
+              .update({ stock: newStock })
+              .eq("id", item.product_id);
+            await db.from("inventory_log").insert({
               product_id: item.product_id,
-              change_type: 'restock',
+              change_type: "restock",
               quantity_change: item.quantity,
-              note: 'Purchase Order ' + order.order_ref,
+              note: "Purchase Order " + order.order_ref,
               created_by: currentUser.id,
             });
           }
           // Mark order delivered
-          await db.from('purchase_orders').update({
-            status: 'delivered',
-            delivered_at: new Date().toISOString(),
-          }).eq('id', id);
+          await db
+            .from("purchase_orders")
+            .update({
+              status: "delivered",
+              delivered_at: new Date().toISOString(),
+            })
+            .eq("id", id);
 
-          showAlert('pageAlert', 'Order delivered! Stock has been updated.', 'success');
+          showAlert(
+            "pageAlert",
+            "Order delivered! Stock has been updated.",
+            "success",
+          );
           await loadOrders();
         } catch (err) {
-          showAlert('pageAlert', 'Delivery failed: ' + err.message);
+          showAlert("pageAlert", "Delivery failed: " + err.message);
         }
       }
 
       async function cancelOrder(id) {
-        const order = allOrders.find(o => o.id === id);
-        if (!confirm('Cancel order ' + (order?.order_ref || '') + '?')) return;
-        const { error } = await db.from('purchase_orders').update({ status: 'cancelled' }).eq('id', id);
-        if (error) { showAlert('pageAlert', error.message); return; }
-        showAlert('pageAlert', 'Order cancelled.', 'success');
+        const order = allOrders.find((o) => o.id === id);
+        if (!confirm("Cancel order " + (order?.order_ref || "") + "?")) return;
+        const { error } = await db
+          .from("purchase_orders")
+          .update({ status: "cancelled" })
+          .eq("id", id);
+        if (error) {
+          showAlert("pageAlert", error.message);
+          return;
+        }
+        showAlert("pageAlert", "Order cancelled.", "success");
         await loadOrders();
       }
 
       function escHtml(s) {
-        return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+        return String(s)
+          .replace(/&/g, "&amp;")
+          .replace(/</g, "&lt;")
+          .replace(/>/g, "&gt;")
+          .replace(/"/g, "&quot;");
       }
     </script>
   </body>
