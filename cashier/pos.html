@@ -1,0 +1,1023 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>POS — Cashier</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="../assets/css/style.css" />
+    <script
+      defer
+      src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"
+    ></script>
+    <script defer src="../config/supabase.js"></script>
+    <script defer src="../assets/js/auth.js"></script>
+  </head>
+  <body>
+    <div class="pos-layout">
+      <!-- ── LEFT PANEL ─────────────────────────────────────── -->
+      <div class="pos-left">
+        <div class="pos-header">
+          <div>
+            <h1>MY STORE POS</h1>
+            <div class="pos-user" id="posUserInfo">Loading…</div>
+          </div>
+          <div class="page-header-actions">
+            <button
+              class="theme-toggle"
+              id="themeToggleBtn"
+              title="Switch theme"
+            >
+              <svg
+                id="themeIcon"
+                width="18"
+                height="18"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+                stroke-width="2"
+              >
+                <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" />
+              </svg>
+            </button>
+            <button class="logout-btn logout-compact" onclick="logout()">
+              <svg
+                width="14"
+                height="14"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+                stroke-width="2"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"
+                />
+              </svg>
+              Logout
+            </button>
+          </div>
+        </div>
+
+        <!-- Search -->
+        <div class="pos-search">
+          <svg
+            width="16"
+            height="16"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+            stroke-width="2"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
+            />
+          </svg>
+          <input
+            type="text"
+            id="productSearch"
+            placeholder="Search by name or barcode…"
+            oninput="filterProducts()"
+          />
+        </div>
+
+        <!-- Category Tabs -->
+        <div class="cat-tabs" id="catTabs">
+          <button class="cat-tab active" data-alltab="1" onclick="selectCat('', this)">
+            All
+          </button>
+        </div>
+
+        <!-- Product Grid -->
+        <div class="product-grid" id="productGrid">
+          <div class="product-grid-loading">Loading products…</div>
+        </div>
+      </div>
+
+      <!-- ── RIGHT PANEL — Cart ─────────────────────────────── -->
+      <div class="pos-right">
+        <div class="cart-panel">
+          <div class="cart-header">
+            <h2>Cart</h2>
+            <span class="cart-count" id="cartCount">0</span>
+          </div>
+
+          <div class="cart-items" id="cartItems">
+            <div class="cart-empty">
+              <svg
+                width="40"
+                height="40"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="rgba(255,255,255,0.25)"
+                stroke-width="1.5"
+                class="cart-icon-centered"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"
+                />
+              </svg>
+              Cart is empty.<br />Add products to get started.
+            </div>
+          </div>
+
+          <div class="cart-footer">
+            <!-- Customer -->
+            <div class="customer-select-area">
+              <label>Customer (optional)</label>
+              <input
+                type="text"
+                id="customerSearch"
+                placeholder="Search by name or phone…"
+                autocomplete="off"
+              />
+              <div class="customer-dropdown" id="customerDropdown"></div>
+              <div id="selectedCustomerLabel" class="customer-label"></div>
+            </div>
+
+            <!-- Discount -->
+            <div class="discount-area">
+              <label>Discount</label>
+              <input
+                type="number"
+                id="discountPct"
+                value="0"
+                min="0"
+                max="100"
+                step="0.1"
+                title="Discount percentage"
+                placeholder="0"
+                oninput="updateTotals()"
+              />
+              <span class="discount-percent">%</span>
+            </div>
+
+            <!-- Totals -->
+            <div class="totals-section">
+              <div class="total-row">
+                <span>Subtotal</span
+                ><span class="amount" id="dispSubtotal">GH&#8373; 0.00</span>
+              </div>
+              <div class="total-row">
+                <span>Tax (15%)</span
+                ><span class="amount" id="dispTax">GH&#8373; 0.00</span>
+              </div>
+              <div class="total-row">
+                <span>Discount</span
+                ><span class="amount" id="dispDiscount">GH&#8373; 0.00</span>
+              </div>
+              <div class="total-row grand">
+                <span>TOTAL</span
+                ><span class="amount" id="dispTotal">GH&#8373; 0.00</span>
+              </div>
+            </div>
+
+            <!-- Payment -->
+            <div class="payment-methods">
+              <span class="payment-label">Payment Method</span>
+              <div class="pay-options">
+                <div
+                  class="pay-option active"
+                  data-method="cash"
+                  onclick="selectPayment('cash', this)"
+                >
+                  Cash
+                </div>
+                <div
+                  class="pay-option"
+                  data-method="mobile_money"
+                  onclick="selectPayment('mobile_money', this)"
+                >
+                  Mobile Money
+                </div>
+                <div
+                  class="pay-option"
+                  data-method="card"
+                  onclick="selectPayment('card', this)"
+                >
+                  Card
+                </div>
+              </div>
+            </div>
+
+            <button
+              class="checkout-btn"
+              id="checkoutBtn"
+              onclick="checkout()"
+              disabled
+            >
+              <svg
+                width="18"
+                height="18"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+                stroke-width="2"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
+                />
+              </svg>
+              Charge GH&#8373; 0.00
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── Receipt Modal ──────────────────────────────────────── -->
+    <div class="modal-overlay" id="receiptModal">
+      <div class="modal modal-lg">
+        <div class="modal-header">
+          <span class="modal-title">&#10003; Sale Complete!</span>
+          <button class="modal-close" onclick="newSale()" title="Close modal">
+            <svg
+              width="14"
+              height="14"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              stroke-width="2.5"
+              aria-hidden="true"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M6 18L18 6M6 6l12 12"
+              />
+            </svg>
+          </button>
+        </div>
+        <div class="modal-body">
+          <pre id="receiptText" class="receipt-pre"></pre>
+        </div>
+        <div class="modal-footer">
+          <button class="btn btn-secondary" onclick="printReceipt()">
+            <svg
+              width="16"
+              height="16"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              stroke-width="2"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z"
+              />
+            </svg>
+            Print Receipt
+          </button>
+          <button class="btn btn-primary" onclick="newSale()">
+            <svg
+              width="16"
+              height="16"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              stroke-width="2"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M12 4v16m8-8H4"
+              />
+            </svg>
+            New Sale
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── Processing Overlay ─────────────────────────────────── -->
+    <div id="processingOverlay" class="processing-overlay">
+      <div class="processing-content">
+        <div class="spinner spinner-large"></div>
+        <div>Processing…</div>
+      </div>
+    </div>
+
+    <!-- ── Error Toast ────────────────────────────────────────── -->
+    <div id="posToast" class="pos-toast"></div>
+
+    <script>
+      /* ── DOM Cache ─────────────────────────────────────── */
+      const DOM = {
+        productGrid: null,
+        cartItems: null,
+        cartCount: null,
+        discountPct: null,
+        customerSearch: null,
+        customerDropdown: null,
+        selectedCustomerLabel: null,
+        dispSubtotal: null,
+        dispTax: null,
+        dispDiscount: null,
+        dispTotal: null,
+        checkoutBtn: null,
+        paymentOptions: null,
+        receiptText: null,
+        posToast: null,
+        processingOverlay: null,
+        toastTimer: null,
+        custTimer: null,
+      };
+
+      /* ── State ─────────────────────────────────────────── */
+      let currentUser = null;
+      let allProducts = [];
+      let allCategories = [];
+      let cart = [];
+      let selectedCat = "";
+      let selectedMethod = "cash";
+      let selectedCustomer = null;
+      let productsLoadState = "pending"; // "pending" | "loaded" | "error" | "empty"
+
+      /* ── Init ──────────────────────────────────────────── */
+      function cacheDOM() {
+        console.log("🔄 Caching DOM elements...");
+        DOM.productGrid = document.getElementById("productGrid");
+        DOM.cartItems = document.getElementById("cartItems");
+        DOM.cartCount = document.getElementById("cartCount");
+        DOM.discountPct = document.getElementById("discountPct");
+        DOM.customerSearch = document.getElementById("customerSearch");
+        DOM.customerDropdown = document.getElementById("customerDropdown");
+        DOM.selectedCustomerLabel = document.getElementById(
+          "selectedCustomerLabel",
+        );
+        DOM.dispSubtotal = document.getElementById("dispSubtotal");
+        DOM.dispTax = document.getElementById("dispTax");
+        DOM.dispDiscount = document.getElementById("dispDiscount");
+        DOM.dispTotal = document.getElementById("dispTotal");
+        DOM.checkoutBtn = document.getElementById("checkoutBtn");
+        DOM.receiptText = document.getElementById("receiptText");
+        DOM.posToast = document.getElementById("posToast");
+        DOM.processingOverlay = document.getElementById("processingOverlay");
+        console.log(
+          "✅ DOM cached - productGrid:",
+          DOM.productGrid ? "found" : "NOT FOUND",
+        );
+      }
+
+      /* ── Boot ──────────────────────────────────────────── */
+      window.addEventListener("DOMContentLoaded", async () => {
+        console.log("🚀 DOMContentLoaded fired");
+        cacheDOM();
+        initTheme();
+        document
+          .getElementById("themeToggleBtn")
+          .addEventListener("click", toggleTheme);
+
+        currentUser = await requireAuth(["cashier", "admin", "manager"]);
+        if (!currentUser) {
+          console.error("❌ Authentication failed");
+          return;
+        }
+        console.log(
+          "✅ User authenticated:",
+          currentUser.name || currentUser.email,
+        );
+
+        document.getElementById("posUserInfo").textContent =
+          (currentUser.name || currentUser.email) + " — " + currentUser.role;
+
+        console.log("📂 Loading categories...");
+        await loadCategories();
+        console.log("✅ Categories loaded");
+
+        console.log("📦 Loading products...");
+        await loadProducts();
+        console.log("✅ Products loaded");
+
+        attachEventListeners();
+        console.log("✅ POS system ready!");
+      });
+
+      /* ── Event Listeners ───────────────────────────────– */
+      function attachEventListeners() {
+        // Discount input
+        DOM.discountPct.addEventListener("input", updateTotals);
+
+        // Customer search
+        DOM.customerSearch.addEventListener("input", searchCustomers);
+
+        // Product search
+        document
+          .getElementById("productSearch")
+          .addEventListener("input", filterProducts);
+
+        // Payment options
+        document.querySelectorAll(".pay-option").forEach((btn) => {
+          btn.addEventListener("click", function () {
+            selectPayment(this.dataset.method, this);
+          });
+        });
+
+        // Customer dropdown close
+        document.addEventListener("click", (e) => {
+          if (!e.target.closest(".customer-select-area"))
+            hideCustomerDropdown();
+        });
+
+        // Checkout button
+        DOM.checkoutBtn.addEventListener("click", checkout);
+      }
+
+      /* ── Categories ────────────────────────────────────── */
+      async function loadCategories() {
+        const { data, error } = await db
+          .from("categories")
+          .select("id, name")
+          .order("name");
+        if (error) {
+          showToast("Could not load categories: " + error.message);
+          return;
+        }
+        allCategories = data || [];
+
+        const tabs = document.getElementById("catTabs");
+        tabs
+          .querySelectorAll(".cat-tab:not([data-alltab])")
+          .forEach((b) => b.remove());
+        tabs.querySelector(".cat-tab").setAttribute("data-alltab", "1");
+
+        allCategories.forEach((c) => {
+          const btn = document.createElement("button");
+          btn.className = "cat-tab";
+          btn.textContent = c.name;
+          btn.dataset.catId = c.id;
+          btn.addEventListener("click", function () {
+            selectCat(String(c.id), this);
+          });
+          tabs.appendChild(btn);
+        });
+      }
+
+      function selectCat(catId, btn) {
+        selectedCat = catId;
+        document
+          .querySelectorAll(".cat-tab")
+          .forEach((b) => b.classList.remove("active"));
+        btn.classList.add("active");
+        filterProducts();
+      }
+
+      /* ── Products ──────────────────────────────────────── */
+      async function loadProducts() {
+        console.log(
+          "🔍 loadProducts called, db:",
+          typeof db,
+          "DOM.productGrid:",
+          DOM.productGrid,
+        );
+        if (!DOM.productGrid) {
+          console.error("❌ productGrid element not found!");
+          return;
+        }
+        if (!db) {
+          console.error("❌ db object not initialized!");
+          DOM.productGrid.innerHTML =
+            '<div class="grid-msg error">Database not initialized</div>';
+          return;
+        }
+
+        DOM.productGrid.innerHTML =
+          '<div class="grid-msg">Loading products…</div>';
+
+        const { data, error } = await db
+          .from("products")
+          .select("id, name, category_id, price, stock, barcode, status")
+          .order("name");
+
+        if (error) {
+          console.error("❌ loadProducts error:", error);
+          DOM.productGrid.innerHTML =
+            '<div class="grid-msg error">Failed to load: ' +
+            error.message +
+            "</div>";
+          productsLoadState = "error";
+          return;
+        }
+        console.log("✅ Products loaded:", data?.length || 0, "items");
+
+        allProducts = (data || []).filter(
+          (p) => p.status === "active" || p.status == null,
+        );
+        if (!allProducts.length) allProducts = data || [];
+
+        productsLoadState = allProducts.length ? "loaded" : "empty";
+        filterProducts();
+      }
+
+      function filterProducts() {
+        const q = document
+          .getElementById("productSearch")
+          .value.toLowerCase()
+          .trim();
+        let list = allProducts;
+        if (selectedCat)
+          list = list.filter((p) => String(p.category_id) === selectedCat);
+        if (q)
+          list = list.filter(
+            (p) =>
+              p.name.toLowerCase().includes(q) ||
+              (p.barcode || "").toLowerCase().includes(q),
+          );
+        renderProducts(list);
+      }
+
+      function renderProducts(list) {
+        if (!list.length) {
+          DOM.productGrid.innerHTML =
+            '<div class="grid-msg">No products found.</div>';
+          return;
+        }
+
+        DOM.productGrid.innerHTML = list
+          .map((p) => {
+            const oos = p.stock <= 0;
+            const low = !oos && p.stock < 10;
+            const onclickAttr = oos ? "" : ' onclick="addToCart(' + p.id + ')"';
+            return `<div class="product-card${oos ? " out-of-stock" : ""}"${onclickAttr}>
+      ${low ? '<span class="stock-badge-low">Low</span>' : ""}
+      <div class="prod-name">${escHtml(p.name)}</div>
+      <div class="prod-price">${formatCurrency(p.price)}</div>
+      <div class="prod-stock">${oos ? "Out of stock" : p.stock + " in stock"}</div>
+    </div>`;
+          })
+          .join("");
+      }
+
+      /* ── Cart ──────────────────────────────────────────── */
+      function addToCart(productId) {
+        const prod = allProducts.find((p) => p.id === productId);
+        if (!prod || prod.stock <= 0) return;
+
+        const existing = cart.find((i) => i.productId === productId);
+        if (existing) {
+          if (existing.qty >= prod.stock) {
+            showToast('Maximum stock reached for "' + prod.name + '"');
+            return;
+          }
+          existing.qty++;
+        } else {
+          cart.push({
+            productId,
+            name: prod.name,
+            price: Number(prod.price),
+            qty: 1,
+            maxQty: prod.stock,
+          });
+        }
+        renderCart();
+      }
+
+      function removeFromCart(productId) {
+        cart = cart.filter((i) => i.productId !== productId);
+        renderCart();
+      }
+
+      function changeQty(productId, delta) {
+        const item = cart.find((i) => i.productId === productId);
+        if (!item) return;
+        item.qty += delta;
+        if (item.qty <= 0) {
+          removeFromCart(productId);
+          return;
+        }
+        if (item.qty > item.maxQty) {
+          item.qty = item.maxQty;
+          showToast("Maximum available: " + item.maxQty);
+        }
+        renderCart();
+      }
+
+      function renderCart() {
+        const totalQty = cart.reduce((s, i) => s + i.qty, 0);
+        DOM.cartCount.textContent = totalQty;
+
+        if (!cart.length) {
+          DOM.cartItems.innerHTML = `<div class="cart-empty">
+      <svg width="40" height="40" fill="none" viewBox="0 0 24 24" stroke="rgba(255,255,255,0.25)" stroke-width="1.5" class="cart-icon-centered">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"/>
+      </svg>Cart is empty.<br>Add products to get started.
+    </div>`;
+          DOM.checkoutBtn.disabled = true;
+          updateTotals();
+          return;
+        }
+
+        DOM.cartItems.innerHTML = cart
+          .map(
+            (item) => `<div class="cart-item">
+    <div class="cart-item-info">
+      <div class="cart-item-name">${escHtml(item.name)}</div>
+      <div class="cart-item-price">${formatCurrency(item.price)} each</div>
+    </div>
+    <div class="qty-controls">
+      <button class="qty-btn" onclick="changeQty(${item.productId},-1)">−</button>
+      <span class="qty-num">${item.qty}</span>
+      <button class="qty-btn" onclick="changeQty(${item.productId},1)">+</button>
+    </div>
+    <div class="cart-item-total">${formatCurrency(item.price * item.qty)}</div>
+    <button class="remove-item" onclick="removeFromCart(${item.productId})" title="Remove">
+      <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/></svg>
+    </button>
+  </div>`,
+          )
+          .join("");
+
+        DOM.checkoutBtn.disabled = false;
+        updateTotals();
+      }
+
+      function updateTotals() {
+        const subtotal = cart.reduce((s, i) => s + i.price * i.qty, 0);
+        const tax = subtotal * 0.15;
+        const discPct = Math.min(
+          Math.max(parseFloat(DOM.discountPct.value) || 0, 0),
+          100,
+        );
+        const discount = (subtotal * discPct) / 100;
+        const total = subtotal + tax - discount;
+
+        DOM.dispSubtotal.textContent = formatCurrency(subtotal);
+        DOM.dispTax.textContent = formatCurrency(tax);
+        DOM.dispDiscount.textContent = formatCurrency(discount);
+        DOM.dispTotal.textContent = formatCurrency(total);
+
+        if (cart.length) {
+          DOM.checkoutBtn.innerHTML = `<svg width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+      <path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+    </svg> Charge ${formatCurrency(total)}`;
+        }
+      }
+
+      /* ── Payment ───────────────────────────────────────── */
+      function selectPayment(method, el) {
+        selectedMethod = method;
+        document
+          .querySelectorAll(".pay-option")
+          .forEach((e) => e.classList.remove("active"));
+        el.classList.add("active");
+      }
+
+      /* ── Customer Search ───────────────────────────────– */
+      function searchCustomers() {
+        const q = DOM.customerSearch.value.trim();
+        clearTimeout(DOM.custTimer);
+        if (!q) {
+          hideCustomerDropdown();
+          selectedCustomer = null;
+          DOM.selectedCustomerLabel.textContent = "";
+          return;
+        }
+        DOM.custTimer = setTimeout(async () => {
+          const { data } = await db
+            .from("customers")
+            .select("id, name, phone, email")
+            .or("name.ilike.%" + q + "%,phone.ilike.%" + q + "%")
+            .limit(6);
+
+          if (!data || !data.length) {
+            DOM.customerDropdown.innerHTML =
+              '<div class="customer-option customer-option-empty">No customers found</div>';
+          } else {
+            DOM.customerDropdown.innerHTML = data
+              .map(
+                (c) =>
+                  `<div class="customer-option" onclick="selectCustomer(${c.id},'${escJs(c.name)}','${escJs(c.phone || "")}','${escJs(c.email || "")}')">${escHtml(c.name)}${c.phone ? " — " + escHtml(c.phone) : ""}</div>`,
+              )
+              .join("");
+          }
+          DOM.customerDropdown.classList.add("show");
+        }, 300);
+      }
+
+      function selectCustomer(id, name, phone, email) {
+        selectedCustomer = { id, name, phone, email };
+        DOM.customerSearch.value = name;
+        DOM.selectedCustomerLabel.textContent = "✓ " + name;
+        hideCustomerDropdown();
+      }
+
+      function hideCustomerDropdown() {
+        DOM.customerDropdown.classList.remove("show");
+      }
+
+      /* ── Checkout ──────────────────────────────────────── */
+      async function checkout() {
+        if (!cart.length) return;
+
+        const subtotal = cart.reduce((s, i) => s + i.price * i.qty, 0);
+        const tax = subtotal * 0.15;
+        const discPct = Math.min(
+          Math.max(parseFloat(DOM.discountPct.value) || 0, 0),
+          100,
+        );
+        const discount = (subtotal * discPct) / 100;
+        const total = subtotal + tax - discount;
+
+        for (const item of cart) {
+          const { data: prod } = await db
+            .from("products")
+            .select("stock, name")
+            .eq("id", item.productId)
+            .single();
+          if (!prod || prod.stock < item.qty) {
+            showToast(
+              'Not enough stock for "' +
+                item.name +
+                '". Available: ' +
+                (prod ? prod.stock : 0),
+            );
+            await loadProducts();
+            return;
+          }
+        }
+
+        if (selectedMethod === "card") {
+          payWithPaystack(
+            selectedCustomer?.email || currentUser.email || "customer@pos.com",
+            total,
+            async (paystackRef) => {
+              showProcessing(true);
+              await saveSale(subtotal, tax, discount, total, paystackRef);
+              showProcessing(false);
+            },
+          );
+        } else {
+          showProcessing(true);
+          await saveSale(subtotal, tax, discount, total, null);
+          showProcessing(false);
+        }
+      }
+
+      async function saveSale(subtotal, tax, discount, total, paystackRef) {
+        const saleRef = generateSaleRef();
+        try {
+          const { data: saleData, error: saleErr } = await db
+            .from("sales")
+            .insert({
+              sale_ref: saleRef,
+              cashier_id: currentUser.id,
+              customer_id: selectedCustomer ? selectedCustomer.id : null,
+              subtotal: parseFloat(subtotal.toFixed(2)),
+              tax: parseFloat(tax.toFixed(2)),
+              discount: parseFloat(discount.toFixed(2)),
+              total: parseFloat(total.toFixed(2)),
+              payment_method: selectedMethod,
+              payment_status: "paid",
+              paystack_ref: paystackRef || null,
+            })
+            .select("id")
+            .single();
+
+          if (saleErr)
+            throw new Error("Sale insert failed: " + saleErr.message);
+          const saleId = saleData.id;
+
+          for (const item of cart) {
+            await db.from("sale_items").insert({
+              sale_id: saleId,
+              product_id: item.productId,
+              product_name: item.name,
+              quantity: item.qty,
+              unit_price: parseFloat(item.price.toFixed(2)),
+              total_price: parseFloat((item.price * item.qty).toFixed(2)),
+            });
+
+            const { data: cur } = await db
+              .from("products")
+              .select("stock")
+              .eq("id", item.productId)
+              .single();
+            const newStock = Math.max((cur ? cur.stock : 0) - item.qty, 0);
+            await db
+              .from("products")
+              .update({ stock: newStock })
+              .eq("id", item.productId);
+
+            await db.from("inventory_log").insert({
+              product_id: item.productId,
+              change_type: "sale",
+              quantity_change: -item.qty,
+              note: "Sale " + saleRef,
+              created_by: currentUser.id,
+            });
+          }
+
+          if (selectedCustomer && selectedCustomer.id) {
+            const pts = Math.floor(total);
+            const { data: cust } = await db
+              .from("customers")
+              .select("loyalty_points")
+              .eq("id", selectedCustomer.id)
+              .single();
+            await db
+              .from("customers")
+              .update({
+                loyalty_points: (cust ? cust.loyalty_points || 0 : 0) + pts,
+              })
+              .eq("id", selectedCustomer.id);
+          }
+
+          showReceipt(saleRef, subtotal, tax, discount, total);
+          await loadProducts();
+        } catch (err) {
+          showToast("Checkout failed: " + err.message);
+          console.error(err);
+        }
+      }
+
+      /* ── Paystack ──────────────────────────────────────── */
+      function loadPaystackScript() {
+        return new Promise((resolve, reject) => {
+          if (window.PaystackPop) {
+            resolve();
+            return;
+          }
+          const script = document.createElement("script");
+          script.src = "https://js.paystack.co/v1/inline.js";
+          script.integrity =
+            "sha512-/DJD2x0vNa3d3xrfEOShfP3PAmAyJSqYSxe4A7dMnLfnIJQMjKlWU/gy8gqfXkLU3Yw0J8+B4pzFxoJa02SBg==";
+          script.crossOrigin = "anonymous";
+          script.onload = () => resolve();
+          script.onerror = () => reject(new Error("Failed to load Paystack"));
+          document.head.appendChild(script);
+        });
+      }
+
+      async function payWithPaystack(email, amountGHS, onSuccess) {
+        try {
+          await loadPaystackScript();
+          if (typeof PaystackPop === "undefined") {
+            showToast("Paystack not loaded. Check your internet connection.");
+            return;
+          }
+          const ref = generateSaleRef();
+          const handler = PaystackPop.setup({
+            key: "pk_test_YOUR_PAYSTACK_PUBLIC_KEY",
+            email: email || "customer@pos.com",
+            amount: Math.round(amountGHS * 100),
+            currency: "GHS",
+            ref: ref,
+            callback: function (response) {
+              onSuccess(response.reference);
+            },
+            onClose: function () {
+              showToast("Payment cancelled.");
+            },
+          });
+          handler.openIframe();
+        } catch (err) {
+          showToast("Failed to load payment gateway: " + err.message);
+        }
+      }
+
+      /* ── Receipt ───────────────────────────────────────── */
+      function showReceipt(saleRef, subtotal, tax, discount, total) {
+        const now = new Date();
+        const months = [
+          "Jan",
+          "Feb",
+          "Mar",
+          "Apr",
+          "May",
+          "Jun",
+          "Jul",
+          "Aug",
+          "Sep",
+          "Oct",
+          "Nov",
+          "Dec",
+        ];
+        let h = now.getHours();
+        const ampm = h >= 12 ? "PM" : "AM";
+        h = h % 12 || 12;
+        const dateStr =
+          String(now.getDate()).padStart(2, "0") +
+          " " +
+          months[now.getMonth()] +
+          " " +
+          now.getFullYear() +
+          ", " +
+          h +
+          ":" +
+          String(now.getMinutes()).padStart(2, "0") +
+          " " +
+          ampm;
+
+        const LINE = "================================";
+        const DASH = "--------------------------------";
+
+        let itemLines = "";
+        cart.forEach((item) => {
+          const nm = item.name.substring(0, 20).padEnd(20);
+          const qty = String(item.qty).padStart(3);
+          const tot = formatCurrency(item.price * item.qty).padStart(12);
+          itemLines += nm + " " + qty + " " + tot + "\n";
+        });
+
+        const cashierName = currentUser.name || currentUser.email || "Cashier";
+        const custLine = selectedCustomer
+          ? "Customer: " + selectedCustomer.name + "\n"
+          : "";
+
+        const receipt = `${LINE}
+        MY STORE POS
+${LINE}
+Receipt: ${saleRef}
+Date:    ${dateStr}
+Cashier: ${cashierName}
+${custLine}${DASH}
+Product              Qty        Total
+${DASH}
+${itemLines}${DASH}
+Subtotal:     ${formatCurrency(subtotal).padStart(18)}
+Tax (15%):    ${formatCurrency(tax).padStart(18)}
+Discount:     ${formatCurrency(discount).padStart(18)}
+${DASH}
+TOTAL:        ${formatCurrency(total).padStart(18)}
+${DASH}
+Payment: ${selectedMethod.replace("_", " ").toUpperCase()}
+${DASH}
+     Thank you for shopping!
+${LINE}`;
+
+        DOM.receiptText.textContent = receipt;
+        openModal("receiptModal");
+      }
+
+      function printReceipt() {
+        const text = DOM.receiptText.textContent;
+        const win = window.open("", "_blank", "width=420,height=650");
+        if (!win) {
+          showToast("Pop-up blocked. Allow pop-ups to print.");
+          return;
+        }
+        win.document.write(
+          `<html><head><title>Receipt</title><style>body{font-family:"Courier New",monospace;font-size:12px;line-height:1.6;padding:10px;margin:0;background:#fff;color:#000}pre{white-space:pre-wrap;word-wrap:break-word}@media print{body{padding:0}}</style></head><body><pre>${escHtml(text)}</pre><script>window.addEventListener('load', () => { setTimeout(() => window.print(), 100); })<\/script></body></html>`,
+        );
+        win.document.close();
+      }
+
+      function newSale() {
+        cart = [];
+        selectedCustomer = null;
+        selectedMethod = "cash";
+        DOM.customerSearch.value = "";
+        DOM.selectedCustomerLabel.textContent = "";
+        DOM.discountPct.value = "0";
+        document
+          .querySelectorAll(".pay-option")
+          .forEach((e) => e.classList.remove("active"));
+        document.querySelector('[data-method="cash"]').classList.add("active");
+        renderCart();
+        closeModal("receiptModal");
+      }
+
+      /* ── Helpers ───────────────────────────────────────── */
+      function showProcessing(show) {
+        DOM.processingOverlay.classList.toggle("show", show);
+      }
+
+      function showToast(msg) {
+        DOM.posToast.textContent = msg;
+        DOM.posToast.classList.add("show");
+        clearTimeout(DOM.toastTimer);
+        DOM.toastTimer = setTimeout(() => {
+          DOM.posToast.classList.remove("show");
+        }, 4000);
+      }
+
+      function escHtml(s) {
+        return String(s)
+          .replace(/&/g, "&amp;")
+          .replace(/</g, "&lt;")
+          .replace(/>/g, "&gt;")
+          .replace(/"/g, "&quot;");
+      }
+
+      function escJs(s) {
+        return String(s)
+          .replace(/\\/g, "\\\\")
+          .replace(/'/g, "\\'")
+          .replace(/"/g, '\\"');
+      }
+    </script>
+  </body>
+</html>

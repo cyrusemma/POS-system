@@ -1,0 +1,618 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Reports — Admin</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="../assets/css/style.css" />
+    <script
+      defer
+      src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"
+    ></script>
+    <script defer src="../config/supabase.js"></script>
+    <script defer src="../assets/js/auth.js"></script>
+  </head>
+  <body>
+    <div class="app-layout">
+      <aside class="sidebar">
+        <div class="sidebar-logo">
+          <div class="brand">
+            <div class="brand-icon">
+              <svg
+                width="20"
+                height="20"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="white"
+                stroke-width="2"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"
+                />
+              </svg>
+            </div>
+            <div>
+              <div class="brand-name">MY STORE</div>
+              <div class="brand-sub">POS System</div>
+            </div>
+          </div>
+        </div>
+        <nav class="sidebar-nav">
+          <div class="nav-section-label">Main</div>
+          <a href="dashboard.html" class="nav-link"
+            ><svg
+              width="16"
+              height="16"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              stroke-width="2"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"
+              /></svg
+            >Dashboard</a
+          >
+          <a href="users.html" class="nav-link"
+            ><svg
+              width="16"
+              height="16"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              stroke-width="2"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"
+              /></svg
+            >Users</a
+          >
+          <a href="roles.html" class="nav-link"
+            ><svg
+              width="16"
+              height="16"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              stroke-width="2"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"
+              /></svg
+            >Roles &amp; Users</a
+          >
+          <div class="nav-section-label">Inventory</div>
+          <a href="products.html" class="nav-link"
+            ><svg
+              width="16"
+              height="16"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              stroke-width="2"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"
+              /></svg
+            >Products</a
+          >
+          <a href="categories.html" class="nav-link"
+            ><svg
+              width="16"
+              height="16"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              stroke-width="2"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A2 2 0 013 12V7a4 4 0 014-4z"
+              /></svg
+            >Categories</a
+          >
+          <a href="inventory.html" class="nav-link"
+            ><svg
+              width="16"
+              height="16"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              stroke-width="2"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"
+              /></svg
+            >Inventory</a
+          >
+          <div class="nav-section-label">Sales</div>
+          <a href="customers.html" class="nav-link"
+            ><svg
+              width="16"
+              height="16"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              stroke-width="2"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"
+              /></svg
+            >Customers</a
+          >
+          <a href="sales.html" class="nav-link"
+            ><svg
+              width="16"
+              height="16"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              stroke-width="2"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
+              /></svg
+            >Sales</a
+          >
+          <a href="reports.html" class="nav-link active"
+            ><svg
+              width="16"
+              height="16"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              stroke-width="2"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"
+              /></svg
+            >Reports</a
+          >
+        </nav>
+        <div class="sidebar-footer">
+          <div class="sidebar-user">
+            <div class="user-name" id="sidebarUserName">Loading…</div>
+            <div class="user-role" id="sidebarUserRole"></div>
+          </div>
+          <button class="logout-btn" onclick="logout()">
+            <svg
+              width="15"
+              height="15"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              stroke-width="2"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"
+              /></svg
+            >Logout
+          </button>
+        </div>
+      </aside>
+
+      <main class="main-content">
+        <div class="page-header">
+          <div>
+            <h1 class="page-title">Reports</h1>
+            <p class="page-subtitle">Analytics and performance overview.</p>
+          </div>
+          <button class="theme-toggle" id="themeToggleBtn" title="Switch theme" aria-label="Switch theme">
+            <svg
+              id="themeIcon"
+              width="16"
+              height="16"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              stroke-width="2"
+            >
+              <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" />
+            </svg>
+          </button>
+        </div>
+
+        <!-- Date Range Picker -->
+        <div class="card mb-20">
+          <div class="card-body filter-body">
+            <div class="filter-bar filter-bar-reset filter-bar-end">
+              <div class="range-btn-group">
+                <button
+                  class="btn btn-secondary btn-sm range-btn active"
+                  data-range="today"
+                  onclick="setRange('today', this)"
+                >
+                  Today
+                </button>
+                <button
+                  class="btn btn-secondary btn-sm range-btn"
+                  data-range="week"
+                  onclick="setRange('week', this)"
+                >
+                  This Week
+                </button>
+                <button
+                  class="btn btn-secondary btn-sm range-btn"
+                  data-range="month"
+                  onclick="setRange('month', this)"
+                >
+                  This Month
+                </button>
+                <button
+                  class="btn btn-secondary btn-sm range-btn"
+                  data-range="custom"
+                  onclick="setRange('custom', this)"
+                >
+                  Custom
+                </button>
+              </div>
+              <div
+                id="customRangeInputs"
+                class="custom-range-inputs hidden"
+              >
+                <div class="form-group form-group-compact">
+                  <label class="form-label" for="customFrom">From</label>
+                  <input type="date" id="customFrom" class="form-control" />
+                </div>
+                <div class="form-group form-group-compact">
+                  <label class="form-label" for="customTo">To</label>
+                  <input type="date" id="customTo" class="form-control" />
+                </div>
+                <button class="btn btn-primary btn-sm" onclick="loadReports()">
+                  Apply
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Summary Cards -->
+        <div class="stats-grid stats-grid-3">
+          <div class="stat-card">
+            <div class="stat-icon">
+              <svg
+                width="20"
+                height="20"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="white"
+                stroke-width="2"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+                />
+              </svg>
+            </div>
+            <div class="stat-value" id="rRevenue">—</div>
+            <div class="stat-label">Total Revenue</div>
+          </div>
+          <div class="stat-card accent">
+            <div class="stat-icon">
+              <svg
+                width="20"
+                height="20"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="white"
+                stroke-width="2"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
+                />
+              </svg>
+            </div>
+            <div class="stat-value" id="rTxns">—</div>
+            <div class="stat-label">Transactions</div>
+          </div>
+          <div class="stat-card success">
+            <div class="stat-icon">
+              <svg
+                width="20"
+                height="20"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="white"
+                stroke-width="2"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"
+                />
+              </svg>
+            </div>
+            <div class="stat-value" id="rAvg">—</div>
+            <div class="stat-label">Avg. Sale Value</div>
+          </div>
+        </div>
+
+        <div class="grid-2">
+          <!-- Top Products -->
+          <div class="card">
+            <div class="card-header">
+              <span class="card-title">Top 5 Products</span>
+            </div>
+            <div class="table-wrapper">
+              <table>
+                <thead>
+                  <tr>
+                    <th>#</th>
+                    <th>Product</th>
+                    <th>Units Sold</th>
+                    <th>Revenue</th>
+                  </tr>
+                </thead>
+                <tbody id="topProductsBody">
+                  <tr>
+                    <td colspan="4" class="table-loading">Loading…</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <!-- Payment Method Breakdown -->
+          <div class="card">
+            <div class="card-header">
+              <span class="card-title">Sales by Payment Method</span>
+            </div>
+            <div class="table-wrapper">
+              <table>
+                <thead>
+                  <tr>
+                    <th>Method</th>
+                    <th>Transactions</th>
+                    <th>Revenue</th>
+                    <th>%</th>
+                  </tr>
+                </thead>
+                <tbody id="paymentBreakBody">
+                  <tr>
+                    <td colspan="4" class="table-loading">Loading…</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <!-- Cashier Performance -->
+        <div class="card mt-20">
+          <div class="card-header">
+            <span class="card-title">Cashier Performance</span>
+          </div>
+          <div class="table-wrapper">
+            <table>
+              <thead>
+                <tr>
+                  <th>Cashier</th>
+                  <th>Transactions</th>
+                  <th>Revenue</th>
+                  <th>Avg Sale</th>
+                </tr>
+              </thead>
+              <tbody id="cashierBody">
+                <tr>
+                  <td colspan="4" class="table-loading">Loading…</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </main>
+    </div>
+
+    <script>
+      let currentUser = null;
+      let dateFrom = "";
+      let dateTo = "";
+
+      window.addEventListener("DOMContentLoaded", async () => {
+        initTheme();
+        const _ttb = document.getElementById("themeToggleBtn");
+        if (_ttb) _ttb.addEventListener("click", toggleTheme);
+        currentUser = await requireAuth(["admin"]);
+        if (!currentUser) return;
+        populateSidebarUser(currentUser);
+        setRange("today", document.querySelector(".range-btn.active"));
+      });
+
+      function setRange(range, btn) {
+        document
+          .querySelectorAll(".range-btn")
+          .forEach((b) => b.classList.remove("active"));
+        btn.classList.add("active");
+        const now = new Date();
+        const iso = (d) => d.toISOString().slice(0, 10);
+
+        if (range === "today") {
+          dateFrom = dateTo = iso(now);
+          document.getElementById("customRangeInputs").classList.add("hidden");
+        } else if (range === "week") {
+          const day = now.getDay() || 7;
+          const mon = new Date(now);
+          mon.setDate(now.getDate() - day + 1);
+          dateFrom = iso(mon);
+          dateTo = iso(now);
+          document.getElementById("customRangeInputs").classList.add("hidden");
+        } else if (range === "month") {
+          dateFrom = iso(new Date(now.getFullYear(), now.getMonth(), 1));
+          dateTo = iso(now);
+          document.getElementById("customRangeInputs").classList.add("hidden");
+        } else {
+          document
+            .getElementById("customRangeInputs")
+            .classList.remove("hidden");
+          return;
+        }
+        loadReports();
+      }
+
+      async function loadReports() {
+        if (document.getElementById("customFrom").value)
+          dateFrom = document.getElementById("customFrom").value;
+        if (document.getElementById("customTo").value)
+          dateTo = document.getElementById("customTo").value;
+        if (!dateFrom || !dateTo) return;
+
+        const from = dateFrom + "T00:00:00";
+        const to = dateTo + "T23:59:59";
+
+        // Fetch sales in range
+        const { data: sales, error } = await db
+          .from("sales")
+          .select("*, profiles(name)")
+          .gte("created_at", from)
+          .lte("created_at", to)
+          .eq("payment_status", "paid");
+
+        if (error) return;
+
+        const total = sales.reduce((s, r) => s + parseFloat(r.total || 0), 0);
+        const count = sales.length;
+        const avg = count ? total / count : 0;
+
+        document.getElementById("rRevenue").textContent = formatCurrency(total);
+        document.getElementById("rTxns").textContent = count;
+        document.getElementById("rAvg").textContent = formatCurrency(avg);
+
+        // Payment method breakdown
+        const methods = {};
+        sales.forEach((s) => {
+          const m = s.payment_method || "unknown";
+          if (!methods[m]) methods[m] = { count: 0, revenue: 0 };
+          methods[m].count++;
+          methods[m].revenue += parseFloat(s.total || 0);
+        });
+        const payBody = document.getElementById("paymentBreakBody");
+        const methodEntries = Object.entries(methods).sort(
+          (a, b) => b[1].revenue - a[1].revenue,
+        );
+        if (!methodEntries.length) {
+          payBody.innerHTML =
+            '<tr><td colspan="4" class="table-empty">No data.</td></tr>';
+        } else {
+          payBody.innerHTML = methodEntries
+            .map(
+              ([m, v]) => `
+      <tr>
+        <td><span class="badge badge-${m}">${m.replace("_", " ")}</span></td>
+        <td>${v.count}</td>
+        <td>${formatCurrency(v.revenue)}</td>
+        <td>${total ? Math.round((v.revenue / total) * 100) : 0}%</td>
+      </tr>
+    `,
+            )
+            .join("");
+        }
+
+        // Cashier performance
+        const cashiers = {};
+        sales.forEach((s) => {
+          const name = s.profiles?.name || "Unknown";
+          if (!cashiers[name]) cashiers[name] = { count: 0, revenue: 0 };
+          cashiers[name].count++;
+          cashiers[name].revenue += parseFloat(s.total || 0);
+        });
+        const cashBody = document.getElementById("cashierBody");
+        const cashEntries = Object.entries(cashiers).sort(
+          (a, b) => b[1].revenue - a[1].revenue,
+        );
+        if (!cashEntries.length) {
+          cashBody.innerHTML =
+            '<tr><td colspan="4" class="table-empty">No data.</td></tr>';
+        } else {
+          cashBody.innerHTML = cashEntries
+            .map(
+              ([name, v]) => `
+      <tr>
+        <td class="fw-600">${escHtml(name)}</td>
+        <td>${v.count}</td>
+        <td>${formatCurrency(v.revenue)}</td>
+        <td>${formatCurrency(v.count ? v.revenue / v.count : 0)}</td>
+      </tr>
+    `,
+            )
+            .join("");
+        }
+
+        // Top products — fetch sale_items for these sales
+        if (sales.length) {
+          const saleIds = sales.map((s) => s.id);
+          const { data: items } = await db
+            .from("sale_items")
+            .select("*")
+            .in("sale_id", saleIds);
+          const prodMap = {};
+          (items || []).forEach((i) => {
+            if (!prodMap[i.product_name])
+              prodMap[i.product_name] = { qty: 0, revenue: 0 };
+            prodMap[i.product_name].qty += i.quantity;
+            prodMap[i.product_name].revenue += parseFloat(i.total_price || 0);
+          });
+          const top5 = Object.entries(prodMap)
+            .sort((a, b) => b[1].qty - a[1].qty)
+            .slice(0, 5);
+          const tBody = document.getElementById("topProductsBody");
+          if (!top5.length) {
+            tBody.innerHTML =
+              '<tr><td colspan="4" class="table-empty">No data.</td></tr>';
+          } else {
+            tBody.innerHTML = top5
+              .map(
+                ([name, v], i) => `
+        <tr>
+          <td class="text-muted">${i + 1}</td>
+          <td class="fw-600">${escHtml(name)}</td>
+          <td>${v.qty}</td>
+          <td>${formatCurrency(v.revenue)}</td>
+        </tr>
+      `,
+              )
+              .join("");
+          }
+        } else {
+          document.getElementById("topProductsBody").innerHTML =
+            '<tr><td colspan="4" class="table-empty">No data.</td></tr>';
+        }
+      }
+
+      function escHtml(s) {
+        return String(s)
+          .replace(/&/g, "&amp;")
+          .replace(/</g, "&lt;")
+          .replace(/>/g, "&gt;")
+          .replace(/"/g, "&quot;");
+      }
+    </script>
+  </body>
+</html>

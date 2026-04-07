@@ -1,0 +1,560 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Dashboard — Admin</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="../assets/css/style.css" />
+    <script
+      defer
+      src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"
+    ></script>
+    <script defer src="../config/supabase.js"></script>
+    <script defer src="../assets/js/auth.js"></script>
+  </head>
+  <body>
+    <div class="app-layout">
+      <!-- Sidebar -->
+      <aside class="sidebar">
+        <div class="sidebar-logo">
+          <div class="brand">
+            <div class="brand-icon">
+              <svg
+                width="20"
+                height="20"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="white"
+                stroke-width="2"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"
+                />
+              </svg>
+            </div>
+            <div>
+              <div class="brand-name">MY STORE</div>
+              <div class="brand-sub">POS System</div>
+            </div>
+          </div>
+        </div>
+
+        <nav class="sidebar-nav">
+          <div class="nav-section-label">Main</div>
+          <a href="dashboard.html" class="nav-link active">
+            <svg
+              width="16"
+              height="16"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              stroke-width="2"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"
+              />
+            </svg>
+            Dashboard
+          </a>
+          <a href="users.html" class="nav-link">
+            <svg
+              width="16"
+              height="16"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              stroke-width="2"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"
+              />
+            </svg>
+            Users
+          </a>
+          <a href="roles.html" class="nav-link">
+            <svg
+              width="16"
+              height="16"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              stroke-width="2"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"
+              />
+            </svg>
+            Roles &amp; Users
+          </a>
+          <div class="nav-section-label">Inventory</div>
+          <a href="products.html" class="nav-link">
+            <svg
+              width="16"
+              height="16"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              stroke-width="2"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"
+              />
+            </svg>
+            Products
+          </a>
+          <a href="categories.html" class="nav-link">
+            <svg
+              width="16"
+              height="16"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              stroke-width="2"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A2 2 0 013 12V7a4 4 0 014-4z"
+              />
+            </svg>
+            Categories
+          </a>
+          <a href="inventory.html" class="nav-link">
+            <svg
+              width="16"
+              height="16"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              stroke-width="2"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"
+              />
+            </svg>
+            Inventory
+          </a>
+          <div class="nav-section-label">Sales</div>
+          <a href="customers.html" class="nav-link">
+            <svg
+              width="16"
+              height="16"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              stroke-width="2"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"
+              />
+            </svg>
+            Customers
+          </a>
+          <a href="sales.html" class="nav-link">
+            <svg
+              width="16"
+              height="16"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              stroke-width="2"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
+              />
+            </svg>
+            Sales
+          </a>
+          <a href="reports.html" class="nav-link">
+            <svg
+              width="16"
+              height="16"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              stroke-width="2"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"
+              />
+            </svg>
+            Reports
+          </a>
+        </nav>
+
+        <div class="sidebar-footer">
+          <div class="sidebar-user">
+            <div class="user-name" id="sidebarUserName">Loading…</div>
+            <div class="user-role" id="sidebarUserRole"></div>
+          </div>
+          <button class="logout-btn" onclick="logout()">
+            <svg
+              width="15"
+              height="15"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              stroke-width="2"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"
+              />
+            </svg>
+            Logout
+          </button>
+        </div>
+      </aside>
+
+      <!-- Main Content -->
+      <main class="main-content">
+        <div class="page-header">
+          <div>
+            <h1 class="page-title">Dashboard</h1>
+            <p class="page-subtitle">
+              Welcome back! Here's what's happening today.
+            </p>
+          </div>
+          <button class="theme-toggle" id="themeToggleBtn" title="Switch theme">
+            <svg
+              id="themeIcon"
+              width="16"
+              height="16"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              stroke-width="2"
+            >
+              <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" />
+            </svg>
+          </button>
+        </div>
+
+        <!-- Stat Cards -->
+        <div class="stats-grid" id="statsGrid">
+          <div class="stat-card">
+            <div class="stat-icon">
+              <svg
+                width="20"
+                height="20"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="white"
+                stroke-width="2"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+                />
+              </svg>
+            </div>
+            <div class="stat-value" id="statRevenue">—</div>
+            <div class="stat-label">Today's Revenue</div>
+          </div>
+          <div class="stat-card accent">
+            <div class="stat-icon">
+              <svg
+                width="20"
+                height="20"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="white"
+                stroke-width="2"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
+                />
+              </svg>
+            </div>
+            <div class="stat-value" id="statTxns">—</div>
+            <div class="stat-label">Transactions Today</div>
+          </div>
+          <div class="stat-card success">
+            <div class="stat-icon">
+              <svg
+                width="20"
+                height="20"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="white"
+                stroke-width="2"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"
+                />
+              </svg>
+            </div>
+            <div class="stat-value" id="statProducts">—</div>
+            <div class="stat-label">Total Products</div>
+          </div>
+          <div class="stat-card danger">
+            <div class="stat-icon">
+              <svg
+                width="20"
+                height="20"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="white"
+                stroke-width="2"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"
+                />
+              </svg>
+            </div>
+            <div class="stat-value" id="statLowStock">—</div>
+            <div class="stat-label">Low Stock Alerts</div>
+          </div>
+          <div class="stat-card warning">
+            <div class="stat-icon">
+              <svg
+                width="20"
+                height="20"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="white"
+                stroke-width="2"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"
+                />
+              </svg>
+            </div>
+            <div class="stat-value" id="statCustomers">—</div>
+            <div class="stat-label">Total Customers</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-icon">
+              <svg
+                width="20"
+                height="20"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="white"
+                stroke-width="2"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"
+                />
+              </svg>
+            </div>
+            <div class="stat-value" id="statUsers">—</div>
+            <div class="stat-label">Total Users</div>
+          </div>
+        </div>
+
+        <!-- Bottom Sections -->
+        <div class="grid-2">
+          <!-- Recent Sales -->
+          <div class="card">
+            <div class="card-header">
+              <span class="card-title">Recent Sales</span>
+              <a href="sales.html" class="btn btn-secondary btn-sm">View All</a>
+            </div>
+            <div class="table-wrapper">
+              <table>
+                <thead>
+                  <tr>
+                    <th>Reference</th>
+                    <th>Total</th>
+                    <th>Payment</th>
+                    <th>Time</th>
+                  </tr>
+                </thead>
+                <tbody id="recentSalesBody">
+                  <tr>
+                    <td colspan="4" class="table-loading">Loading…</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <!-- Low Stock -->
+          <div class="card">
+            <div class="card-header">
+              <span class="card-title">Low Stock Products</span>
+              <a href="inventory.html" class="btn btn-secondary btn-sm"
+                >Manage</a
+              >
+            </div>
+            <div class="table-wrapper">
+              <table>
+                <thead>
+                  <tr>
+                    <th>Product</th>
+                    <th>Category</th>
+                    <th>Stock</th>
+                  </tr>
+                </thead>
+                <tbody id="lowStockBody">
+                  <tr>
+                    <td colspan="3" class="table-loading">Loading…</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </main>
+    </div>
+
+    <script>
+      let currentUser = null;
+
+      window.addEventListener("DOMContentLoaded", async () => {
+        initTheme();
+        const _ttb = document.getElementById("themeToggleBtn");
+        if (_ttb) _ttb.addEventListener("click", toggleTheme);
+        currentUser = await requireAuth(["admin"]);
+        if (!currentUser) return;
+        populateSidebarUser(currentUser);
+        loadDashboard();
+      });
+
+      async function loadDashboard() {
+        const today = new Date();
+        today.setHours(0, 0, 0, 0);
+        const todayISO = today.toISOString();
+
+        try {
+          // Today's sales
+          const { data: todaySales } = await db
+            .from("sales")
+            .select("total")
+            .gte("created_at", todayISO);
+
+          const revenue = (todaySales || []).reduce(
+            (s, r) => s + parseFloat(r.total || 0),
+            0,
+          );
+          document.getElementById("statRevenue").textContent =
+            formatCurrency(revenue);
+          document.getElementById("statTxns").textContent = (
+            todaySales || []
+          ).length;
+
+          // Total products
+          const { count: prodCount } = await db
+            .from("products")
+            .select("id", { count: "exact", head: true });
+          document.getElementById("statProducts").textContent = prodCount ?? 0;
+
+          // Low stock count
+          const { count: lowCount } = await db
+            .from("products")
+            .select("id", { count: "exact", head: true })
+            .lt("stock", 10);
+          document.getElementById("statLowStock").textContent = lowCount ?? 0;
+
+          // Total customers
+          const { count: custCount } = await db
+            .from("customers")
+            .select("id", { count: "exact", head: true });
+          document.getElementById("statCustomers").textContent = custCount ?? 0;
+
+          // Total users
+          const { count: userCount } = await db
+            .from("profiles")
+            .select("id", { count: "exact", head: true });
+          document.getElementById("statUsers").textContent = userCount ?? 0;
+
+          // Recent sales
+          const { data: recentSales } = await db
+            .from("sales")
+            .select("sale_ref, total, payment_method, created_at")
+            .order("created_at", { ascending: false })
+            .limit(10);
+
+          const salesBody = document.getElementById("recentSalesBody");
+          if (!recentSales || recentSales.length === 0) {
+            salesBody.innerHTML =
+              '<tr><td colspan="4" class="table-empty">No sales yet today.</td></tr>';
+          } else {
+            salesBody.innerHTML = recentSales
+              .map(
+                (s) => `
+        <tr>
+          <td><span class="fw-600">${s.sale_ref}</span></td>
+          <td>${formatCurrency(s.total)}</td>
+          <td><span class="badge badge-${s.payment_method}">${s.payment_method?.replace("_", " ")}</span></td>
+          <td class="text-muted">${formatDate(s.created_at)}</td>
+        </tr>
+      `,
+              )
+              .join("");
+          }
+
+          // Low stock products
+          const { data: lowProducts } = await db
+            .from("products")
+            .select("name, stock, categories(name)")
+            .lt("stock", 10)
+            .order("stock", { ascending: true })
+            .limit(10);
+
+          const lowBody = document.getElementById("lowStockBody");
+          if (!lowProducts || lowProducts.length === 0) {
+            lowBody.innerHTML =
+              '<tr><td colspan="3" class="table-empty">All products are well stocked.</td></tr>';
+          } else {
+            lowBody.innerHTML = lowProducts
+              .map(
+                (p) => `
+        <tr class="${p.stock === 0 ? "low-stock" : ""}">
+          <td><span class="fw-600">${p.name}</span></td>
+          <td class="text-muted">${p.categories?.name || "—"}</td>
+          <td><span class="badge badge-${p.stock === 0 ? "inactive" : "low"}">${p.stock} left</span></td>
+        </tr>
+      `,
+              )
+              .join("");
+          }
+        } catch (err) {
+          console.error("Dashboard error:", err);
+          const alert = document.getElementById("pageAlert");
+          if (alert) {
+            alert.className = "alert alert-danger";
+            alert.textContent =
+              "Failed to load dashboard data. Please refresh the page.";
+            alert.style.display = "flex";
+          }
+        }
+      }
+    </script>
+  </body>
+</html>

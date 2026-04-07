@@ -1,0 +1,264 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Sign In — POS System</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="../assets/css/style.css" />
+    <script
+      defer
+      src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"
+    ></script>
+    <script defer src="../config/supabase.js"></script>
+    <script defer src="../assets/js/auth.js"></script>
+  </head>
+  <body>
+    <div class="login-page">
+      <div class="login-card">
+        <div class="login-theme-row">
+          <button class="theme-toggle" id="themeToggleBtn" title="Switch theme">
+            <svg
+              id="themeIcon"
+              width="16"
+              height="16"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              stroke-width="2"
+            >
+              <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" />
+            </svg>
+          </button>
+        </div>
+        <div class="login-logo">
+          <div class="logo-icon">
+            <svg
+              width="32"
+              height="32"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="white"
+              stroke-width="2"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"
+              />
+            </svg>
+          </div>
+          <h1>MY STORE POS</h1>
+          <p>Point of Sale Management System</p>
+        </div>
+
+        <div id="loginError" class="login-error"></div>
+
+        <form class="login-form" id="loginForm" autocomplete="off">
+          <div class="form-group">
+            <label class="form-label" for="email">Email Address</label>
+            <input
+              type="email"
+              id="email"
+              class="form-control"
+              placeholder="you@example.com"
+              maxlength="255"
+              required
+              autocomplete="email"
+            />
+            <div class="form-error" id="emailError"></div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="password">Password</label>
+            <input
+              type="password"
+              id="password"
+              class="form-control"
+              placeholder="••••••••"
+              required
+              autocomplete="current-password"
+            />
+            <div class="form-error" id="passwordError"></div>
+          </div>
+
+          <button type="submit" class="login-btn" id="loginBtn">
+            <span id="loginBtnText">Sign In</span>
+            <span id="loginSpinner" class="spinner hidden"></span>
+          </button>
+        </form>
+      </div>
+    </div>
+
+    <script>
+      let isLoginSubmitting = false; // Prevent rapid-click on login button
+
+      // Redirect if already logged in
+      window.addEventListener("DOMContentLoaded", async () => {
+        initTheme();
+        const _ttb = document.getElementById("themeToggleBtn");
+        if (_ttb) _ttb.addEventListener("click", toggleTheme);
+        // Check for inactive reason in URL
+        const params = new URLSearchParams(window.location.search);
+        if (params.get("reason") === "inactive") {
+          showLoginError(
+            "Your account has been deactivated. Please contact an administrator.",
+          );
+        }
+
+        const {
+          data: { session },
+        } = await db.auth.getSession();
+        if (session) {
+          // Fetch profile and redirect
+          const { data: profile } = await db
+            .from("profiles")
+            .select("role")
+            .eq("id", session.user.id)
+            .single();
+          if (profile) redirectByRole(profile.role);
+        }
+      });
+
+      function showLoginError(msg) {
+        const el = document.getElementById("loginError");
+        el.textContent = msg;
+        el.style.display = "block";
+      }
+
+      function hideLoginError() {
+        document.getElementById("loginError").style.display = "none";
+      }
+
+      function clearErrors() {
+        hideLoginError();
+        document.getElementById("emailError").textContent = "";
+        document.getElementById("passwordError").textContent = "";
+        document.getElementById("email").classList.remove("error");
+        document.getElementById("password").classList.remove("error");
+      }
+
+      document
+        .getElementById("loginForm")
+        .addEventListener("submit", async (e) => {
+          e.preventDefault();
+
+          // Prevent rapid-click submissions
+          if (isLoginSubmitting) return;
+          isLoginSubmitting = true;
+
+          clearErrors();
+
+          // Rate limiting check
+          if (!canAttemptLogin()) {
+            const blockTime = getLoginBlockTime();
+            showLoginError(
+              `Too many failed attempts. Try again in ${blockTime} seconds.`,
+            );
+            return;
+          }
+
+          const email = document.getElementById("email").value.trim();
+          const password = document.getElementById("password").value;
+          let valid = true;
+
+          if (!email) {
+            document.getElementById("emailError").textContent =
+              "Email is required.";
+            document.getElementById("email").classList.add("error");
+            valid = false;
+          }
+          if (!password) {
+            document.getElementById("passwordError").textContent =
+              "Password is required.";
+            document.getElementById("password").classList.add("error");
+            valid = false;
+          }
+          if (!valid) return;
+
+          // Set loading state
+          const btn = document.getElementById("loginBtn");
+          const btnText = document.getElementById("loginBtnText");
+          const spinner = document.getElementById("loginSpinner");
+          btn.disabled = true;
+          btnText.textContent = "Signing in…";
+          spinner.classList.remove("hidden");
+
+          try {
+            const { data, error } = await db.auth.signInWithPassword({
+              email,
+              password,
+            });
+
+            if (error) {
+              recordLoginAttempt();
+              applyLoginRateLimit();
+              let msg = "Invalid email or password. Please try again.";
+              if (error.message.toLowerCase().includes("email not confirmed")) {
+                msg = "Please confirm your email address before signing in.";
+              }
+              if (loginAttempts.count >= 5) {
+                msg += ` (${5 - loginAttempts.count + 1} attempts remaining)`;
+              }
+              showLoginError(msg);
+              btn.disabled = false;
+              btnText.textContent = "Sign In";
+              spinner.classList.add("hidden");
+              isLoginSubmitting = false;
+              return;
+            }
+
+            // Login successful - reset attempts
+            loginAttempts.count = 0;
+            loginAttempts.firstAttempt = null;
+            loginAttempts.blockedUntil = null;
+
+            // Fetch profile
+            const { data: profile, error: profErr } = await db
+              .from("profiles")
+              .select("*")
+              .eq("id", data.user.id)
+              .single();
+
+            if (profErr || !profile) {
+              showLoginError(
+                "Account profile not found. Please contact an administrator.",
+              );
+              await db.auth.signOut();
+              btn.disabled = false;
+              btnText.textContent = "Sign In";
+              spinner.classList.add("hidden");
+              isLoginSubmitting = false;
+              return;
+            }
+
+            if (profile.status === "inactive") {
+              showLoginError(
+                "Your account has been deactivated. Please contact an administrator.",
+              );
+              await db.auth.signOut();
+              btn.disabled = false;
+              btnText.textContent = "Sign In";
+              spinner.classList.add("hidden");
+              isLoginSubmitting = false;
+              return;
+            }
+
+            // Redirect by role
+            redirectByRole(profile.role);
+          } catch (err) {
+            showLoginError("An unexpected error occurred. Please try again.");
+            btn.disabled = false;
+            btnText.textContent = "Sign In";
+            spinner.classList.add("hidden");
+            isLoginSubmitting = false;
+          } finally {
+            isLoginSubmitting = false;
+          }
+        });
+    </script>
+  </body>
+</html>

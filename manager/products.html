@@ -1,0 +1,626 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Products — Manager</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="../assets/css/style.css" />
+    <script
+      defer
+      src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"
+    ></script>
+    <script defer src="../config/supabase.js"></script>
+    <script defer src="../assets/js/auth.js"></script>
+  </head>
+  <body>
+    <div class="app-layout">
+      <aside class="sidebar">
+        <div class="sidebar-logo">
+          <div class="brand">
+            <div class="brand-icon">
+              <svg
+                width="20"
+                height="20"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="white"
+                stroke-width="2"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"
+                />
+              </svg>
+            </div>
+            <div>
+              <div class="brand-name">MY STORE</div>
+              <div class="brand-sub">POS System</div>
+            </div>
+          </div>
+        </div>
+        <nav class="sidebar-nav">
+          <div class="nav-section-label">Main</div>
+          <a href="dashboard.html" class="nav-link"
+            ><svg
+              width="16"
+              height="16"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              stroke-width="2"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"
+              /></svg
+            >Dashboard</a
+          >
+          <div class="nav-section-label">Inventory</div>
+          <a href="products.html" class="nav-link active"
+            ><svg
+              width="16"
+              height="16"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              stroke-width="2"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"
+              /></svg
+            >Products</a
+          >
+          <a href="inventory.html" class="nav-link"
+            ><svg
+              width="16"
+              height="16"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              stroke-width="2"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"
+              /></svg
+            >Inventory</a
+          >
+          <div class="nav-section-label">Sales</div>
+          <a href="customers.html" class="nav-link"
+            ><svg
+              width="16"
+              height="16"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              stroke-width="2"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"
+              /></svg
+            >Customers</a
+          >
+          <a href="reports.html" class="nav-link"
+            ><svg
+              width="16"
+              height="16"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              stroke-width="2"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"
+              /></svg
+            >Reports</a
+          >
+        </nav>
+        <div class="sidebar-footer">
+          <div class="sidebar-user">
+            <div class="user-name" id="sidebarUserName">Loading…</div>
+            <div class="user-role" id="sidebarUserRole"></div>
+          </div>
+          <button class="logout-btn" onclick="logout()">
+            <svg
+              width="15"
+              height="15"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              stroke-width="2"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"
+              /></svg
+            >Logout
+          </button>
+        </div>
+      </aside>
+
+      <main class="main-content">
+        <div class="page-header">
+          <div>
+            <h1 class="page-title">Products</h1>
+            <p class="page-subtitle">View and edit product details.</p>
+          </div>
+          <div class="page-header-actions">
+            <button
+              class="theme-toggle"
+              id="themeToggleBtn"
+              title="Switch theme"
+              aria-label="Switch theme"
+            >
+              <svg
+                id="themeIcon"
+                width="16"
+                height="16"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+                stroke-width="2"
+              >
+                <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" />
+              </svg>
+            </button>
+            <button class="btn btn-primary" onclick="openAddModal()">
+              <svg
+                width="16"
+                height="16"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+                stroke-width="2"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  d="M12 4v16m8-8H4"
+                />
+              </svg>
+              Add Product
+            </button>
+          </div>
+        </div>
+
+        <div id="pageAlert" class="alert hidden"></div>
+
+        <div class="card">
+          <div class="card-header">
+            <span class="card-title">All Products</span>
+            <div class="filter-bar filter-bar-reset">
+              <div class="search-box">
+                <svg
+                  width="15"
+                  height="15"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                  stroke-width="2"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
+                  />
+                </svg>
+                <input
+                  type="text"
+                  id="searchInput"
+                  placeholder="Search…"
+                  oninput="filterProducts()"
+                  aria-label="Search products"
+                />
+              </div>
+              <select
+                id="categoryFilter"
+                class="form-control select-category"
+                onchange="filterProducts()"
+                aria-label="Filter by category"
+              >
+                <option value="">All Categories</option>
+              </select>
+            </div>
+          </div>
+          <div class="table-wrapper">
+            <table>
+              <thead>
+                <tr>
+                  <th>Name</th>
+                  <th>Category</th>
+                  <th>Price</th>
+                  <th>Stock</th>
+                  <th>Status</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody id="productsBody">
+                <tr>
+                  <td colspan="6" class="table-loading">Loading…</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </main>
+    </div>
+
+    <!-- Add Modal -->
+    <div class="modal-overlay" id="addModal">
+      <div class="modal">
+        <div class="modal-header">
+          <span class="modal-title">Add Product</span
+          ><button class="modal-close" onclick="closeModal('addModal')" aria-label="Close">
+            <svg
+              width="14"
+              height="14"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              stroke-width="2.5"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M6 18L18 6M6 6l12 12"
+              />
+            </svg>
+          </button>
+        </div>
+        <div class="modal-body">
+          <div id="addAlert" class="alert hidden"></div>
+          <div class="grid-2">
+            <div class="form-group">
+              <label class="form-label" for="addName">Name</label
+              ><input type="text" id="addName" class="form-control" />
+              <div class="form-error" id="addNameErr"></div>
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="addCategory">Category</label
+              ><select id="addCategory" class="form-control">
+                <option value="">Select</option>
+              </select>
+              <div class="form-error" id="addCatErr"></div>
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="addPrice">Price (GH₵)</label
+              ><input
+                type="number"
+                id="addPrice"
+                class="form-control"
+                min="0"
+                step="0.01"
+              />
+              <div class="form-error" id="addPriceErr"></div>
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="addStock">Stock</label
+              ><input
+                type="number"
+                id="addStock"
+                class="form-control"
+                min="0"
+              />
+              <div class="form-error" id="addStockErr"></div>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="addBarcode">Barcode</label
+            ><input type="text" id="addBarcode" class="form-control" />
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="addStatus">Status</label
+            ><select id="addStatus" class="form-control">
+              <option value="active">Active</option>
+              <option value="inactive">Inactive</option>
+            </select>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button class="btn btn-secondary" onclick="closeModal('addModal')">
+            Cancel</button
+          ><button class="btn btn-primary" id="addBtn" onclick="addProduct()">
+            Add Product
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Edit Modal -->
+    <div class="modal-overlay" id="editModal">
+      <div class="modal">
+        <div class="modal-header">
+          <span class="modal-title">Edit Product</span
+          ><button class="modal-close" onclick="closeModal('editModal')" aria-label="Close">
+            <svg
+              width="14"
+              height="14"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              stroke-width="2.5"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M6 18L18 6M6 6l12 12"
+              />
+            </svg>
+          </button>
+        </div>
+        <div class="modal-body">
+          <div id="editAlert" class="alert hidden"></div>
+          <input type="hidden" id="editId" />
+          <div class="grid-2">
+            <div class="form-group">
+              <label class="form-label" for="editName">Name</label
+              ><input type="text" id="editName" class="form-control" />
+              <div class="form-error" id="editNameErr"></div>
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="editCategory">Category</label
+              ><select id="editCategory" class="form-control"></select>
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="editPrice">Price (GH₵)</label
+              ><input
+                type="number"
+                id="editPrice"
+                class="form-control"
+                min="0"
+                step="0.01"
+              />
+              <div class="form-error" id="editPriceErr"></div>
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="editStock">Stock</label
+              ><input
+                type="number"
+                id="editStock"
+                class="form-control"
+                min="0"
+              />
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="editBarcode">Barcode</label
+            ><input type="text" id="editBarcode" class="form-control" />
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="editStatus">Status</label
+            ><select id="editStatus" class="form-control">
+              <option value="active">Active</option>
+              <option value="inactive">Inactive</option>
+            </select>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button class="btn btn-secondary" onclick="closeModal('editModal')">
+            Cancel</button
+          ><button class="btn btn-primary" id="editBtn" onclick="saveProduct()">
+            Save Changes
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      let currentUser = null;
+      let allProducts = [];
+      let categories = [];
+
+      window.addEventListener("DOMContentLoaded", async () => {
+        initTheme();
+        const _ttb = document.getElementById("themeToggleBtn");
+        if (_ttb) _ttb.addEventListener("click", toggleTheme);
+        currentUser = await requireAuth(["manager"]);
+        if (!currentUser) return;
+        populateSidebarUser(currentUser);
+        await loadCategories();
+        loadProducts();
+      });
+
+      async function loadCategories() {
+        const { data } = await db.from("categories").select("*").order("name");
+        categories = data || [];
+        const opt = categories
+          .map((c) => `<option value="${c.id}">${c.name}</option>`)
+          .join("");
+        document.getElementById("categoryFilter").innerHTML =
+          '<option value="">All Categories</option>' + opt;
+        document.getElementById("addCategory").innerHTML =
+          '<option value="">Select category</option>' + opt;
+        document.getElementById("editCategory").innerHTML = opt;
+      }
+
+      async function loadProducts() {
+        document.getElementById("productsBody").innerHTML =
+          '<tr><td colspan="6" class="table-loading">Loading…</td></tr>';
+        const { data, error } = await db
+          .from("products")
+          .select("*, categories(name)")
+          .order("name");
+        if (error) {
+          showAlert("pageAlert", error.message);
+          return;
+        }
+        allProducts = data || [];
+        renderProducts(allProducts);
+      }
+
+      function renderProducts(list) {
+        const body = document.getElementById("productsBody");
+        if (!list.length) {
+          body.innerHTML =
+            '<tr><td colspan="6" class="table-empty">No products found.</td></tr>';
+          return;
+        }
+        body.innerHTML = list
+          .map(
+            (p) => `
+    <tr>
+      <td class="fw-600">${p.name}</td>
+      <td class="text-muted">${p.categories?.name || "—"}</td>
+      <td>${formatCurrency(p.price)}</td>
+      <td><span class="${p.stock < 10 ? "badge badge-low" : ""}">${p.stock}</span></td>
+      <td><span class="badge badge-${p.status}">${p.status}</span></td>
+      <td><div class="action-btns"><button class="btn btn-sm btn-secondary" onclick="openEdit(${p.id})">Edit</button></div></td>
+    </tr>
+  `,
+          )
+          .join("");
+      }
+
+      function filterProducts() {
+        const q = document.getElementById("searchInput").value.toLowerCase();
+        const cat = document.getElementById("categoryFilter").value;
+        renderProducts(
+          allProducts.filter(
+            (p) =>
+              p.name.toLowerCase().includes(q) &&
+              (!cat || String(p.category_id) === cat),
+          ),
+        );
+      }
+
+      function openAddModal() {
+        ["addName", "addBarcode"].forEach(
+          (id) => (document.getElementById(id).value = ""),
+        );
+        document.getElementById("addPrice").value = "";
+        document.getElementById("addStock").value = "";
+        document.getElementById("addStatus").value = "active";
+        document.getElementById("addCategory").value = "";
+        ["addNameErr", "addCatErr", "addPriceErr", "addStockErr"].forEach(
+          (id) => (document.getElementById(id).textContent = ""),
+        );
+        hideAlert("addAlert");
+        openModal("addModal");
+      }
+
+      async function addProduct() {
+        hideAlert("addAlert");
+        const name = document.getElementById("addName").value.trim(),
+          catId = document.getElementById("addCategory").value,
+          price = parseFloat(document.getElementById("addPrice").value),
+          stock = parseInt(document.getElementById("addStock").value),
+          barcode = document.getElementById("addBarcode").value.trim() || null,
+          status = document.getElementById("addStatus").value;
+        let valid = true;
+        if (!name) {
+          document.getElementById("addNameErr").textContent = "Required.";
+          valid = false;
+        }
+        if (!catId) {
+          document.getElementById("addCatErr").textContent = "Required.";
+          valid = false;
+        }
+        if (isNaN(price) || price < 0) {
+          document.getElementById("addPriceErr").textContent =
+            "Enter valid price.";
+          valid = false;
+        }
+        if (isNaN(stock) || stock < 0) {
+          document.getElementById("addStockErr").textContent =
+            "Enter valid stock.";
+          valid = false;
+        }
+        if (!valid) return;
+        const btn = document.getElementById("addBtn");
+        btn.disabled = true;
+        btn.textContent = "Adding…";
+        try {
+          const { error } = await db
+            .from("products")
+            .insert({
+              name,
+              category_id: catId,
+              price,
+              stock,
+              barcode,
+              status,
+            });
+          if (error) throw error;
+          closeModal("addModal");
+          showAlert("pageAlert", "Product added.", "success");
+          loadProducts();
+        } catch (err) {
+          showAlert("addAlert", err.message);
+        } finally {
+          btn.disabled = false;
+          btn.textContent = "Add Product";
+        }
+      }
+
+      function openEdit(id) {
+        const p = allProducts.find((x) => x.id === id);
+        if (!p) return;
+        document.getElementById("editId").value = p.id;
+        document.getElementById("editName").value = p.name;
+        document.getElementById("editCategory").value = p.category_id;
+        document.getElementById("editPrice").value = p.price;
+        document.getElementById("editStock").value = p.stock;
+        document.getElementById("editBarcode").value = p.barcode || "";
+        document.getElementById("editStatus").value = p.status;
+        ["editNameErr", "editPriceErr"].forEach(
+          (id) => (document.getElementById(id).textContent = ""),
+        );
+        hideAlert("editAlert");
+        openModal("editModal");
+      }
+
+      async function saveProduct() {
+        hideAlert("editAlert");
+        const id = parseInt(document.getElementById("editId").value),
+          name = document.getElementById("editName").value.trim(),
+          catId = document.getElementById("editCategory").value,
+          price = parseFloat(document.getElementById("editPrice").value),
+          stock = parseInt(document.getElementById("editStock").value),
+          barcode = document.getElementById("editBarcode").value.trim() || null,
+          status = document.getElementById("editStatus").value;
+        let valid = true;
+        if (!name) {
+          document.getElementById("editNameErr").textContent = "Required.";
+          valid = false;
+        }
+        if (isNaN(price) || price < 0) {
+          document.getElementById("editPriceErr").textContent = "Required.";
+          valid = false;
+        }
+        if (!valid) return;
+        const btn = document.getElementById("editBtn");
+        btn.disabled = true;
+        btn.textContent = "Saving…";
+        try {
+          const { error } = await db
+            .from("products")
+            .update({ name, category_id: catId, price, stock, barcode, status })
+            .eq("id", id);
+          if (error) throw error;
+          closeModal("editModal");
+          showAlert("pageAlert", "Product updated.", "success");
+          loadProducts();
+        } catch (err) {
+          showAlert("editAlert", err.message);
+        } finally {
+          btn.disabled = false;
+          btn.textContent = "Save Changes";
+        }
+      }
+    </script>
+  </body>
+</html>

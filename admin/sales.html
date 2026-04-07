@@ -1,0 +1,641 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Sales — Admin</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="../assets/css/style.css" />
+    <script
+      defer
+      src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"
+    ></script>
+    <script defer src="../config/supabase.js"></script>
+    <script defer src="../assets/js/auth.js"></script>
+  </head>
+  <body>
+    <div class="app-layout">
+      <aside class="sidebar">
+        <div class="sidebar-logo">
+          <div class="brand">
+            <div class="brand-icon">
+              <svg
+                width="20"
+                height="20"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="white"
+                stroke-width="2"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"
+                />
+              </svg>
+            </div>
+            <div>
+              <div class="brand-name">MY STORE</div>
+              <div class="brand-sub">POS System</div>
+            </div>
+          </div>
+        </div>
+        <nav class="sidebar-nav">
+          <div class="nav-section-label">Main</div>
+          <a href="dashboard.html" class="nav-link"
+            ><svg
+              width="16"
+              height="16"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              stroke-width="2"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"
+              /></svg
+            >Dashboard</a
+          >
+          <a href="users.html" class="nav-link"
+            ><svg
+              width="16"
+              height="16"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              stroke-width="2"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"
+              /></svg
+            >Users</a
+          >
+          <a href="roles.html" class="nav-link"
+            ><svg
+              width="16"
+              height="16"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              stroke-width="2"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"
+              /></svg
+            >Roles &amp; Users</a
+          >
+          <div class="nav-section-label">Inventory</div>
+          <a href="products.html" class="nav-link"
+            ><svg
+              width="16"
+              height="16"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              stroke-width="2"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"
+              /></svg
+            >Products</a
+          >
+          <a href="categories.html" class="nav-link"
+            ><svg
+              width="16"
+              height="16"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              stroke-width="2"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A2 2 0 013 12V7a4 4 0 014-4z"
+              /></svg
+            >Categories</a
+          >
+          <a href="inventory.html" class="nav-link"
+            ><svg
+              width="16"
+              height="16"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              stroke-width="2"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"
+              /></svg
+            >Inventory</a
+          >
+          <div class="nav-section-label">Sales</div>
+          <a href="customers.html" class="nav-link"
+            ><svg
+              width="16"
+              height="16"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              stroke-width="2"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"
+              /></svg
+            >Customers</a
+          >
+          <a href="sales.html" class="nav-link active"
+            ><svg
+              width="16"
+              height="16"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              stroke-width="2"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
+              /></svg
+            >Sales</a
+          >
+          <a href="reports.html" class="nav-link"
+            ><svg
+              width="16"
+              height="16"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              stroke-width="2"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"
+              /></svg
+            >Reports</a
+          >
+        </nav>
+        <div class="sidebar-footer">
+          <div class="sidebar-user">
+            <div class="user-name" id="sidebarUserName">Loading…</div>
+            <div class="user-role" id="sidebarUserRole"></div>
+          </div>
+          <button class="logout-btn" onclick="logout()">
+            <svg
+              width="15"
+              height="15"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              stroke-width="2"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"
+              /></svg
+            >Logout
+          </button>
+        </div>
+      </aside>
+
+      <main class="main-content">
+        <div class="page-header">
+          <div>
+            <h1 class="page-title">Sales</h1>
+            <p class="page-subtitle">View and filter all transactions.</p>
+          </div>
+          <div class="page-header-actions">
+            <button
+              class="theme-toggle"
+              id="themeToggleBtn"
+              title="Switch theme"
+            >
+              <svg
+                id="themeIcon"
+                width="16"
+                height="16"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+                stroke-width="2"
+              >
+                <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" />
+              </svg>
+            </button>
+            <button class="btn btn-secondary" onclick="exportCSV()">
+              <svg
+                width="16"
+                height="16"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+                stroke-width="2"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"
+                />
+              </svg>
+              Export CSV
+            </button>
+          </div>
+        </div>
+
+        <div id="pageAlert" class="alert hidden"></div>
+
+        <!-- Filters -->
+        <div class="card filter-card">
+          <div class="card-body filter-body">
+            <div class="filter-bar filter-bar-reset">
+              <div class="form-group form-group-compact">
+                <label class="form-label">From Date</label>
+                <input
+                  type="date"
+                  id="filterFrom"
+                  class="form-control"
+                  title="From Date - Start date for filtering sales"
+                  onchange="loadSales()"
+                />
+              </div>
+              <div class="form-group form-group-compact">
+                <label class="form-label">To Date</label>
+                <input
+                  type="date"
+                  id="filterTo"
+                  class="form-control"
+                  title="To Date - End date for filtering sales"
+                  onchange="loadSales()"
+                />
+              </div>
+              <div class="form-group form-group-compact">
+                <label class="form-label">Payment Method</label>
+                <select
+                  id="filterMethod"
+                  class="form-control"
+                  title="Payment Method - Filter sales by payment method"
+                  onchange="loadSales()"
+                >
+                  <option value="">All Methods</option>
+                  <option value="cash">Cash</option>
+                  <option value="mobile_money">Mobile Money</option>
+                  <option value="card">Card</option>
+                </select>
+              </div>
+              <div class="form-group form-group-compact">
+                <label class="form-label">Cashier</label>
+                <select
+                  id="filterCashier"
+                  class="form-control"
+                  title="Cashier - Filter sales by cashier"
+                  onchange="loadSales()"
+                >
+                  <option value="">All Cashiers</option>
+                </select>
+              </div>
+              <button
+                class="btn btn-secondary button-flex-end"
+                onclick="clearFilters()"
+                title="Clear all filters"
+              >
+                Clear
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-header">
+            <span class="card-title">Transactions</span>
+            <span class="text-muted text-small" id="salesCount"></span>
+          </div>
+          <div class="table-wrapper">
+            <table>
+              <thead>
+                <tr>
+                  <th>Reference</th>
+                  <th>Cashier</th>
+                  <th>Customer</th>
+                  <th>Total</th>
+                  <th>Payment</th>
+                  <th>Status</th>
+                  <th>Date</th>
+                </tr>
+              </thead>
+              <tbody id="salesBody">
+                <tr>
+                  <td colspan="7" class="table-loading">Loading…</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </main>
+    </div>
+
+    <!-- Sale Detail Modal -->
+    <div class="modal-overlay" id="detailModal">
+      <div class="modal modal-lg">
+        <div class="modal-header">
+          <span class="modal-title" id="detailTitle">Sale Details</span>
+          <button
+            class="modal-close"
+            onclick="closeModal('detailModal')"
+            title="Close modal"
+          >
+            <svg
+              width="14"
+              height="14"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              stroke-width="2.5"
+              aria-hidden="true"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M6 18L18 6M6 6l12 12"
+              />
+            </svg>
+          </button>
+        </div>
+        <div class="modal-body">
+          <div id="detailInfo" class="grid-2 mb-16 detail-info"></div>
+          <div class="table-wrapper">
+            <table>
+              <thead>
+                <tr>
+                  <th>Product</th>
+                  <th>Qty</th>
+                  <th>Unit Price</th>
+                  <th>Total</th>
+                </tr>
+              </thead>
+              <tbody id="detailItems"></tbody>
+            </table>
+          </div>
+          <div class="detail-summary">
+            <div class="summary-container">
+              <div class="summary-row">
+                <span class="text-muted">Subtotal:</span>
+                <span id="dSubtotal"></span>
+              </div>
+              <div class="summary-row">
+                <span class="text-muted">Tax (15%):</span>
+                <span id="dTax"></span>
+              </div>
+              <div class="summary-row">
+                <span class="text-muted">Discount:</span>
+                <span id="dDiscount"></span>
+              </div>
+              <div class="summary-row-total">
+                <span>Total:</span>
+                <span id="dTotal"></span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      let currentUser = null;
+      let allSales = [];
+      let cashiers = [];
+
+      window.addEventListener("DOMContentLoaded", async () => {
+        initTheme();
+        const _ttb = document.getElementById("themeToggleBtn");
+        if (_ttb) _ttb.addEventListener("click", toggleTheme);
+        currentUser = await requireAuth(["admin"]);
+        if (!currentUser) return;
+        populateSidebarUser(currentUser);
+
+        // Load cashiers for filter
+        const { data: profiles } = await db
+          .from("profiles")
+          .select("id, name")
+          .order("name");
+        cashiers = profiles || [];
+        const sel = document.getElementById("filterCashier");
+        cashiers.forEach((p) => {
+          const opt = document.createElement("option");
+          opt.value = p.id;
+          opt.textContent = p.name;
+          sel.appendChild(opt);
+        });
+
+        // Default dates: this month
+        const now = new Date();
+        const firstDay = new Date(now.getFullYear(), now.getMonth(), 1);
+        document.getElementById("filterFrom").value = firstDay
+          .toISOString()
+          .slice(0, 10);
+        document.getElementById("filterTo").value = now
+          .toISOString()
+          .slice(0, 10);
+
+        loadSales();
+      });
+
+      async function loadSales() {
+        document.getElementById("salesBody").innerHTML =
+          '<tr><td colspan="7" class="table-loading">Loading…</td></tr>';
+        document.getElementById("salesCount").textContent = "";
+
+        let q = db
+          .from("sales")
+          .select("*, profiles(name), customers(name)")
+          .order("created_at", { ascending: false });
+
+        const from = document.getElementById("filterFrom").value;
+        const to = document.getElementById("filterTo").value;
+        const method = document.getElementById("filterMethod").value;
+        const cashier = document.getElementById("filterCashier").value;
+
+        if (from) q = q.gte("created_at", from + "T00:00:00");
+        if (to) q = q.lte("created_at", to + "T23:59:59");
+        if (method) q = q.eq("payment_method", method);
+        if (cashier) q = q.eq("cashier_id", cashier);
+
+        const { data, error } = await q;
+        if (error) {
+          showAlert("pageAlert", "Error: " + error.message);
+          return;
+        }
+        allSales = data || [];
+        document.getElementById("salesCount").textContent =
+          allSales.length + " records";
+        renderSales(allSales);
+      }
+
+      function renderSales(list) {
+        const body = document.getElementById("salesBody");
+        if (!list.length) {
+          body.innerHTML =
+            '<tr><td colspan="7" class="table-empty">No sales found.</td></tr>';
+          return;
+        }
+        body.innerHTML = list
+          .map(
+            (s) => `
+    <tr class="clickable-row" onclick="viewDetail(${s.id})">
+      <td><span class="fw-600">${escHtml(s.sale_ref)}</span></td>
+      <td>${escHtml(s.profiles?.name || "—")}</td>
+      <td class="text-muted">${escHtml(s.customers?.name || "Walk-in")}</td>
+      <td>${formatCurrency(s.total)}</td>
+      <td><span class="badge badge-${s.payment_method}">${(s.payment_method || "").replace("_", " ")}</span></td>
+      <td><span class="badge badge-${s.payment_status}">${s.payment_status}</span></td>
+      <td class="text-muted">${formatDate(s.created_at)}</td>
+    </tr>
+  `,
+          )
+          .join("");
+      }
+
+      async function viewDetail(saleId) {
+        const sale = allSales.find((s) => s.id === saleId);
+        if (!sale) return;
+        document.getElementById("detailTitle").textContent =
+          "Sale — " + sale.sale_ref;
+        document.getElementById("detailInfo").innerHTML = `
+    <div><span class="form-label">Cashier</span><div>${escHtml(sale.profiles?.name || "—")}</div></div>
+    <div><span class="form-label">Customer</span><div>${escHtml(sale.customers?.name || "Walk-in")}</div></div>
+    <div><span class="form-label">Payment Method</span><div><span class="badge badge-${sale.payment_method}">${(sale.payment_method || "").replace("_", " ")}</span></div></div>
+    <div><span class="form-label">Status</span><div><span class="badge badge-${sale.payment_status}">${sale.payment_status}</span></div></div>
+    <div><span class="form-label">Date</span><div>${formatDate(sale.created_at)}</div></div>
+    ${sale.paystack_ref ? `<div><span class="form-label">Paystack Ref</span><div class="text-muted">${escHtml(sale.paystack_ref)}</div></div>` : ""}
+  `;
+        document.getElementById("dSubtotal").textContent = formatCurrency(
+          sale.subtotal,
+        );
+        document.getElementById("dTax").textContent = formatCurrency(sale.tax);
+        document.getElementById("dDiscount").textContent = formatCurrency(
+          sale.discount || 0,
+        );
+        document.getElementById("dTotal").textContent = formatCurrency(
+          sale.total,
+        );
+        document.getElementById("detailItems").innerHTML =
+          '<tr><td colspan="4" class="table-loading">Loading items…</td></tr>';
+        openModal("detailModal");
+
+        const { data: items } = await db
+          .from("sale_items")
+          .select("*")
+          .eq("sale_id", saleId);
+        if (!items?.length) {
+          document.getElementById("detailItems").innerHTML =
+            '<tr><td colspan="4" class="table-empty">No items.</td></tr>';
+          return;
+        }
+        document.getElementById("detailItems").innerHTML = items
+          .map(
+            (i) => `
+    <tr>
+      <td class="fw-600">${escHtml(i.product_name)}</td>
+      <td>${i.quantity}</td>
+      <td>${formatCurrency(i.unit_price)}</td>
+      <td>${formatCurrency(i.total_price)}</td>
+    </tr>
+  `,
+          )
+          .join("");
+      }
+
+      function clearFilters() {
+        document.getElementById("filterFrom").value = "";
+        document.getElementById("filterTo").value = "";
+        document.getElementById("filterMethod").value = "";
+        document.getElementById("filterCashier").value = "";
+        loadSales();
+      }
+
+      function exportCSV() {
+        if (!allSales.length) {
+          showAlert("pageAlert", "No sales to export.", "warning");
+          return;
+        }
+        try {
+          const rows = [
+            [
+              "Reference",
+              "Cashier",
+              "Customer",
+              "Subtotal",
+              "Tax",
+              "Discount",
+              "Total",
+              "Payment Method",
+              "Status",
+              "Date",
+            ],
+            ...allSales.map((s) => [
+              s.sale_ref,
+              s.profiles?.name || "",
+              s.customers?.name || "Walk-in",
+              s.subtotal,
+              s.tax,
+              s.discount || 0,
+              s.total,
+              s.payment_method,
+              s.payment_status,
+              formatDate(s.created_at),
+            ]),
+          ];
+          const csv = rows
+            .map((r) =>
+              r.map((v) => `"${String(v).replace(/"/g, '""')}"`).join(","),
+            )
+            .join("\n");
+          const blob = new Blob([csv], { type: "text/csv" });
+          const url = URL.createObjectURL(blob);
+          const a = document.createElement("a");
+          a.href = url;
+          a.download =
+            "sales_export_" + new Date().toISOString().slice(0, 10) + ".csv";
+          a.click();
+          URL.revokeObjectURL(url);
+          showAlert("pageAlert", "Sales exported successfully.", "success");
+        } catch (err) {
+          console.error("CSV export error:", err);
+          showAlert(
+            "pageAlert",
+            "Failed to export CSV. Please try again.",
+            "danger",
+          );
+        }
+      }
+
+      function escHtml(s) {
+        return String(s)
+          .replace(/&/g, "&amp;")
+          .replace(/</g, "&lt;")
+          .replace(/>/g, "&gt;")
+          .replace(/"/g, "&quot;");
+      }
+
+      // Enhanced error logging
+      console.log("✅ sales.html loaded");
+    </script>
+  </body>
+</html>
