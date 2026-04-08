@@ -11,6 +11,12 @@
       rel="stylesheet"
     />
     <link rel="stylesheet" href="../assets/css/style.css" />
+    <style>
+      /* MoMo Verification Status */
+      #momoVerifyStatus.verified {
+        color: #4ade80 !important;
+      }
+    </style>
     <script
       defer
       src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"
@@ -113,8 +119,19 @@
 
       <!-- ── MOBILE CART FAB ──────────────────────────────────── -->
       <button class="mob-cart-fab" id="mobCartFab" aria-label="View cart">
-        <svg width="22" height="22" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-          <path stroke-linecap="round" stroke-linejoin="round" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"/>
+        <svg
+          width="22"
+          height="22"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
+          stroke-width="2"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"
+          />
         </svg>
         <span class="fab-count" id="fabCount">0</span>
       </button>
@@ -129,8 +146,26 @@
             <h2>Cart</h2>
             <div class="cart-header-right">
               <span class="cart-count" id="cartCount">0</span>
-              <button id="mobCartClose" onclick="closeMobCart()" aria-label="Close cart" class="mob-close-btn">
-                <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/></svg>
+              <button
+                id="mobCartClose"
+                onclick="closeMobCart()"
+                aria-label="Close cart"
+                class="mob-close-btn"
+              >
+                <svg
+                  width="16"
+                  height="16"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                  stroke-width="2"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    d="M6 18L18 6M6 6l12 12"
+                  />
+                </svg>
               </button>
             </div>
           </div>
@@ -250,23 +285,49 @@
               <!-- Quick bill buttons -->
               <div class="quick-bills" id="quickBills">
                 <span class="quick-bill-label">Quick:</span>
-                <button class="quick-bill-btn" onclick="setTendered(5)">₵5</button>
-                <button class="quick-bill-btn" onclick="setTendered(10)">₵10</button>
-                <button class="quick-bill-btn" onclick="setTendered(20)">₵20</button>
-                <button class="quick-bill-btn" onclick="setTendered(50)">₵50</button>
-                <button class="quick-bill-btn" onclick="setTendered(100)">₵100</button>
-                <button class="quick-bill-btn" onclick="setTendered(200)">₵200</button>
-                <button class="quick-bill-btn exact-btn" id="exactBtn" onclick="setExact()">Exact</button>
+                <button class="quick-bill-btn" onclick="setTendered(5)">
+                  ₵5
+                </button>
+                <button class="quick-bill-btn" onclick="setTendered(10)">
+                  ₵10
+                </button>
+                <button class="quick-bill-btn" onclick="setTendered(20)">
+                  ₵20
+                </button>
+                <button class="quick-bill-btn" onclick="setTendered(50)">
+                  ₵50
+                </button>
+                <button class="quick-bill-btn" onclick="setTendered(100)">
+                  ₵100
+                </button>
+                <button class="quick-bill-btn" onclick="setTendered(200)">
+                  ₵200
+                </button>
+                <button
+                  class="quick-bill-btn exact-btn"
+                  id="exactBtn"
+                  onclick="setExact()"
+                >
+                  Exact
+                </button>
               </div>
               <!-- Change display -->
               <div class="change-display" id="changeDisplay">
                 <div class="change-row">
                   <span class="change-label">Total</span>
-                  <span class="change-figure change-total-figure" id="changeTotalAmt">GH₵ 0.00</span>
+                  <span
+                    class="change-figure change-total-figure"
+                    id="changeTotalAmt"
+                    >GH₵ 0.00</span
+                  >
                 </div>
                 <div class="change-row">
                   <span class="change-label">Tendered</span>
-                  <span class="change-figure change-tendered-figure" id="changeTenderedAmt">GH₵ 0.00</span>
+                  <span
+                    class="change-figure change-tendered-figure"
+                    id="changeTenderedAmt"
+                    >GH₵ 0.00</span
+                  >
                 </div>
                 <div class="change-divider"></div>
                 <div class="change-row">
@@ -286,7 +347,13 @@
                   class="form-control"
                   placeholder="e.g. 0241234567"
                   maxlength="13"
+                  oninput="verifyMomoCustomer()"
                 />
+                <div
+                  id="momoVerifyStatus"
+                  class="form-error"
+                  style="display: none; margin-top: 4px"
+                ></div>
               </div>
               <div class="form-group">
                 <label class="form-label">Account Name</label>
@@ -294,7 +361,8 @@
                   type="text"
                   id="momoName"
                   class="form-control"
-                  placeholder="Name on the account"
+                  placeholder="Name on the account (auto-filled if verified)"
+                />
                 />
               </div>
             </div>
@@ -784,11 +852,15 @@
       function calcChange() {
         const subtotal = cart.reduce((s, i) => s + i.price * i.qty, 0);
         const tax = subtotal * 0.15;
-        const discPct = Math.min(Math.max(parseFloat(DOM.discountPct.value) || 0, 0), 100);
+        const discPct = Math.min(
+          Math.max(parseFloat(DOM.discountPct.value) || 0, 0),
+          100,
+        );
         const discount = (subtotal * discPct) / 100;
         const grandTotal = subtotal + tax - discount;
 
-        const tendered = parseFloat(document.getElementById("amountTendered").value) || 0;
+        const tendered =
+          parseFloat(document.getElementById("amountTendered").value) || 0;
         const changeDisplay = document.getElementById("changeDisplay");
         const changeAmount = document.getElementById("changeAmount");
         const changeTotalAmt = document.getElementById("changeTotalAmt");
@@ -797,11 +869,14 @@
         if (tendered > 0) {
           const change = tendered - grandTotal;
           changeDisplay.style.display = "flex";
-          if (changeTotalAmt) changeTotalAmt.textContent = formatCurrency(grandTotal);
-          if (changeTenderedAmt) changeTenderedAmt.textContent = formatCurrency(tendered);
+          if (changeTotalAmt)
+            changeTotalAmt.textContent = formatCurrency(grandTotal);
+          if (changeTenderedAmt)
+            changeTenderedAmt.textContent = formatCurrency(tendered);
 
           if (change < 0) {
-            changeAmount.textContent = "Short by " + formatCurrency(Math.abs(change));
+            changeAmount.textContent =
+              "Short by " + formatCurrency(Math.abs(change));
             changeAmount.style.color = "var(--danger)";
             changeAmount.style.background = "rgba(192,57,43,0.12)";
           } else {
@@ -824,7 +899,10 @@
       function setExact() {
         const subtotal = cart.reduce((s, i) => s + i.price * i.qty, 0);
         const tax = subtotal * 0.15;
-        const discPct = Math.min(Math.max(parseFloat(DOM.discountPct.value) || 0, 0), 100);
+        const discPct = Math.min(
+          Math.max(parseFloat(DOM.discountPct.value) || 0, 0),
+          100,
+        );
         const discount = (subtotal * discPct) / 100;
         const grandTotal = subtotal + tax - discount;
         setTendered(grandTotal);
@@ -871,6 +949,50 @@
 
       function hideCustomerDropdown() {
         DOM.customerDropdown.classList.remove("show");
+      }
+
+      /* ── MoMo Customer Verification ────────────────────── */
+      async function verifyMomoCustomer() {
+        const momoNumber = document.getElementById("momoNumber").value.trim();
+        const momoNameInput = document.getElementById("momoName");
+        const momoVerifyStatus = document.getElementById("momoVerifyStatus");
+
+        if (!momoNumber || momoNumber.length < 10) {
+          momoVerifyStatus.style.display = "none";
+          momoNameInput.value = "";
+          return;
+        }
+
+        try {
+          // Search customer by phone number
+          const { data, error } = await db
+            .from("customers")
+            .select("id, name, phone, email")
+            .eq("phone", momoNumber)
+            .single();
+
+          if (error || !data) {
+            // No match found
+            momoVerifyStatus.textContent =
+              "⚠ Customer not found. Please verify the number.";
+            momoVerifyStatus.style.display = "block";
+            momoVerifyStatus.style.color = "var(--danger)";
+            momoNameInput.value = "";
+          } else {
+            // Customer found
+            momoNameInput.value = data.name;
+            momoVerifyStatus.textContent = "✓ Verified: " + data.name;
+            momoVerifyStatus.style.display = "block";
+            momoVerifyStatus.style.color = "var(--success)";
+            momoVerifyStatus.className = "form-error" + " verified";
+          }
+        } catch (err) {
+          console.error("Verification error:", err);
+          momoVerifyStatus.textContent =
+            "Error verifying customer. Please try again.";
+          momoVerifyStatus.style.display = "block";
+          momoVerifyStatus.style.color = "var(--danger)";
+        }
       }
 
       /* ── Checkout ──────────────────────────────────────── */
@@ -974,21 +1096,33 @@
               unit_price: parseFloat(item.price.toFixed(2)),
               total_price: parseFloat((item.price * item.qty).toFixed(2)),
             });
-            if (itemErr) throw new Error("Sale item insert failed (" + item.name + "): " + itemErr.message);
+            if (itemErr)
+              throw new Error(
+                "Sale item insert failed (" +
+                  item.name +
+                  "): " +
+                  itemErr.message,
+              );
 
             const { data: cur, error: fetchErr } = await db
               .from("products")
               .select("stock")
               .eq("id", item.productId)
               .single();
-            if (fetchErr) throw new Error("Stock fetch failed (" + item.name + "): " + fetchErr.message);
+            if (fetchErr)
+              throw new Error(
+                "Stock fetch failed (" + item.name + "): " + fetchErr.message,
+              );
 
             const newStock = Math.max((cur ? cur.stock : 0) - item.qty, 0);
             const { error: stockErr } = await db
               .from("products")
               .update({ stock: newStock })
               .eq("id", item.productId);
-            if (stockErr) throw new Error("Stock update failed (" + item.name + "): " + stockErr.message);
+            if (stockErr)
+              throw new Error(
+                "Stock update failed (" + item.name + "): " + stockErr.message,
+              );
 
             const { error: logErr } = await db.from("inventory_log").insert({
               product_id: item.productId,
@@ -1032,9 +1166,6 @@
           }
           const script = document.createElement("script");
           script.src = "https://js.paystack.co/v1/inline.js";
-          script.integrity =
-            "sha512-/DJD2x0vNa3d3xrfEOShfP3PAmAyJSqYSxe4A7dMnLfnIJQMjKlWU/gy8gqfXkLU3Yw0J8+B4pzFxoJa02SBg==";
-          script.crossOrigin = "anonymous";
           script.onload = () => resolve();
           script.onerror = () => reject(new Error("Failed to load Paystack"));
           document.head.appendChild(script);
@@ -1050,7 +1181,10 @@
           }
           const ref = generateSaleRef();
           const handler = PaystackPop.setup({
-            key: (typeof PAYSTACK_PUBLIC_KEY !== "undefined" ? PAYSTACK_PUBLIC_KEY : "pk_test_YOUR_PAYSTACK_PUBLIC_KEY"),
+            key:
+              typeof PAYSTACK_PUBLIC_KEY !== "undefined"
+                ? PAYSTACK_PUBLIC_KEY
+                : "pk_test_YOUR_PAYSTACK_PUBLIC_KEY",
             email: email || "customer@pos.com",
             amount: Math.round(amountGHS * 100),
             currency: "GHS",
@@ -1133,16 +1267,23 @@ Discount:     ${formatCurrency(discount).padStart(18)}
 ${DASH}
 TOTAL:        ${formatCurrency(total).padStart(18)}
 ${DASH}
-Payment: ${selectedMethod.replace("_", " ").toUpperCase()}${(function() {
+Payment: ${selectedMethod.replace("_", " ").toUpperCase()}${(function () {
           if (selectedMethod === "cash") {
-            var tendered = parseFloat(document.getElementById("amountTendered").value) || 0;
+            var tendered =
+              parseFloat(document.getElementById("amountTendered").value) || 0;
             if (tendered > 0) {
               var change = tendered - total;
-              return "\nTendered:     " + formatCurrency(tendered).padStart(18) +
-                "\nChange:       " + formatCurrency(Math.max(change, 0)).padStart(18);
+              return (
+                "\nTendered:     " +
+                formatCurrency(tendered).padStart(18) +
+                "\nChange:       " +
+                formatCurrency(Math.max(change, 0)).padStart(18)
+              );
             }
           } else if (selectedMethod === "mobile_money") {
-            var num = (document.getElementById("momoNumber").value || "").trim();
+            var num = (
+              document.getElementById("momoNumber").value || ""
+            ).trim();
             var name = (document.getElementById("momoName").value || "").trim();
             var lines = "";
             if (num) lines += "\nMoMo No:  " + num;
@@ -1209,8 +1350,7 @@ ${LINE}`;
 
       /* ── Realtime Stock Sync ──────────────────────────────── */
       function initRealtimeStock() {
-        db
-          .channel("products-stock")
+        db.channel("products-stock")
           .on(
             "postgres_changes",
             { event: "UPDATE", schema: "public", table: "products" },
@@ -1242,7 +1382,11 @@ ${LINE}`;
         if (!fab) return;
 
         fab.addEventListener("click", function () {
-          if (document.getElementById("posRight").classList.contains("mob-cart-open")) {
+          if (
+            document
+              .getElementById("posRight")
+              .classList.contains("mob-cart-open")
+          ) {
             closeMobCart();
           } else {
             openMobCart();
@@ -1256,7 +1400,9 @@ ${LINE}`;
           var isMobile = window.matchMedia("(max-width: 768px)").matches;
           if (closeBtn) closeBtn.style.display = isMobile ? "flex" : "none";
           if (!isMobile) {
-            document.getElementById("posRight").classList.remove("mob-cart-open");
+            document
+              .getElementById("posRight")
+              .classList.remove("mob-cart-open");
             overlay.classList.remove("show");
             document.body.style.overflow = "";
           }
@@ -1270,7 +1416,10 @@ ${LINE}`;
         var posRight = document.getElementById("posRight");
         var overlay = document.getElementById("mobCartOverlay");
         if (posRight) posRight.classList.add("mob-cart-open");
-        if (overlay) { overlay.style.display = "block"; overlay.classList.add("show"); }
+        if (overlay) {
+          overlay.style.display = "block";
+          overlay.classList.add("show");
+        }
         document.body.style.overflow = "hidden";
       }
 
@@ -1278,7 +1427,12 @@ ${LINE}`;
         var posRight = document.getElementById("posRight");
         var overlay = document.getElementById("mobCartOverlay");
         if (posRight) posRight.classList.remove("mob-cart-open");
-        if (overlay) { overlay.classList.remove("show"); setTimeout(function(){ overlay.style.display = "none"; }, 300); }
+        if (overlay) {
+          overlay.classList.remove("show");
+          setTimeout(function () {
+            overlay.style.display = "none";
+          }, 300);
+        }
         document.body.style.overflow = "";
       }
 
@@ -1289,7 +1443,9 @@ ${LINE}`;
         badge.textContent = count;
         if (count > 0) {
           badge.classList.add("bump");
-          setTimeout(function () { badge.classList.remove("bump"); }, 300);
+          setTimeout(function () {
+            badge.classList.remove("bump");
+          }, 300);
         }
       }
 
