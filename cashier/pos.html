@@ -205,6 +205,17 @@
                 />
                 <div class="customer-dropdown" id="customerDropdown"></div>
                 <div id="selectedCustomerLabel" class="customer-label"></div>
+                <!-- Loyalty points badge + redeem toggle -->
+                <div class="loyalty-bar" id="loyaltyBar">
+                  <span class="loyalty-pts-label">
+                    <svg width="13" height="13" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                    <span id="loyaltyPtsText">0 pts</span>
+                  </span>
+                  <label class="loyalty-toggle-wrap">
+                    <input type="checkbox" id="redeemToggle" onchange="applyLoyalty()">
+                    <span class="loyalty-toggle-label">Redeem</span>
+                  </label>
+                </div>
               </div>
 
               <!-- Discount -->
@@ -766,11 +777,28 @@
           100,
         );
         const discount = (subtotal * discPct) / 100;
-        const total = subtotal + tax - discount;
+        const loyaltyDiscount = getLoyaltyDiscount();
+        const total = Math.max(subtotal + tax - discount - loyaltyDiscount, 0);
 
         DOM.dispSubtotal.textContent = formatCurrency(subtotal);
         DOM.dispTax.textContent = formatCurrency(tax);
         DOM.dispDiscount.textContent = formatCurrency(discount);
+
+        // Show/hide loyalty row
+        let loyaltyRow = document.getElementById("loyaltyDiscountRow");
+        if (loyaltyDiscount > 0) {
+          if (!loyaltyRow) {
+            loyaltyRow = document.createElement("div");
+            loyaltyRow.className = "total-row loyalty-discount-row";
+            loyaltyRow.id = "loyaltyDiscountRow";
+            loyaltyRow.innerHTML = '<span>★ Points Redeemed</span><span class="amount" id="dispLoyalty"></span>';
+            DOM.dispTotal.parentElement.insertAdjacentElement("beforebegin", loyaltyRow);
+          }
+          document.getElementById("dispLoyalty").textContent = "−" + formatCurrency(loyaltyDiscount);
+        } else if (loyaltyRow) {
+          loyaltyRow.remove();
+        }
+
         DOM.dispTotal.textContent = formatCurrency(total);
 
         if (cart.length) {
@@ -806,7 +834,7 @@
           100,
         );
         const discount = (subtotal * discPct) / 100;
-        const grandTotal = subtotal + tax - discount;
+        const grandTotal = Math.max(subtotal + tax - discount - getLoyaltyDiscount(), 0);
 
         const tendered =
           parseFloat(document.getElementById("amountTendered").value) || 0;
@@ -857,6 +885,27 @@
         setTendered(grandTotal);
       }
 
+      /* ── Loyalty Redemption ────────────────────────────── */
+      function applyLoyalty() {
+        updateTotals();
+      }
+
+      function getLoyaltyDiscount() {
+        const toggle = document.getElementById("redeemToggle");
+        if (!toggle || !toggle.checked || !selectedCustomer) return 0;
+        // 1 point = GH₵0.01 discount, capped at the cart total
+        const subtotal = cart.reduce((s, i) => s + i.price * i.qty, 0);
+        const tax = subtotal * 0.15;
+        const discPct = Math.min(Math.max(parseFloat(DOM.discountPct.value) || 0, 0), 100);
+        const baseDiscount = (subtotal * discPct) / 100;
+        const afterBase = subtotal + tax - baseDiscount;
+        const maxRedeemGHS = Math.min(
+          (selectedCustomer.loyaltyPoints || 0) * 0.01,
+          afterBase * 0.5  // cap at 50% of total
+        );
+        return parseFloat(maxRedeemGHS.toFixed(2));
+      }
+
       /* ── Customer Search ───────────────────────────────– */
       function searchCustomers() {
         const q = DOM.customerSearch.value.trim();
@@ -865,12 +914,19 @@
           hideCustomerDropdown();
           selectedCustomer = null;
           DOM.selectedCustomerLabel.textContent = "";
+          const lb = document.getElementById("loyaltyBar");
+          if (lb) lb.classList.remove("show");
+          const rt = document.getElementById("redeemToggle");
+          if (rt) rt.checked = false;
+          const lr = document.getElementById("loyaltyDiscountRow");
+          if (lr) lr.remove();
+          updateTotals();
           return;
         }
         DOM.custTimer = setTimeout(async () => {
           const { data } = await db
             .from("customers")
-            .select("id, name, phone, email")
+            .select("id, name, phone, email, loyalty_points")
             .or("name.ilike.%" + q + "%,phone.ilike.%" + q + "%")
             .limit(6);
 
@@ -881,7 +937,7 @@
             DOM.customerDropdown.innerHTML = data
               .map(
                 (c) =>
-                  `<div class="customer-option" onclick="selectCustomer(${c.id},'${escJs(c.name)}','${escJs(c.phone || "")}','${escJs(c.email || "")}')">${escHtml(c.name)}${c.phone ? " — " + escHtml(c.phone) : ""}</div>`,
+                  `<div class="customer-option" onclick="selectCustomer(${c.id},'${escJs(c.name)}','${escJs(c.phone || "")}','${escJs(c.email || "")}',${c.loyalty_points || 0})">${escHtml(c.name)}${c.phone ? " — " + escHtml(c.phone) : ""}<span class="customer-option-pts">★ ${c.loyalty_points || 0} pts</span></div>`,
               )
               .join("");
           }
@@ -889,11 +945,19 @@
         }, 300);
       }
 
-      function selectCustomer(id, name, phone, email) {
-        selectedCustomer = { id, name, phone, email };
+      function selectCustomer(id, name, phone, email, loyaltyPoints) {
+        selectedCustomer = { id, name, phone, email, loyaltyPoints: loyaltyPoints || 0 };
         DOM.customerSearch.value = name;
         DOM.selectedCustomerLabel.textContent = "✓ " + name;
+        // Show loyalty bar
+        const loyaltyBar = document.getElementById("loyaltyBar");
+        const loyaltyPtsText = document.getElementById("loyaltyPtsText");
+        const redeemToggle = document.getElementById("redeemToggle");
+        loyaltyPtsText.textContent = (loyaltyPoints || 0) + " pts";
+        redeemToggle.checked = false;
+        loyaltyBar.classList.add("show");
         hideCustomerDropdown();
+        updateTotals();
       }
 
       function hideCustomerDropdown() {
@@ -955,7 +1019,8 @@
           100,
         );
         const discount = (subtotal * discPct) / 100;
-        const total = subtotal + tax - discount;
+        const loyaltyDiscount = getLoyaltyDiscount();
+        const total = Math.max(subtotal + tax - discount - loyaltyDiscount, 0);
 
         for (const item of cart) {
           const { data: prod } = await db
@@ -983,19 +1048,19 @@
             total,
             async (paystackRef) => {
               showProcessing(true);
-              await saveSale(subtotal, tax, discount, total, paystackRef);
+              await saveSale(subtotal, tax, discount, loyaltyDiscount, total, paystackRef);
               showProcessing(false);
             },
             channels,
           );
         } else {
           showProcessing(true);
-          await saveSale(subtotal, tax, discount, total, null);
+          await saveSale(subtotal, tax, discount, loyaltyDiscount, total, null);
           showProcessing(false);
         }
       }
 
-      async function saveSale(subtotal, tax, discount, total, paystackRef) {
+      async function saveSale(subtotal, tax, discount, loyaltyDiscount, total, paystackRef) {
         const saleRef = generateSaleRef();
 
         const tendered =
@@ -1077,21 +1142,25 @@
           }
 
           if (selectedCustomer && selectedCustomer.id) {
-            const pts = Math.floor(total);
+            // Points earned: 1pt per GH₵1 of cash paid (after loyalty discount)
+            const ptsEarned = Math.floor(total);
+            // Points spent: loyaltyDiscount / 0.01 (since 1pt = GH₵0.01)
+            const ptsSpent = Math.round(loyaltyDiscount / 0.01);
             const { data: cust } = await db
               .from("customers")
               .select("loyalty_points")
               .eq("id", selectedCustomer.id)
               .single();
-            await db
+            const currentPts = cust ? cust.loyalty_points || 0 : 0;
+            const newPts = Math.max(currentPts - ptsSpent + ptsEarned, 0);
+            const { error: loyaltyErr } = await db
               .from("customers")
-              .update({
-                loyalty_points: (cust ? cust.loyalty_points || 0 : 0) + pts,
-              })
+              .update({ loyalty_points: newPts })
               .eq("id", selectedCustomer.id);
+            if (loyaltyErr) console.warn("Loyalty update failed:", loyaltyErr.message);
           }
 
-          showReceipt(saleRef, subtotal, tax, discount, total);
+          showReceipt(saleRef, subtotal, tax, discount, loyaltyDiscount, total);
           await loadProducts();
         } catch (err) {
           showToast("Checkout failed: " + err.message);
@@ -1146,7 +1215,7 @@
       }
 
       /* ── Receipt ───────────────────────────────────────── */
-      function showReceipt(saleRef, subtotal, tax, discount, total) {
+      function showReceipt(saleRef, subtotal, tax, discount, loyaltyDiscount, total) {
         const now = new Date();
         const months = [
           "Jan",
@@ -1206,7 +1275,7 @@ ${DASH}
 ${itemLines}${DASH}
 Subtotal:     ${formatCurrency(subtotal).padStart(18)}
 Tax (15%):    ${formatCurrency(tax).padStart(18)}
-Discount:     ${formatCurrency(discount).padStart(18)}
+Discount:     ${formatCurrency(discount).padStart(18)}${loyaltyDiscount > 0 ? "\nPts Redeemed: " + ("−" + formatCurrency(loyaltyDiscount)).padStart(18) : ""}
 ${DASH}
 TOTAL:        ${formatCurrency(total).padStart(18)}
 ${DASH}
@@ -1228,7 +1297,7 @@ Payment: ${selectedMethod.replace("_", " ").toUpperCase()}${(function () {
           }
           return "";
         })()}
-${DASH}
+${DASH}${selectedCustomer ? "\n★ Points earned: " + Math.floor(total) + " pts" : ""}
      Thank you for shopping!
 ${LINE}`;
 
@@ -1258,9 +1327,14 @@ ${LINE}`;
         DOM.discountPct.value = "0";
         document.getElementById("amountTendered").value = "";
         document.getElementById("changeDisplay").style.display = "none";
-        document.getElementById("momoNumber").value = "";
-        document.getElementById("momoName").value = "";
         document.getElementById("cashPanel").style.display = "flex";
+        // Reset loyalty bar
+        const loyaltyBar = document.getElementById("loyaltyBar");
+        if (loyaltyBar) loyaltyBar.classList.remove("show");
+        const redeemToggle = document.getElementById("redeemToggle");
+        if (redeemToggle) redeemToggle.checked = false;
+        const loyaltyRow = document.getElementById("loyaltyDiscountRow");
+        if (loyaltyRow) loyaltyRow.remove();
         document.getElementById("momoPanel").style.display = "none";
         document
           .querySelectorAll(".pay-option")
