@@ -170,222 +170,171 @@
             </div>
           </div>
 
-          <div class="cart-items" id="cartItems">
-            <div class="cart-empty">
-              <svg
-                width="40"
-                height="40"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="rgba(255,255,255,0.25)"
-                stroke-width="1.5"
-                class="cart-icon-centered"
-              >
-                <path
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"
-                />
-              </svg>
-              Cart is empty.<br />Add products to get started.
-            </div>
-          </div>
-
-          <div class="cart-footer">
-            <!-- Customer -->
-            <div class="customer-select-area">
-              <label>Customer (optional)</label>
-              <input
-                type="text"
-                id="customerSearch"
-                placeholder="Search by name or phone…"
-                autocomplete="off"
-              />
-              <div class="customer-dropdown" id="customerDropdown"></div>
-              <div id="selectedCustomerLabel" class="customer-label"></div>
-            </div>
-
-            <!-- Discount -->
-            <div class="discount-area">
-              <label>Discount</label>
-              <input
-                type="number"
-                id="discountPct"
-                value="0"
-                min="0"
-                max="100"
-                step="0.1"
-                title="Discount percentage"
-                placeholder="0"
-                oninput="updateTotals()"
-              />
-              <span class="discount-percent">%</span>
-            </div>
-
-            <!-- Totals -->
-            <div class="totals-section">
-              <div class="total-row">
-                <span>Subtotal</span
-                ><span class="amount" id="dispSubtotal">GH&#8373; 0.00</span>
-              </div>
-              <div class="total-row">
-                <span>Tax (15%)</span
-                ><span class="amount" id="dispTax">GH&#8373; 0.00</span>
-              </div>
-              <div class="total-row">
-                <span>Discount</span
-                ><span class="amount" id="dispDiscount">GH&#8373; 0.00</span>
-              </div>
-              <div class="total-row grand">
-                <span>TOTAL</span
-                ><span class="amount" id="dispTotal">GH&#8373; 0.00</span>
-              </div>
-            </div>
-
-            <!-- Payment -->
-            <div class="payment-methods">
-              <span class="payment-label">Payment Method</span>
-              <div class="pay-options">
-                <div
-                  class="pay-option active"
-                  data-method="cash"
-                  onclick="selectPayment('cash', this)"
+          <!-- Scrollable body: cart items + footer controls -->
+          <div class="cart-scroll-body" id="cartScrollBody">
+            <div class="cart-items" id="cartItems">
+              <div class="cart-empty">
+                <svg
+                  width="40"
+                  height="40"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="rgba(255,255,255,0.25)"
+                  stroke-width="1.5"
+                  class="cart-icon-centered"
                 >
-                  Cash
-                </div>
-                <div
-                  class="pay-option"
-                  data-method="mobile_money"
-                  onclick="selectPayment('mobile_money', this)"
-                >
-                  Mobile Money
-                </div>
-                <div
-                  class="pay-option"
-                  data-method="card"
-                  onclick="selectPayment('card', this)"
-                >
-                  Card
-                </div>
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"
+                  />
+                </svg>
+                Cart is empty.<br />Add products to get started.
               </div>
             </div>
 
-            <!-- Cash Change Calculator -->
-            <div id="cashPanel" class="payment-extra-panel">
-              <label class="form-label">Amount Tendered (GH₵)</label>
-              <input
-                type="number"
-                id="amountTendered"
-                class="form-control tendered-input"
-                placeholder="Enter amount given…"
-                min="0"
-                step="0.01"
-                oninput="calcChange()"
-              />
-              <!-- Quick bill buttons -->
-              <div class="quick-bills" id="quickBills">
-                <span class="quick-bill-label">Quick:</span>
-                <button class="quick-bill-btn" onclick="setTendered(5)">
-                  ₵5
-                </button>
-                <button class="quick-bill-btn" onclick="setTendered(10)">
-                  ₵10
-                </button>
-                <button class="quick-bill-btn" onclick="setTendered(20)">
-                  ₵20
-                </button>
-                <button class="quick-bill-btn" onclick="setTendered(50)">
-                  ₵50
-                </button>
-                <button class="quick-bill-btn" onclick="setTendered(100)">
-                  ₵100
-                </button>
-                <button class="quick-bill-btn" onclick="setTendered(200)">
-                  ₵200
-                </button>
-                <button
-                  class="quick-bill-btn exact-btn"
-                  id="exactBtn"
-                  onclick="setExact()"
-                >
-                  Exact
-                </button>
-              </div>
-              <!-- Change display -->
-              <div class="change-display" id="changeDisplay">
-                <div class="change-row">
-                  <span class="change-label">Total</span>
-                  <span
-                    class="change-figure change-total-figure"
-                    id="changeTotalAmt"
-                    >GH₵ 0.00</span
-                  >
-                </div>
-                <div class="change-row">
-                  <span class="change-label">Tendered</span>
-                  <span
-                    class="change-figure change-tendered-figure"
-                    id="changeTenderedAmt"
-                    >GH₵ 0.00</span
-                  >
-                </div>
-                <div class="change-divider"></div>
-                <div class="change-row">
-                  <span class="change-label change-label-emphasis">CHANGE</span>
-                  <span class="change-amount" id="changeAmount">GH₵ 0.00</span>
-                </div>
-              </div>
-            </div>
-
-            <!-- MoMo Details -->
-            <div id="momoPanel" class="payment-extra-panel">
-              <div class="form-group">
-                <label class="form-label">MoMo Number</label>
-                <input
-                  type="tel"
-                  id="momoNumber"
-                  class="form-control"
-                  placeholder="e.g. 0241234567"
-                  maxlength="13"
-                  oninput="verifyMomoCustomer()"
-                />
-                <div
-                  id="momoVerifyStatus"
-                  class="form-error"
-                  style="display: none; margin-top: 4px"
-                ></div>
-              </div>
-              <div class="form-group">
-                <label class="form-label">Account Name</label>
+            <div class="cart-footer">
+              <!-- Customer -->
+              <div class="customer-select-area">
+                <label>Customer (optional)</label>
                 <input
                   type="text"
-                  id="momoName"
-                  class="form-control"
-                  placeholder="Name on the account (auto-filled if verified)"
+                  id="customerSearch"
+                  placeholder="Search by name or phone…"
+                  autocomplete="off"
                 />
-                />
+                <div class="customer-dropdown" id="customerDropdown"></div>
+                <div id="selectedCustomerLabel" class="customer-label"></div>
               </div>
-            </div>
 
+              <!-- Discount -->
+              <div class="discount-area">
+                <label>Discount</label>
+                <input
+                  type="number"
+                  id="discountPct"
+                  value="0"
+                  min="0"
+                  max="100"
+                  step="0.1"
+                  title="Discount percentage"
+                  placeholder="0"
+                  oninput="updateTotals()"
+                />
+                <span class="discount-percent">%</span>
+              </div>
+
+              <!-- Totals -->
+              <div class="totals-section">
+                <div class="total-row">
+                  <span>Subtotal</span
+                  ><span class="amount" id="dispSubtotal">GH&#8373; 0.00</span>
+                </div>
+                <div class="total-row">
+                  <span>Tax (15%)</span
+                  ><span class="amount" id="dispTax">GH&#8373; 0.00</span>
+                </div>
+                <div class="total-row">
+                  <span>Discount</span
+                  ><span class="amount" id="dispDiscount">GH&#8373; 0.00</span>
+                </div>
+                <div class="total-row grand">
+                  <span>TOTAL</span
+                  ><span class="amount" id="dispTotal">GH&#8373; 0.00</span>
+                </div>
+              </div>
+
+              <!-- Payment Method -->
+              <div class="payment-methods">
+                <span class="payment-label">Payment Method</span>
+                <div class="pay-options">
+                  <div
+                    class="pay-option active"
+                    data-method="cash"
+                    onclick="selectPayment('cash', this)"
+                  >
+                    <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V5a2 2 0 00-2-2h-4a2 2 0 00-2 2v2"/></svg>
+                    Cash
+                  </div>
+                  <div
+                    class="pay-option"
+                    data-method="mobile_money"
+                    onclick="selectPayment('mobile_money', this)"
+                  >
+                    <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><rect x="5" y="2" width="14" height="20" rx="2"/><line x1="12" y1="18" x2="12.01" y2="18"/></svg>
+                    MoMo
+                  </div>
+                  <div
+                    class="pay-option"
+                    data-method="card"
+                    onclick="selectPayment('card', this)"
+                  >
+                    <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><rect x="1" y="4" width="22" height="16" rx="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg>
+                    Card
+                  </div>
+                </div>
+              </div>
+
+              <!-- Cash Change Calculator -->
+              <div id="cashPanel" class="payment-extra-panel">
+                <label class="form-label">Amount Tendered (GH₵)</label>
+                <input
+                  type="number"
+                  id="amountTendered"
+                  class="form-control tendered-input"
+                  placeholder="Enter amount given…"
+                  min="0"
+                  step="0.01"
+                  oninput="calcChange()"
+                />
+                <div class="quick-bills" id="quickBills">
+                  <span class="quick-bill-label">Quick:</span>
+                  <button class="quick-bill-btn" onclick="setTendered(5)">₵5</button>
+                  <button class="quick-bill-btn" onclick="setTendered(10)">₵10</button>
+                  <button class="quick-bill-btn" onclick="setTendered(20)">₵20</button>
+                  <button class="quick-bill-btn" onclick="setTendered(50)">₵50</button>
+                  <button class="quick-bill-btn" onclick="setTendered(100)">₵100</button>
+                  <button class="quick-bill-btn" onclick="setTendered(200)">₵200</button>
+                  <button class="quick-bill-btn exact-btn" id="exactBtn" onclick="setExact()">Exact</button>
+                </div>
+                <div class="change-display" id="changeDisplay">
+                  <div class="change-row">
+                    <span class="change-label">Total</span>
+                    <span class="change-figure change-total-figure" id="changeTotalAmt">GH₵ 0.00</span>
+                  </div>
+                  <div class="change-row">
+                    <span class="change-label">Tendered</span>
+                    <span class="change-figure change-tendered-figure" id="changeTenderedAmt">GH₵ 0.00</span>
+                  </div>
+                  <div class="change-divider"></div>
+                  <div class="change-row">
+                    <span class="change-label change-label-emphasis">CHANGE</span>
+                    <span class="change-amount" id="changeAmount">GH₵ 0.00</span>
+                  </div>
+                </div>
+              </div>
+
+              <!-- MoMo — handled by Paystack -->
+              <div id="momoPanel" class="payment-extra-panel momo-info-panel">
+                <div class="momo-info-icon">
+                  <svg width="28" height="28" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><rect x="5" y="2" width="14" height="20" rx="2"/><line x1="12" y1="18" x2="12.01" y2="18" stroke-width="2.5"/></svg>
+                </div>
+                <p class="momo-info-text">Tap <strong>Charge</strong> below to open the secure Paystack page and complete your Mobile Money payment.</p>
+              </div>
+
+            </div><!-- /.cart-footer -->
+          </div><!-- /.cart-scroll-body -->
+
+          <!-- Sticky checkout bar — always visible -->
+          <div class="cart-checkout-bar">
             <button
               class="checkout-btn"
               id="checkoutBtn"
               onclick="checkout()"
               disabled
             >
-              <svg
-                width="18"
-                height="18"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-                stroke-width="2"
-              >
-                <path
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
-                />
+              <svg width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
               </svg>
               Charge GH&#8373; 0.00
             </button>
@@ -1026,7 +975,9 @@
           }
         }
 
-        if (selectedMethod === "card") {
+        if (selectedMethod === "card" || selectedMethod === "mobile_money") {
+          const channels =
+            selectedMethod === "mobile_money" ? ["mobile_money"] : ["card"];
           payWithPaystack(
             selectedCustomer?.email || currentUser.email || "customer@pos.com",
             total,
@@ -1035,6 +986,7 @@
               await saveSale(subtotal, tax, discount, total, paystackRef);
               showProcessing(false);
             },
+            channels,
           );
         } else {
           showProcessing(true);
@@ -1051,14 +1003,6 @@
         const changeGiven =
           selectedMethod === "cash" && tendered
             ? parseFloat(Math.max(tendered - total, 0).toFixed(2))
-            : null;
-        const momoNumber =
-          selectedMethod === "mobile_money"
-            ? document.getElementById("momoNumber").value.trim() || null
-            : null;
-        const momoName =
-          selectedMethod === "mobile_money"
-            ? document.getElementById("momoName").value.trim() || null
             : null;
 
         try {
@@ -1077,8 +1021,6 @@
               paystack_ref: paystackRef || null,
               amount_tendered: tendered,
               change_given: changeGiven,
-              momo_number: momoNumber,
-              momo_name: momoName,
             })
             .select("id")
             .single();
@@ -1172,7 +1114,7 @@
         });
       }
 
-      async function payWithPaystack(email, amountGHS, onSuccess) {
+      async function payWithPaystack(email, amountGHS, onSuccess, channels) {
         try {
           await loadPaystackScript();
           if (typeof PaystackPop === "undefined") {
@@ -1189,6 +1131,7 @@
             amount: Math.round(amountGHS * 100),
             currency: "GHS",
             ref: ref,
+            channels: channels || ["card"],
             callback: function (response) {
               onSuccess(response.reference);
             },
@@ -1281,14 +1224,7 @@ Payment: ${selectedMethod.replace("_", " ").toUpperCase()}${(function () {
               );
             }
           } else if (selectedMethod === "mobile_money") {
-            var num = (
-              document.getElementById("momoNumber").value || ""
-            ).trim();
-            var name = (document.getElementById("momoName").value || "").trim();
-            var lines = "";
-            if (num) lines += "\nMoMo No:  " + num;
-            if (name) lines += "\nAccount:  " + name;
-            return lines;
+            return "\nPayment via Mobile Money (Paystack)";
           }
           return "";
         })()}
