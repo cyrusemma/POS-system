@@ -237,21 +237,43 @@
 
             <!-- Cash Change Calculator -->
             <div id="cashPanel" class="payment-extra-panel">
-              <div class="form-group">
-                <label class="form-label">Amount Tendered (GH₵)</label>
-                <input
-                  type="number"
-                  id="amountTendered"
-                  class="form-control"
-                  placeholder="0.00"
-                  min="0"
-                  step="0.01"
-                  oninput="calcChange()"
-                />
+              <label class="form-label">Amount Tendered (GH₵)</label>
+              <input
+                type="number"
+                id="amountTendered"
+                class="form-control"
+                placeholder="Enter amount given…"
+                min="0"
+                step="0.01"
+                oninput="calcChange()"
+                style="font-size:18px;font-weight:700;padding:12px 14px;letter-spacing:-0.3px"
+              />
+              <!-- Quick bill buttons -->
+              <div class="quick-bills" id="quickBills">
+                <span class="quick-bill-label">Quick:</span>
+                <button class="quick-bill-btn" onclick="setTendered(5)">₵5</button>
+                <button class="quick-bill-btn" onclick="setTendered(10)">₵10</button>
+                <button class="quick-bill-btn" onclick="setTendered(20)">₵20</button>
+                <button class="quick-bill-btn" onclick="setTendered(50)">₵50</button>
+                <button class="quick-bill-btn" onclick="setTendered(100)">₵100</button>
+                <button class="quick-bill-btn" onclick="setTendered(200)">₵200</button>
+                <button class="quick-bill-btn exact-btn" id="exactBtn" onclick="setExact()">Exact</button>
               </div>
-              <div class="change-display" id="changeDisplay">
-                <span class="change-label">Change</span>
-                <span class="change-amount" id="changeAmount">GH₵ 0.00</span>
+              <!-- Change display -->
+              <div class="change-display" id="changeDisplay" style="display:none">
+                <div class="change-row">
+                  <span class="change-label">Total</span>
+                  <span class="change-figure" id="changeTotalAmt" style="color:rgba(255,255,255,0.6)">GH₵ 0.00</span>
+                </div>
+                <div class="change-row">
+                  <span class="change-label">Tendered</span>
+                  <span class="change-figure" id="changeTenderedAmt" style="color:rgba(255,255,255,0.8)">GH₵ 0.00</span>
+                </div>
+                <div class="change-divider"></div>
+                <div class="change-row">
+                  <span class="change-label" style="font-size:14px;font-weight:700;color:#fff">CHANGE</span>
+                  <span class="change-amount" id="changeAmount" style="font-size:20px">GH₵ 0.00</span>
+                </div>
               </div>
             </div>
 
@@ -753,41 +775,60 @@
         el.classList.add("active");
 
         document.getElementById("cashPanel").style.display =
-          method === "cash" ? "" : "none";
+          method === "cash" ? "flex" : "none";
         document.getElementById("momoPanel").style.display =
-          method === "mobile_money" ? "" : "none";
+          method === "mobile_money" ? "flex" : "none";
 
         if (method === "cash") calcChange();
       }
 
       function calcChange() {
-        const total = cart.reduce((s, i) => s + i.price * i.qty, 0);
-        const tax = total * 0.15;
-        const discPct = Math.min(
-          Math.max(parseFloat(DOM.discountPct.value) || 0, 0),
-          100,
-        );
-        const discount = (total * discPct) / 100;
-        const grandTotal = total + tax - discount;
+        const subtotal = cart.reduce((s, i) => s + i.price * i.qty, 0);
+        const tax = subtotal * 0.15;
+        const discPct = Math.min(Math.max(parseFloat(DOM.discountPct.value) || 0, 0), 100);
+        const discount = (subtotal * discPct) / 100;
+        const grandTotal = subtotal + tax - discount;
 
-        const tendered =
-          parseFloat(document.getElementById("amountTendered").value) || 0;
+        const tendered = parseFloat(document.getElementById("amountTendered").value) || 0;
         const changeDisplay = document.getElementById("changeDisplay");
         const changeAmount = document.getElementById("changeAmount");
+        const changeTotalAmt = document.getElementById("changeTotalAmt");
+        const changeTenderedAmt = document.getElementById("changeTenderedAmt");
 
         if (tendered > 0) {
           const change = tendered - grandTotal;
           changeDisplay.style.display = "flex";
-          changeAmount.textContent = formatCurrency(Math.max(change, 0));
-          changeAmount.style.color =
-            change < 0 ? "var(--danger)" : "var(--success)";
+          if (changeTotalAmt) changeTotalAmt.textContent = formatCurrency(grandTotal);
+          if (changeTenderedAmt) changeTenderedAmt.textContent = formatCurrency(tendered);
+
           if (change < 0) {
-            changeAmount.textContent =
-              "Short by " + formatCurrency(Math.abs(change));
+            changeAmount.textContent = "Short by " + formatCurrency(Math.abs(change));
+            changeAmount.style.color = "var(--danger)";
+            changeAmount.style.background = "rgba(192,57,43,0.12)";
+          } else {
+            changeAmount.textContent = formatCurrency(change);
+            changeAmount.style.color = "var(--success)";
+            changeAmount.style.background = "rgba(30,132,73,0.12)";
           }
         } else {
           changeDisplay.style.display = "none";
         }
+      }
+
+      function setTendered(amount) {
+        const input = document.getElementById("amountTendered");
+        input.value = amount.toFixed(2);
+        calcChange();
+        input.focus();
+      }
+
+      function setExact() {
+        const subtotal = cart.reduce((s, i) => s + i.price * i.qty, 0);
+        const tax = subtotal * 0.15;
+        const discPct = Math.min(Math.max(parseFloat(DOM.discountPct.value) || 0, 0), 100);
+        const discount = (subtotal * discPct) / 100;
+        const grandTotal = subtotal + tax - discount;
+        setTendered(grandTotal);
       }
 
       /* ── Customer Search ───────────────────────────────– */
@@ -1010,7 +1051,7 @@
           }
           const ref = generateSaleRef();
           const handler = PaystackPop.setup({
-            key: "pk_test_YOUR_PAYSTACK_PUBLIC_KEY",
+            key: (typeof PAYSTACK_PUBLIC_KEY !== "undefined" ? PAYSTACK_PUBLIC_KEY : "pk_test_YOUR_PAYSTACK_PUBLIC_KEY"),
             email: email || "customer@pos.com",
             amount: Math.round(amountGHS * 100),
             currency: "GHS",
@@ -1143,7 +1184,7 @@ ${LINE}`;
         document.getElementById("changeDisplay").style.display = "none";
         document.getElementById("momoNumber").value = "";
         document.getElementById("momoName").value = "";
-        document.getElementById("cashPanel").style.display = "";
+        document.getElementById("cashPanel").style.display = "flex";
         document.getElementById("momoPanel").style.display = "none";
         document
           .querySelectorAll(".pay-option")

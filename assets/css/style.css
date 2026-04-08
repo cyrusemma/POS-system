@@ -3036,14 +3036,135 @@ tr.low-stock td {
   border-top: 1px solid rgba(255, 255, 255, 0.1);
 }
 
-/* Display utilities for dynamic elements */
-.change-display {
-  display: none;
+/* ── Payment Extra Panels (Cash / MoMo) ─────────────────────── */
+.payment-extra-panel {
+  display: none; /* shown via JS as flex */
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 10px;
+  padding: 14px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid var(--glass-border);
+  border-radius: 12px;
 }
 
-.payment-extra-panel {
-  display: none;
+.quick-bills {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-wrap: wrap;
 }
+
+.quick-bill-label {
+  font-size: 11px;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.4);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  white-space: nowrap;
+  margin-right: 2px;
+}
+
+.quick-bill-btn {
+  padding: 5px 10px;
+  border-radius: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  background: rgba(255, 255, 255, 0.07);
+  color: rgba(255, 255, 255, 0.8);
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.15s;
+  font-family: inherit;
+}
+
+.quick-bill-btn:hover {
+  background: rgba(255, 255, 255, 0.14);
+  border-color: rgba(255, 255, 255, 0.28);
+  color: #fff;
+}
+
+.quick-bill-btn.exact-btn {
+  border-color: rgba(24, 95, 165, 0.5);
+  background: rgba(24, 95, 165, 0.12);
+  color: #7cb9f4;
+}
+
+.quick-bill-btn.exact-btn:hover {
+  background: rgba(24, 95, 165, 0.22);
+}
+
+.change-display {
+  display: none; /* shown via JS as flex */
+  flex-direction: column;
+  gap: 4px;
+  padding: 12px 14px;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 10px;
+}
+
+.change-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 2px 0;
+}
+
+.change-label {
+  font-size: 12px;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.5);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.change-figure {
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.change-divider {
+  height: 1px;
+  background: rgba(255, 255, 255, 0.1);
+  margin: 6px 0;
+}
+
+.change-amount {
+  font-size: 20px;
+  font-weight: 800;
+  color: var(--success);
+  letter-spacing: -0.5px;
+  padding: 2px 8px;
+  border-radius: 6px;
+  transition: color 0.2s, background 0.2s;
+}
+
+/* Light theme */
+[data-theme="light"] .payment-extra-panel {
+  background: rgba(0, 0, 0, 0.03);
+  border-color: rgba(0, 0, 0, 0.1);
+}
+
+[data-theme="light"] .quick-bill-btn {
+  border-color: rgba(0, 0, 0, 0.12);
+  background: rgba(0, 0, 0, 0.04);
+  color: #374151;
+}
+
+[data-theme="light"] .quick-bill-btn:hover {
+  background: rgba(0, 0, 0, 0.08);
+}
+
+[data-theme="light"] .quick-bill-label { color: #9ca3af; }
+
+[data-theme="light"] .change-display {
+  background: rgba(0, 0, 0, 0.03);
+  border-color: rgba(0, 0, 0, 0.1);
+}
+
+[data-theme="light"] .change-divider { background: rgba(0, 0, 0, 0.1); }
+[data-theme="light"] .change-label { color: rgba(0, 0, 0, 0.45); }
 
 /* Light theme overrides */
 [data-theme="light"] .border-t {
