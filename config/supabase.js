@@ -1,8 +1,8 @@
 const SUPABASE_URL = "https://ngjtygpuykvzlnnjqmdo.supabase.co";
 const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im5nanR5Z3B1eWt2emxubmpxbWRvIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQ1NjMzNzEsImV4cCI6MjA5MDEzOTM3MX0.mo2FLZcR8i9JXmHi1D2uzwZh4wlFfvL0jBsMnyIqFlU";
 
-// ── Paystack Public Key — replace with your key from paystack.com/settings ──
-const PAYSTACK_PUBLIC_KEY = "pk_test_YOUR_PAYSTACK_PUBLIC_KEY";
+
+const PAYSTACK_PUBLIC_KEY = "pk_live_dbbff67157a85123f7aca7552db62ef06a506057";
 
 let db = null;
 
