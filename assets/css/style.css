@@ -1109,10 +1109,59 @@ tr.low-stock td {
   font-weight: 700;
 }
 
-.pos-header .pos-user {
-  font-size: 13px;
-  color: rgba(255, 255, 255, 0.55);
+/* Cashier identity badge in POS header */
+.cashier-badge {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  padding: 6px 12px 6px 6px;
+  background: rgba(255, 255, 255, 0.07);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 40px;
 }
+
+.cashier-avatar {
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  background: var(--primary);
+  color: #fff;
+  font-size: 15px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.cashier-info {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.2;
+}
+
+.cashier-name {
+  font-size: 13.5px;
+  font-weight: 700;
+  color: #fff;
+  white-space: nowrap;
+}
+
+.cashier-role {
+  font-size: 10.5px;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.45);
+  text-transform: uppercase;
+  letter-spacing: 0.4px;
+}
+
+[data-theme="light"] .cashier-badge {
+  background: rgba(0, 0, 0, 0.05);
+  border-color: rgba(0, 0, 0, 0.1);
+}
+
+[data-theme="light"] .cashier-name { color: #1a1a2e; }
+[data-theme="light"] .cashier-role { color: rgba(0, 0, 0, 0.45); }
 
 /* Product search & filters */
 .pos-search {
@@ -3677,8 +3726,19 @@ tr.low-stock td {
     font-size: 15px;
   }
 
-  .pos-header .pos-user {
-    font-size: 11px;
+  .cashier-badge {
+    padding: 4px 8px 4px 4px;
+    gap: 6px;
+  }
+
+  .cashier-info {
+    display: none;
+  }
+
+  .cashier-avatar {
+    width: 30px;
+    height: 30px;
+    font-size: 13px;
   }
 
   .page-header-actions {

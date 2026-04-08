@@ -31,7 +31,13 @@
         <div class="pos-header">
           <div>
             <h1>MY STORE POS</h1>
-            <div class="pos-user" id="posUserInfo">Loading…</div>
+          </div>
+          <div class="cashier-badge" id="cashierBadge">
+            <div class="cashier-avatar" id="cashierAvatar">?</div>
+            <div class="cashier-info">
+              <span class="cashier-name" id="cashierName">Loading…</span>
+              <span class="cashier-role" id="cashierRole"></span>
+            </div>
           </div>
           <div class="page-header-actions">
             <button
@@ -513,8 +519,10 @@
           currentUser.name || currentUser.email,
         );
 
-        document.getElementById("posUserInfo").textContent =
-          (currentUser.name || currentUser.email) + " — " + currentUser.role;
+        const displayName = currentUser.name || currentUser.email.split("@")[0];
+        document.getElementById("cashierName").textContent = displayName;
+        document.getElementById("cashierRole").textContent = currentUser.role.charAt(0).toUpperCase() + currentUser.role.slice(1);
+        document.getElementById("cashierAvatar").textContent = displayName.charAt(0).toUpperCase();
 
         console.log("📂 Loading categories...");
         await loadCategories();
