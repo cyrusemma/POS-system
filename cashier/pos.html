@@ -127,9 +127,9 @@
         <div class="cart-panel">
           <div class="cart-header">
             <h2>Cart</h2>
-            <div style="display:flex;align-items:center;gap:10px;">
+            <div class="cart-header-right">
               <span class="cart-count" id="cartCount">0</span>
-              <button id="mobCartClose" onclick="closeMobCart()" aria-label="Close cart" style="display:none;align-items:center;justify-content:center;width:32px;height:32px;border-radius:10px;border:1px solid rgba(255,255,255,0.18);background:rgba(255,255,255,0.08);color:#fff;cursor:pointer;">
+              <button id="mobCartClose" onclick="closeMobCart()" aria-label="Close cart" class="mob-close-btn">
                 <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/></svg>
               </button>
             </div>
@@ -241,12 +241,11 @@
               <input
                 type="number"
                 id="amountTendered"
-                class="form-control"
+                class="form-control tendered-input"
                 placeholder="Enter amount given…"
                 min="0"
                 step="0.01"
                 oninput="calcChange()"
-                style="font-size:18px;font-weight:700;padding:12px 14px;letter-spacing:-0.3px"
               />
               <!-- Quick bill buttons -->
               <div class="quick-bills" id="quickBills">
@@ -260,19 +259,19 @@
                 <button class="quick-bill-btn exact-btn" id="exactBtn" onclick="setExact()">Exact</button>
               </div>
               <!-- Change display -->
-              <div class="change-display" id="changeDisplay" style="display:none">
+              <div class="change-display" id="changeDisplay">
                 <div class="change-row">
                   <span class="change-label">Total</span>
-                  <span class="change-figure" id="changeTotalAmt" style="color:rgba(255,255,255,0.6)">GH₵ 0.00</span>
+                  <span class="change-figure change-total-figure" id="changeTotalAmt">GH₵ 0.00</span>
                 </div>
                 <div class="change-row">
                   <span class="change-label">Tendered</span>
-                  <span class="change-figure" id="changeTenderedAmt" style="color:rgba(255,255,255,0.8)">GH₵ 0.00</span>
+                  <span class="change-figure change-tendered-figure" id="changeTenderedAmt">GH₵ 0.00</span>
                 </div>
                 <div class="change-divider"></div>
                 <div class="change-row">
-                  <span class="change-label" style="font-size:14px;font-weight:700;color:#fff">CHANGE</span>
-                  <span class="change-amount" id="changeAmount" style="font-size:20px">GH₵ 0.00</span>
+                  <span class="change-label change-label-emphasis">CHANGE</span>
+                  <span class="change-amount" id="changeAmount">GH₵ 0.00</span>
                 </div>
               </div>
             </div>

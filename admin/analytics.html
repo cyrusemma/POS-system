@@ -111,8 +111,8 @@
       /* ── Glass Card ─────────────────────────────────────────── */
       .an-card {
         background: var(--an-card);
-        backdrop-filter: blur(12px);
         -webkit-backdrop-filter: blur(12px);
+        backdrop-filter: blur(12px);
         border: 1px solid var(--an-border);
         border-radius: 16px;
         overflow: hidden;
@@ -370,6 +370,7 @@
         pointer-events: none;
         z-index: 9999;
         white-space: nowrap;
+        -webkit-backdrop-filter: blur(12px);
         backdrop-filter: blur(12px);
         display: none;
         font-family: 'Inter', sans-serif;
