@@ -1,0 +1,15 @@
+{
+  "compilerOptions": {
+    "lib": ["deno.window", "deno.unstable"],
+    "target": "ES2020",
+    "strict": true,
+    "skipLibCheck": true,
+    "noImplicitAny": false,
+    "allowJs": true,
+    "jsx": "react-jsx"
+  },
+  "imports": {
+    "https://deno.land/std@0.168.0/": "https://deno.land/std@0.168.0/",
+    "https://esm.sh/": "https://esm.sh/"
+  }
+}

@@ -4,35 +4,41 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Analytics — Admin</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400&display=swap" rel="stylesheet" />
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
     <link rel="stylesheet" href="../assets/css/style.css" />
 
     <style>
       /* ── Analytics Variables ───────────────────────────────── */
       :root {
         --indigo: #6366f1;
-        --indigo-dim: rgba(99,102,241,0.15);
+        --indigo-dim: rgba(99, 102, 241, 0.15);
         --emerald: #10b981;
-        --emerald-dim: rgba(16,185,129,0.15);
+        --emerald-dim: rgba(16, 185, 129, 0.15);
         --rose: #f43f5e;
-        --rose-dim: rgba(244,63,94,0.15);
+        --rose-dim: rgba(244, 63, 94, 0.15);
         --amber: #f59e0b;
-        --amber-dim: rgba(245,158,11,0.15);
+        --amber-dim: rgba(245, 158, 11, 0.15);
         --slate: #94a3b8;
         --an-bg: #0a0a0f;
-        --an-card: rgba(255,255,255,0.04);
-        --an-border: rgba(255,255,255,0.08);
-        --an-border-bright: rgba(255,255,255,0.14);
+        --an-card: rgba(255, 255, 255, 0.04);
+        --an-border: rgba(255, 255, 255, 0.08);
+        --an-border-bright: rgba(255, 255, 255, 0.14);
         --an-text: #e2e8f0;
         --an-muted: #64748b;
-        --an-subtle: rgba(255,255,255,0.06);
+        --an-subtle: rgba(255, 255, 255, 0.06);
       }
 
       /* ── Base Override for Analytics Page ─────────────────── */
       .main-content {
         background: var(--an-bg);
-        font-family: 'Inter', 'Plus Jakarta Sans', sans-serif;
+        font-family: "Inter", "Plus Jakarta Sans", sans-serif;
         color: var(--an-text);
       }
 
@@ -69,7 +75,7 @@
       /* ── Date Range Pills ───────────────────────────────────── */
       .date-pills {
         display: flex;
-        background: rgba(255,255,255,0.04);
+        background: rgba(255, 255, 255, 0.04);
         border: 1px solid var(--an-border);
         border-radius: 12px;
         padding: 4px;
@@ -90,12 +96,14 @@
         letter-spacing: 0.2px;
       }
 
-      .date-pill:hover { color: var(--an-text); }
+      .date-pill:hover {
+        color: var(--an-text);
+      }
 
       .date-pill.active {
         background: var(--indigo);
         color: #fff;
-        box-shadow: 0 2px 12px rgba(99,102,241,0.4);
+        box-shadow: 0 2px 12px rgba(99, 102, 241, 0.4);
       }
 
       /* ── Section Label ──────────────────────────────────────── */
@@ -134,36 +142,70 @@
         padding: 22px 24px;
         position: relative;
         overflow: hidden;
-        transition: border-color 0.2s, transform 0.2s;
+        transition:
+          border-color 0.2s,
+          transform 0.2s;
       }
 
       .kpi-card::after {
-        content: '';
+        content: "";
         position: absolute;
-        bottom: 0; left: 0; right: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
         height: 3px;
         border-radius: 0 0 16px 16px;
       }
 
-      .kpi-card:nth-child(1)::after { background: var(--indigo); box-shadow: 0 0 16px rgba(99,102,241,0.6); }
-      .kpi-card:nth-child(2)::after { background: var(--emerald); box-shadow: 0 0 16px rgba(16,185,129,0.6); }
-      .kpi-card:nth-child(3)::after { background: var(--amber); box-shadow: 0 0 16px rgba(245,158,11,0.6); }
-      .kpi-card:nth-child(4)::after { background: var(--rose); box-shadow: 0 0 16px rgba(244,63,94,0.6); }
+      .kpi-card:nth-child(1)::after {
+        background: var(--indigo);
+        box-shadow: 0 0 16px rgba(99, 102, 241, 0.6);
+      }
+      .kpi-card:nth-child(2)::after {
+        background: var(--emerald);
+        box-shadow: 0 0 16px rgba(16, 185, 129, 0.6);
+      }
+      .kpi-card:nth-child(3)::after {
+        background: var(--amber);
+        box-shadow: 0 0 16px rgba(245, 158, 11, 0.6);
+      }
+      .kpi-card:nth-child(4)::after {
+        background: var(--rose);
+        box-shadow: 0 0 16px rgba(244, 63, 94, 0.6);
+      }
 
-      .kpi-card:hover { border-color: var(--an-border-bright); transform: translateY(-2px); }
+      .kpi-card:hover {
+        border-color: var(--an-border-bright);
+        transform: translateY(-2px);
+      }
 
       .kpi-icon {
-        width: 38px; height: 38px;
+        width: 38px;
+        height: 38px;
         border-radius: 10px;
-        display: flex; align-items: center; justify-content: center;
+        display: flex;
+        align-items: center;
+        justify-content: center;
         margin-bottom: 16px;
         font-size: 18px;
       }
 
-      .kpi-card:nth-child(1) .kpi-icon { background: var(--indigo-dim); color: var(--indigo); }
-      .kpi-card:nth-child(2) .kpi-icon { background: var(--emerald-dim); color: var(--emerald); }
-      .kpi-card:nth-child(3) .kpi-icon { background: var(--amber-dim); color: var(--amber); }
-      .kpi-card:nth-child(4) .kpi-icon { background: var(--rose-dim); color: var(--rose); }
+      .kpi-card:nth-child(1) .kpi-icon {
+        background: var(--indigo-dim);
+        color: var(--indigo);
+      }
+      .kpi-card:nth-child(2) .kpi-icon {
+        background: var(--emerald-dim);
+        color: var(--emerald);
+      }
+      .kpi-card:nth-child(3) .kpi-icon {
+        background: var(--amber-dim);
+        color: var(--amber);
+      }
+      .kpi-card:nth-child(4) .kpi-icon {
+        background: var(--rose-dim);
+        color: var(--rose);
+      }
 
       .kpi-label {
         font-size: 11.5px;
@@ -199,8 +241,14 @@
         margin-top: 8px;
       }
 
-      .kpi-trend.up { background: var(--emerald-dim); color: var(--emerald); }
-      .kpi-trend.down { background: var(--rose-dim); color: var(--rose); }
+      .kpi-trend.up {
+        background: var(--emerald-dim);
+        color: var(--emerald);
+      }
+      .kpi-trend.down {
+        background: var(--rose-dim);
+        color: var(--rose);
+      }
 
       /* ── Charts Row ─────────────────────────────────────────── */
       .charts-row {
@@ -209,8 +257,12 @@
         margin-bottom: 16px;
       }
 
-      .charts-row-2 { grid-template-columns: 1fr; }
-      .charts-row-split { grid-template-columns: 3fr 2fr; }
+      .charts-row-2 {
+        grid-template-columns: 1fr;
+      }
+      .charts-row-split {
+        grid-template-columns: 3fr 2fr;
+      }
 
       .chart-card {
         background: var(--an-card);
@@ -247,9 +299,21 @@
         white-space: nowrap;
       }
 
-      .chart-badge.indigo { background: var(--indigo-dim); color: var(--indigo); border: 1px solid rgba(99,102,241,0.2); }
-      .chart-badge.emerald { background: var(--emerald-dim); color: var(--emerald); border: 1px solid rgba(16,185,129,0.2); }
-      .chart-badge.rose { background: var(--rose-dim); color: var(--rose); border: 1px solid rgba(244,63,94,0.2); }
+      .chart-badge.indigo {
+        background: var(--indigo-dim);
+        color: var(--indigo);
+        border: 1px solid rgba(99, 102, 241, 0.2);
+      }
+      .chart-badge.emerald {
+        background: var(--emerald-dim);
+        color: var(--emerald);
+        border: 1px solid rgba(16, 185, 129, 0.2);
+      }
+      .chart-badge.rose {
+        background: var(--rose-dim);
+        color: var(--rose);
+        border: 1px solid rgba(244, 63, 94, 0.2);
+      }
 
       .chart-wrap {
         position: relative;
@@ -300,7 +364,6 @@
 
       .heatmap-outer {
         overflow-x: auto;
-        -webkit-overflow-scrolling: touch;
       }
 
       .heatmap-container {
@@ -350,7 +413,9 @@
         border-radius: 4px;
         cursor: pointer;
         position: relative;
-        transition: transform 0.1s, opacity 0.1s;
+        transition:
+          transform 0.1s,
+          opacity 0.1s;
       }
 
       .heatmap-cell:hover {
@@ -361,7 +426,7 @@
       /* Heatmap tooltip */
       .heatmap-tooltip {
         position: fixed;
-        background: rgba(15,15,30,0.95);
+        background: rgba(15, 15, 30, 0.95);
         border: 1px solid var(--an-border-bright);
         border-radius: 8px;
         padding: 8px 12px;
@@ -373,7 +438,7 @@
         -webkit-backdrop-filter: blur(12px);
         backdrop-filter: blur(12px);
         display: none;
-        font-family: 'Inter', sans-serif;
+        font-family: "Inter", sans-serif;
       }
 
       .heatmap-tooltip strong {
@@ -404,12 +469,17 @@
 
       /* ── Skeleton Loaders ───────────────────────────────────── */
       @keyframes skeleton-pulse {
-        0%, 100% { opacity: 0.4; }
-        50% { opacity: 0.7; }
+        0%,
+        100% {
+          opacity: 0.4;
+        }
+        50% {
+          opacity: 0.7;
+        }
       }
 
       .skeleton {
-        background: rgba(255,255,255,0.08);
+        background: rgba(255, 255, 255, 0.08);
         border-radius: 8px;
         animation: skeleton-pulse 1.6s ease-in-out infinite;
       }
@@ -437,10 +507,12 @@
         align-items: center;
         gap: 12px;
         padding: 10px 0;
-        border-bottom: 1px solid rgba(255,255,255,0.04);
+        border-bottom: 1px solid rgba(255, 255, 255, 0.04);
       }
 
-      .stock-item:last-child { border-bottom: none; }
+      .stock-item:last-child {
+        border-bottom: none;
+      }
 
       .stock-name {
         font-size: 13px;
@@ -456,7 +528,7 @@
       .stock-bar-wrap {
         flex: 2;
         height: 6px;
-        background: rgba(255,255,255,0.06);
+        background: rgba(255, 255, 255, 0.06);
         border-radius: 3px;
         overflow: hidden;
       }
@@ -485,31 +557,44 @@
       }
 
       .stock-badge.oos {
-        background: rgba(244,63,94,0.2);
+        background: rgba(244, 63, 94, 0.2);
         color: var(--rose);
-        border: 1px solid rgba(244,63,94,0.3);
+        border: 1px solid rgba(244, 63, 94, 0.3);
       }
 
       .stock-badge.low {
-        background: rgba(245,158,11,0.15);
+        background: rgba(245, 158, 11, 0.15);
         color: var(--amber);
-        border: 1px solid rgba(245,158,11,0.25);
+        border: 1px solid rgba(245, 158, 11, 0.25);
       }
 
       /* ── Responsive ─────────────────────────────────────────── */
       @media (max-width: 1100px) {
-        .kpi-grid { grid-template-columns: repeat(2, 1fr); }
-        .charts-row-split { grid-template-columns: 1fr; }
+        .kpi-grid {
+          grid-template-columns: repeat(2, 1fr);
+        }
+        .charts-row-split {
+          grid-template-columns: 1fr;
+        }
       }
 
       @media (max-width: 768px) {
-        .kpi-grid { grid-template-columns: repeat(2, 1fr); gap: 12px; }
-        .an-header { flex-direction: column; }
-        .kpi-value { font-size: 22px; }
+        .kpi-grid {
+          grid-template-columns: repeat(2, 1fr);
+          gap: 12px;
+        }
+        .an-header {
+          flex-direction: column;
+        }
+        .kpi-value {
+          font-size: 22px;
+        }
       }
 
       @media (max-width: 480px) {
-        .kpi-grid { grid-template-columns: 1fr 1fr; }
+        .kpi-grid {
+          grid-template-columns: 1fr 1fr;
+        }
       }
 
       /* ── No-data state ──────────────────────────────────────── */
@@ -524,10 +609,14 @@
         gap: 8px;
       }
 
-      .no-data svg { opacity: 0.3; }
+      .no-data svg {
+        opacity: 0.3;
+      }
 
       /* ── Glow effects ───────────────────────────────────────── */
-      .glow-indigo { box-shadow: 0 0 40px rgba(99,102,241,0.08); }
+      .glow-indigo {
+        box-shadow: 0 0 40px rgba(99, 102, 241, 0.08);
+      }
 
       /* ── Summary legend strip ───────────────────────────────── */
       .legend-strip {
@@ -546,13 +635,17 @@
       }
 
       .legend-dot {
-        width: 10px; height: 10px;
+        width: 10px;
+        height: 10px;
         border-radius: 50%;
         flex-shrink: 0;
       }
     </style>
 
-    <script defer src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script
+      defer
+      src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"
+    ></script>
     <script defer src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script defer src="../config/supabase.js"></script>
     <script defer src="../assets/js/auth.js"></script>
@@ -565,8 +658,19 @@
         <div class="sidebar-logo">
           <div class="brand">
             <div class="brand-icon">
-              <svg width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="white" stroke-width="2">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
+              <svg
+                width="20"
+                height="20"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="white"
+                stroke-width="2"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"
+                />
               </svg>
             </div>
             <div>
@@ -579,49 +683,192 @@
         <nav class="sidebar-nav">
           <div class="nav-section-label">Main</div>
           <a href="dashboard.html" class="nav-link">
-            <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" /></svg>
+            <svg
+              width="16"
+              height="16"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              stroke-width="2"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"
+              />
+            </svg>
             Dashboard
           </a>
           <a href="analytics.html" class="nav-link active">
-            <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M16 8v8m-4-5v5m-4-2v2m-2 4h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" /></svg>
+            <svg
+              width="16"
+              height="16"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              stroke-width="2"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M16 8v8m-4-5v5m-4-2v2m-2 4h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"
+              />
+            </svg>
             Analytics
           </a>
           <a href="users.html" class="nav-link">
-            <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z" /></svg>
+            <svg
+              width="16"
+              height="16"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              stroke-width="2"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"
+              />
+            </svg>
             Users
           </a>
           <div class="nav-section-label">Inventory</div>
           <a href="products.html" class="nav-link">
-            <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4" /></svg>
+            <svg
+              width="16"
+              height="16"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              stroke-width="2"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"
+              />
+            </svg>
             Products
           </a>
           <a href="categories.html" class="nav-link">
-            <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A2 2 0 013 12V7a4 4 0 014-4z" /></svg>
+            <svg
+              width="16"
+              height="16"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              stroke-width="2"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A2 2 0 013 12V7a4 4 0 014-4z"
+              />
+            </svg>
             Categories
           </a>
           <a href="inventory.html" class="nav-link">
-            <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" /></svg>
+            <svg
+              width="16"
+              height="16"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              stroke-width="2"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"
+              />
+            </svg>
             Inventory
           </a>
           <a href="suppliers.html" class="nav-link">
-            <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M8 7v8a2 2 0 002 2h6M8 7V5a2 2 0 012-2h4.586a1 1 0 01.707.293l4.414 4.414a1 1 0 01.293.707V15a2 2 0 01-2 2h-2M8 7H6a2 2 0 00-2 2v10a2 2 0 002 2h8a2 2 0 002-2v-2" /></svg>
+            <svg
+              width="16"
+              height="16"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              stroke-width="2"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M8 7v8a2 2 0 002 2h6M8 7V5a2 2 0 012-2h4.586a1 1 0 01.707.293l4.414 4.414a1 1 0 01.293.707V15a2 2 0 01-2 2h-2M8 7H6a2 2 0 00-2 2v10a2 2 0 002 2h8a2 2 0 002-2v-2"
+              />
+            </svg>
             Suppliers
           </a>
           <a href="purchase-orders.html" class="nav-link">
-            <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" /></svg>
+            <svg
+              width="16"
+              height="16"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              stroke-width="2"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
+              />
+            </svg>
             Purchase Orders
           </a>
           <div class="nav-section-label">Sales</div>
           <a href="customers.html" class="nav-link">
-            <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" /></svg>
+            <svg
+              width="16"
+              height="16"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              stroke-width="2"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"
+              />
+            </svg>
             Customers
           </a>
           <a href="sales.html" class="nav-link">
-            <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" /></svg>
+            <svg
+              width="16"
+              height="16"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              stroke-width="2"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
+              />
+            </svg>
             Sales
           </a>
           <a href="reports.html" class="nav-link">
-            <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" /></svg>
+            <svg
+              width="16"
+              height="16"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              stroke-width="2"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"
+              />
+            </svg>
             Reports
           </a>
         </nav>
@@ -632,7 +879,20 @@
             <div class="user-role" id="sidebarUserRole"></div>
           </div>
           <button class="logout-btn" onclick="logout()">
-            <svg width="15" height="15" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" /></svg>
+            <svg
+              width="15"
+              height="15"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              stroke-width="2"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"
+              />
+            </svg>
             Logout
           </button>
         </div>
@@ -640,7 +900,6 @@
 
       <!-- ── Main Content ──────────────────────────────────────── -->
       <main class="main-content">
-
         <!-- Header -->
         <div class="an-header">
           <div class="an-header-left">
@@ -649,13 +908,49 @@
           </div>
           <div class="an-header-right">
             <div class="date-pills">
-              <button class="date-pill" data-range="today" onclick="setRange('today',this)">Today</button>
-              <button class="date-pill" data-range="7" onclick="setRange('7',this)">7 Days</button>
-              <button class="date-pill active" data-range="30" onclick="setRange('30',this)">30 Days</button>
-              <button class="date-pill" data-range="all" onclick="setRange('all',this)">All Time</button>
+              <button
+                class="date-pill"
+                data-range="today"
+                onclick="setRange('today', this)"
+              >
+                Today
+              </button>
+              <button
+                class="date-pill"
+                data-range="7"
+                onclick="setRange('7', this)"
+              >
+                7 Days
+              </button>
+              <button
+                class="date-pill active"
+                data-range="30"
+                onclick="setRange('30', this)"
+              >
+                30 Days
+              </button>
+              <button
+                class="date-pill"
+                data-range="all"
+                onclick="setRange('all', this)"
+              >
+                All Time
+              </button>
             </div>
-            <button class="theme-toggle" id="themeToggleBtn" title="Switch theme">
-              <svg id="themeIcon" width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <button
+              class="theme-toggle"
+              id="themeToggleBtn"
+              title="Switch theme"
+            >
+              <svg
+                id="themeIcon"
+                width="16"
+                height="16"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+                stroke-width="2"
+              >
                 <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" />
               </svg>
             </button>
@@ -666,45 +961,107 @@
         <div class="kpi-grid" id="kpiGrid">
           <div class="kpi-card">
             <div class="kpi-icon">
-              <svg width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+              <svg
+                width="18"
+                height="18"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+                stroke-width="2"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+                />
+              </svg>
             </div>
             <div class="kpi-label">Today's Revenue</div>
-            <div class="kpi-value" id="kpiTodayRev"><span class="skeleton skeleton-kpi-value"></span></div>
+            <div class="kpi-value" id="kpiTodayRev">
+              <span class="skeleton skeleton-kpi-value"></span>
+            </div>
             <div class="kpi-sub" id="kpiTodaySub">&nbsp;</div>
           </div>
           <div class="kpi-card">
             <div class="kpi-icon">
-              <svg width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" /></svg>
+              <svg
+                width="18"
+                height="18"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+                stroke-width="2"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"
+                />
+              </svg>
             </div>
             <div class="kpi-label">Period Revenue</div>
-            <div class="kpi-value" id="kpiPeriodRev"><span class="skeleton skeleton-kpi-value"></span></div>
+            <div class="kpi-value" id="kpiPeriodRev">
+              <span class="skeleton skeleton-kpi-value"></span>
+            </div>
             <div class="kpi-sub" id="kpiPeriodSub">&nbsp;</div>
           </div>
           <div class="kpi-card">
             <div class="kpi-icon">
-              <svg width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" /></svg>
+              <svg
+                width="18"
+                height="18"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+                stroke-width="2"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
+                />
+              </svg>
             </div>
             <div class="kpi-label">Total Sales Today</div>
-            <div class="kpi-value" id="kpiTodayCount"><span class="skeleton skeleton-kpi-value"></span></div>
+            <div class="kpi-value" id="kpiTodayCount">
+              <span class="skeleton skeleton-kpi-value"></span>
+            </div>
             <div class="kpi-sub" id="kpiTodayCountSub">&nbsp;</div>
           </div>
           <div class="kpi-card">
             <div class="kpi-icon">
-              <svg width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" /></svg>
+              <svg
+                width="18"
+                height="18"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+                stroke-width="2"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"
+                />
+              </svg>
             </div>
             <div class="kpi-label">Avg Order Value</div>
-            <div class="kpi-value" id="kpiAvgOrder"><span class="skeleton skeleton-kpi-value"></span></div>
+            <div class="kpi-value" id="kpiAvgOrder">
+              <span class="skeleton skeleton-kpi-value"></span>
+            </div>
             <div class="kpi-sub" id="kpiAvgSub">&nbsp;</div>
           </div>
         </div>
 
         <!-- 2. Revenue Trend (full width) -->
-        <div class="charts-row charts-row-2" style="margin-bottom:16px;">
+        <div class="charts-row charts-row-2 an-chart-row-mb-16">
           <div class="chart-card glow-indigo">
             <div class="chart-card-header">
               <div>
                 <div class="chart-title">Revenue Trend</div>
-                <div class="chart-subtitle">Daily sales totals with 7-day moving average</div>
+                <div class="chart-subtitle">
+                  Daily sales totals with 7-day moving average
+                </div>
               </div>
               <span class="chart-badge indigo" id="trendBadge">30 Days</span>
             </div>
@@ -712,14 +1069,19 @@
               <div class="skeleton skeleton-chart"></div>
             </div>
             <div class="legend-strip">
-              <div class="legend-item"><span class="legend-dot" style="background:#6366f1"></span>Daily Revenue</div>
-              <div class="legend-item"><span class="legend-dot" style="background:#10b981;border-radius:2px;width:16px;height:3px;margin:3px 0"></span>7-Day Avg</div>
+              <div class="legend-item">
+                <span class="legend-dot an-legend-dot-primary"></span>Daily
+                Revenue
+              </div>
+              <div class="legend-item">
+                <span class="legend-dot an-legend-dot-accent"></span>7-Day Avg
+              </div>
             </div>
           </div>
         </div>
 
         <!-- 3+4. Products + Payment (split) -->
-        <div class="charts-row charts-row-split" style="margin-bottom:16px;">
+        <div class="charts-row charts-row-split an-chart-row-mb-16">
           <div class="chart-card">
             <div class="chart-card-header">
               <div>
@@ -751,16 +1113,21 @@
           <div class="chart-card-header">
             <div>
               <div class="chart-title">Hourly Sales Heatmap</div>
-              <div class="chart-subtitle">Sales volume by day of week &amp; hour — all time</div>
+              <div class="chart-subtitle">
+                Sales volume by day of week &amp; hour — all time
+              </div>
             </div>
             <span class="chart-badge indigo">All Time</span>
           </div>
           <div class="heatmap-outer">
             <div class="heatmap-container" id="heatmapContainer">
-              <div class="skeleton skeleton-chart" style="height:180px"></div>
+              <div class="skeleton skeleton-chart an-skeleton-heatmap"></div>
             </div>
           </div>
-          <div class="heatmap-legend" id="heatmapLegend" style="display:none">
+          <div
+            class="heatmap-legend an-heatmap-legend-hidden"
+            id="heatmapLegend"
+          >
             <span>Less</span>
             <div class="heatmap-legend-bar" id="legendBar"></div>
             <span>More</span>
@@ -768,19 +1135,20 @@
         </div>
 
         <!-- 6. Low Stock -->
-        <div class="chart-card" style="margin-bottom:24px;">
+        <div class="chart-card an-chart-row-mb-24">
           <div class="chart-card-header">
             <div>
               <div class="chart-title">Low Stock Alerts</div>
-              <div class="chart-subtitle">Products with fewer than 10 units remaining</div>
+              <div class="chart-subtitle">
+                Products with fewer than 10 units remaining
+              </div>
             </div>
             <span class="chart-badge rose" id="lowStockBadge">Loading…</span>
           </div>
           <div id="lowStockList">
-            <div class="skeleton skeleton-chart" style="height:160px"></div>
+            <div class="skeleton skeleton-chart" style="height: 160px"></div>
           </div>
         </div>
-
       </main>
     </div>
 
@@ -789,7 +1157,7 @@
 
     <script>
       /* ── State ─────────────────────────────────────────────── */
-      let currentRange = '30';
+      let currentRange = "30";
       let trendChart = null;
       let productsChart = null;
       let paymentChart = null;
@@ -797,43 +1165,62 @@
 
       /* ── Helpers ───────────────────────────────────────────── */
       function ghs(n) {
-        return 'GHS ' + (parseFloat(n) || 0).toLocaleString('en-GH', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+        return (
+          "GHS " +
+          (parseFloat(n) || 0).toLocaleString("en-GH", {
+            minimumFractionDigits: 2,
+            maximumFractionDigits: 2,
+          })
+        );
       }
 
       function getDateRange(range) {
         const now = new Date();
-        const todayStr = now.toISOString().split('T')[0];
-        if (range === 'today') {
-          const start = new Date(todayStr + 'T00:00:00.000Z');
-          return { from: start.toISOString(), label: 'Today' };
+        const todayStr = now.toISOString().split("T")[0];
+        if (range === "today") {
+          const start = new Date(todayStr + "T00:00:00.000Z");
+          return { from: start.toISOString(), label: "Today" };
         }
-        if (range === '7') {
-          const d = new Date(now); d.setDate(d.getDate() - 6);
-          d.setHours(0,0,0,0);
-          return { from: d.toISOString(), label: '7 Days' };
+        if (range === "7") {
+          const d = new Date(now);
+          d.setDate(d.getDate() - 6);
+          d.setHours(0, 0, 0, 0);
+          return { from: d.toISOString(), label: "7 Days" };
         }
-        if (range === '30') {
-          const d = new Date(now); d.setDate(d.getDate() - 29);
-          d.setHours(0,0,0,0);
-          return { from: d.toISOString(), label: '30 Days' };
+        if (range === "30") {
+          const d = new Date(now);
+          d.setDate(d.getDate() - 29);
+          d.setHours(0, 0, 0, 0);
+          return { from: d.toISOString(), label: "30 Days" };
         }
-        return { from: null, label: 'All Time' };
+        return { from: null, label: "All Time" };
       }
 
       function localDateStr(isoStr) {
         const d = new Date(isoStr);
-        return d.getFullYear() + '-' +
-          String(d.getMonth() + 1).padStart(2, '0') + '-' +
-          String(d.getDate()).padStart(2, '0');
+        return (
+          d.getFullYear() +
+          "-" +
+          String(d.getMonth() + 1).padStart(2, "0") +
+          "-" +
+          String(d.getDate()).padStart(2, "0")
+        );
       }
 
       function fmtDateLabel(dateStr) {
-        const d = new Date(dateStr + 'T12:00:00');
-        return d.toLocaleDateString('en-GH', { month: 'short', day: 'numeric' });
+        const d = new Date(dateStr + "T12:00:00");
+        return d.toLocaleDateString("en-GH", {
+          month: "short",
+          day: "numeric",
+        });
       }
 
       function destroyChart(chart) {
-        if (chart) { try { chart.destroy(); } catch(e){} }
+        if (chart) {
+          try {
+            chart.destroy();
+          } catch (e) {}
+        }
       }
 
       function showSkeleton(wrapId) {
@@ -844,27 +1231,29 @@
       /* ── Date range toggle ─────────────────────────────────── */
       function setRange(range, btn) {
         currentRange = range;
-        document.querySelectorAll('.date-pill').forEach(p => p.classList.remove('active'));
-        btn.classList.add('active');
+        document
+          .querySelectorAll(".date-pill")
+          .forEach((p) => p.classList.remove("active"));
+        btn.classList.add("active");
         const { label } = getDateRange(range);
-        document.getElementById('trendBadge').textContent = label;
+        document.getElementById("trendBadge").textContent = label;
         loadAll();
       }
 
       /* ── Chart.js global defaults ─────────────────────────── */
       function setChartDefaults() {
         if (!window.Chart) return;
-        Chart.defaults.color = '#64748b';
-        Chart.defaults.borderColor = 'rgba(255,255,255,0.06)';
+        Chart.defaults.color = "#64748b";
+        Chart.defaults.borderColor = "rgba(255,255,255,0.06)";
         Chart.defaults.font.family = "'Inter', 'Plus Jakarta Sans', sans-serif";
         Chart.defaults.font.size = 12;
         Chart.defaults.plugins.legend.display = false;
-        Chart.defaults.plugins.tooltip.backgroundColor = 'rgba(10,10,20,0.95)';
-        Chart.defaults.plugins.tooltip.borderColor = 'rgba(255,255,255,0.12)';
+        Chart.defaults.plugins.tooltip.backgroundColor = "rgba(10,10,20,0.95)";
+        Chart.defaults.plugins.tooltip.borderColor = "rgba(255,255,255,0.12)";
         Chart.defaults.plugins.tooltip.borderWidth = 1;
         Chart.defaults.plugins.tooltip.padding = 10;
-        Chart.defaults.plugins.tooltip.titleColor = '#fff';
-        Chart.defaults.plugins.tooltip.bodyColor = '#94a3b8';
+        Chart.defaults.plugins.tooltip.titleColor = "#fff";
+        Chart.defaults.plugins.tooltip.bodyColor = "#94a3b8";
         Chart.defaults.plugins.tooltip.cornerRadius = 8;
         Chart.defaults.plugins.tooltip.displayColors = false;
       }
@@ -878,55 +1267,90 @@
         todayStart.setHours(0, 0, 0, 0);
 
         const [todayRes, periodRes] = await Promise.all([
-          db.from('sales').select('total').gte('created_at', todayStart.toISOString()),
+          db
+            .from("sales")
+            .select("total")
+            .gte("created_at", todayStart.toISOString()),
           from
-            ? db.from('sales').select('total').gte('created_at', from)
-            : db.from('sales').select('total')
+            ? db.from("sales").select("total").gte("created_at", from)
+            : db.from("sales").select("total"),
         ]);
 
         const todaySales = todayRes.data || [];
         const periodSales = periodRes.data || [];
 
-        const todayRev = todaySales.reduce((s, r) => s + parseFloat(r.total || 0), 0);
-        const periodRev = periodSales.reduce((s, r) => s + parseFloat(r.total || 0), 0);
-        const avgOrder = periodSales.length ? periodRev / periodSales.length : 0;
+        const todayRev = todaySales.reduce(
+          (s, r) => s + parseFloat(r.total || 0),
+          0,
+        );
+        const periodRev = periodSales.reduce(
+          (s, r) => s + parseFloat(r.total || 0),
+          0,
+        );
+        const avgOrder = periodSales.length
+          ? periodRev / periodSales.length
+          : 0;
 
-        document.getElementById('kpiTodayRev').textContent = ghs(todayRev);
-        document.getElementById('kpiTodaySub').textContent = todaySales.length + ' transaction' + (todaySales.length !== 1 ? 's' : '') + ' today';
+        document.getElementById("kpiTodayRev").textContent = ghs(todayRev);
+        document.getElementById("kpiTodaySub").textContent =
+          todaySales.length +
+          " transaction" +
+          (todaySales.length !== 1 ? "s" : "") +
+          " today";
 
-        document.getElementById('kpiPeriodRev').textContent = ghs(periodRev);
-        document.getElementById('kpiPeriodSub').textContent = periodSales.length + ' transaction' + (periodSales.length !== 1 ? 's' : '') + ' in period';
+        document.getElementById("kpiPeriodRev").textContent = ghs(periodRev);
+        document.getElementById("kpiPeriodSub").textContent =
+          periodSales.length +
+          " transaction" +
+          (periodSales.length !== 1 ? "s" : "") +
+          " in period";
 
-        document.getElementById('kpiTodayCount').textContent = todaySales.length;
-        document.getElementById('kpiTodayCountSub').textContent = 'Sales completed today';
+        document.getElementById("kpiTodayCount").textContent =
+          todaySales.length;
+        document.getElementById("kpiTodayCountSub").textContent =
+          "Sales completed today";
 
-        document.getElementById('kpiAvgOrder').textContent = ghs(avgOrder);
-        document.getElementById('kpiAvgSub').textContent = 'Per transaction average';
+        document.getElementById("kpiAvgOrder").textContent = ghs(avgOrder);
+        document.getElementById("kpiAvgSub").textContent =
+          "Per transaction average";
 
         // Subtitle
         const { label } = getDateRange(currentRange);
-        document.getElementById('anSubtitle').textContent =
-          'Showing data for: ' + label + ' — ' + new Date().toLocaleDateString('en-GH', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
+        document.getElementById("anSubtitle").textContent =
+          "Showing data for: " +
+          label +
+          " — " +
+          new Date().toLocaleDateString("en-GH", {
+            weekday: "long",
+            year: "numeric",
+            month: "long",
+            day: "numeric",
+          });
       }
 
       /* ── 2. Revenue Trend ──────────────────────────────────── */
       async function loadTrend() {
-        showSkeleton('trendWrap');
+        showSkeleton("trendWrap");
         const { from } = getDateRange(currentRange);
 
-        const query = db.from('sales').select('total, created_at').order('created_at');
-        const { data } = from ? await query.gte('created_at', from) : await query;
+        const query = db
+          .from("sales")
+          .select("total, created_at")
+          .order("created_at");
+        const { data } = from
+          ? await query.gte("created_at", from)
+          : await query;
         const sales = data || [];
 
         // Group by local date
         const byDate = {};
-        sales.forEach(s => {
+        sales.forEach((s) => {
           const d = localDateStr(s.created_at);
           byDate[d] = (byDate[d] || 0) + parseFloat(s.total || 0);
         });
 
         const dates = Object.keys(byDate).sort();
-        const values = dates.map(d => byDate[d]);
+        const values = dates.map((d) => byDate[d]);
 
         // 7-day moving average
         const ma7 = values.map((_, i) => {
@@ -937,98 +1361,102 @@
         const labels = dates.map(fmtDateLabel);
 
         // Rebuild canvas
-        document.getElementById('trendWrap').innerHTML = '<canvas id="trendChart"></canvas>';
-        const ctx = document.getElementById('trendChart').getContext('2d');
+        document.getElementById("trendWrap").innerHTML =
+          '<canvas id="trendChart"></canvas>';
+        const ctx = document.getElementById("trendChart").getContext("2d");
 
         // Gradient fill
         const grad = ctx.createLinearGradient(0, 0, 0, 300);
-        grad.addColorStop(0, 'rgba(99,102,241,0.35)');
-        grad.addColorStop(1, 'rgba(99,102,241,0.01)');
+        grad.addColorStop(0, "rgba(99,102,241,0.35)");
+        grad.addColorStop(1, "rgba(99,102,241,0.01)");
 
         destroyChart(trendChart);
         trendChart = new Chart(ctx, {
-          type: 'line',
+          type: "line",
           data: {
             labels,
             datasets: [
               {
-                label: 'Revenue',
+                label: "Revenue",
                 data: values,
-                borderColor: '#6366f1',
+                borderColor: "#6366f1",
                 backgroundColor: grad,
                 borderWidth: 2.5,
                 fill: true,
                 tension: 0.4,
                 pointRadius: dates.length > 20 ? 0 : 3,
                 pointHoverRadius: 6,
-                pointBackgroundColor: '#6366f1',
-                pointBorderColor: '#0a0a0f',
+                pointBackgroundColor: "#6366f1",
+                pointBorderColor: "#0a0a0f",
                 pointBorderWidth: 2,
               },
               {
-                label: '7-Day Avg',
+                label: "7-Day Avg",
                 data: ma7,
-                borderColor: '#10b981',
-                backgroundColor: 'transparent',
+                borderColor: "#10b981",
+                backgroundColor: "transparent",
                 borderWidth: 2,
                 fill: false,
                 tension: 0.4,
                 borderDash: [6, 4],
                 pointRadius: 0,
                 pointHoverRadius: 4,
-              }
-            ]
+              },
+            ],
           },
           options: {
             responsive: true,
             maintainAspectRatio: true,
-            interaction: { mode: 'index', intersect: false },
+            interaction: { mode: "index", intersect: false },
             plugins: {
               legend: { display: false },
               tooltip: {
                 callbacks: {
-                  label: ctx => ' ' + ctx.dataset.label + ': ' + ghs(ctx.parsed.y)
-                }
-              }
+                  label: (ctx) =>
+                    " " + ctx.dataset.label + ": " + ghs(ctx.parsed.y),
+                },
+              },
             },
             scales: {
               x: {
-                grid: { color: 'rgba(255,255,255,0.04)' },
+                grid: { color: "rgba(255,255,255,0.04)" },
                 ticks: {
                   maxTicksLimit: 10,
                   maxRotation: 0,
-                  color: '#64748b',
-                  font: { size: 11 }
-                }
+                  color: "#64748b",
+                  font: { size: 11 },
+                },
               },
               y: {
-                grid: { color: 'rgba(255,255,255,0.06)' },
+                grid: { color: "rgba(255,255,255,0.06)" },
                 ticks: {
-                  color: '#64748b',
+                  color: "#64748b",
                   font: { size: 11 },
-                  callback: v => 'GHS ' + v.toLocaleString()
-                }
-              }
-            }
-          }
+                  callback: (v) => "GHS " + v.toLocaleString(),
+                },
+              },
+            },
+          },
         });
       }
 
       /* ── 3. Top 10 Products ────────────────────────────────── */
       async function loadTopProducts() {
-        showSkeleton('productsWrap');
+        showSkeleton("productsWrap");
         const { from } = getDateRange(currentRange);
 
         // Fetch sale_items joined with sales for date filtering
-        let query = db.from('sale_items').select('product_name, total_price, sales!inner(created_at)');
-        if (from) query = query.gte('sales.created_at', from);
+        let query = db
+          .from("sale_items")
+          .select("product_name, total_price, sales!inner(created_at)");
+        if (from) query = query.gte("sales.created_at", from);
         const { data } = await query;
         const items = data || [];
 
         // Aggregate by product
         const byProduct = {};
-        items.forEach(i => {
-          const n = i.product_name || 'Unknown';
+        items.forEach((i) => {
+          const n = i.product_name || "Unknown";
           byProduct[n] = (byProduct[n] || 0) + parseFloat(i.total_price || 0);
         });
 
@@ -1036,87 +1464,96 @@
           .sort((a, b) => b[1] - a[1])
           .slice(0, 10);
 
-        const labels = sorted.map(([n]) => n.length > 22 ? n.slice(0, 20) + '…' : n);
+        const labels = sorted.map(([n]) =>
+          n.length > 22 ? n.slice(0, 20) + "…" : n,
+        );
         const values = sorted.map(([, v]) => v);
 
-        document.getElementById('productsWrap').innerHTML = '<canvas id="productsChart"></canvas>';
-        const ctx = document.getElementById('productsChart').getContext('2d');
+        document.getElementById("productsWrap").innerHTML =
+          '<canvas id="productsChart"></canvas>';
+        const ctx = document.getElementById("productsChart").getContext("2d");
 
         // Bar gradient (left to right)
         const barGrad = ctx.createLinearGradient(0, 0, 400, 0);
-        barGrad.addColorStop(0, '#6366f1');
-        barGrad.addColorStop(1, '#818cf8');
+        barGrad.addColorStop(0, "#6366f1");
+        barGrad.addColorStop(1, "#818cf8");
 
         destroyChart(productsChart);
         productsChart = new Chart(ctx, {
-          type: 'bar',
+          type: "bar",
           data: {
             labels,
-            datasets: [{
-              label: 'Revenue',
-              data: values,
-              backgroundColor: barGrad,
-              borderRadius: 6,
-              borderSkipped: false,
-            }]
+            datasets: [
+              {
+                label: "Revenue",
+                data: values,
+                backgroundColor: barGrad,
+                borderRadius: 6,
+                borderSkipped: false,
+              },
+            ],
           },
           options: {
-            indexAxis: 'y',
+            indexAxis: "y",
             responsive: true,
             maintainAspectRatio: false,
             plugins: {
               tooltip: {
-                callbacks: { label: ctx => ' ' + ghs(ctx.parsed.x) }
-              }
+                callbacks: { label: (ctx) => " " + ghs(ctx.parsed.x) },
+              },
             },
             scales: {
               x: {
-                grid: { color: 'rgba(255,255,255,0.05)' },
+                grid: { color: "rgba(255,255,255,0.05)" },
                 ticks: {
-                  color: '#64748b',
+                  color: "#64748b",
                   font: { size: 11 },
-                  callback: v => 'GHS ' + v.toLocaleString()
-                }
+                  callback: (v) => "GHS " + v.toLocaleString(),
+                },
               },
               y: {
                 grid: { display: false },
-                ticks: { color: '#94a3b8', font: { size: 11 } }
-              }
-            }
-          }
+                ticks: { color: "#94a3b8", font: { size: 11 } },
+              },
+            },
+          },
         });
 
         // Fix canvas height for horizontal bar
-        const canvas = document.getElementById('productsChart');
-        canvas.parentElement.style.height = Math.max(200, sorted.length * 34) + 'px';
+        const canvas = document.getElementById("productsChart");
+        canvas.parentElement.style.height =
+          Math.max(200, sorted.length * 34) + "px";
         productsChart.resize();
       }
 
       /* ── 4. Payment Methods Doughnut ───────────────────────── */
       async function loadPaymentChart() {
-        showSkeleton('paymentWrap');
+        showSkeleton("paymentWrap");
         const { from } = getDateRange(currentRange);
 
-        let query = db.from('sales').select('payment_method, total');
-        if (from) query = query.gte('created_at', from);
+        let query = db.from("sales").select("payment_method, total");
+        if (from) query = query.gte("created_at", from);
         const { data } = await query;
         const sales = data || [];
 
         const byMethod = {};
-        sales.forEach(s => {
-          const m = s.payment_method || 'other';
+        sales.forEach((s) => {
+          const m = s.payment_method || "other";
           byMethod[m] = (byMethod[m] || 0) + parseFloat(s.total || 0);
         });
 
         const methodConfig = {
-          cash:         { label: 'Cash',         color: '#10b981' },
-          mobile_money: { label: 'Mobile Money', color: '#6366f1' },
-          card:         { label: 'Card',          color: '#f59e0b' },
+          cash: { label: "Cash", color: "#10b981" },
+          mobile_money: { label: "Mobile Money", color: "#6366f1" },
+          card: { label: "Card", color: "#f59e0b" },
         };
 
-        const labels = [], colors = [], values = [], displayLabels = [];
+        const labels = [],
+          colors = [],
+          values = [],
+          displayLabels = [];
         Object.entries(byMethod).forEach(([m, v]) => {
-          const cfg = methodConfig[m] || { label: m, color: '#94a3b8' };
+          const cfg = methodConfig[m] || { label: m, color: "#94a3b8" };
           labels.push(cfg.label);
           colors.push(cfg.color);
           values.push(v);
@@ -1125,7 +1562,7 @@
 
         const total = values.reduce((a, b) => a + b, 0);
 
-        document.getElementById('paymentWrap').innerHTML = `
+        document.getElementById("paymentWrap").innerHTML = `
           <div class="doughnut-wrap">
             <canvas id="paymentChart" style="max-height:220px"></canvas>
             <div class="doughnut-center">
@@ -1134,60 +1571,76 @@
             </div>
           </div>
           <div class="legend-strip" style="margin-top:12px;justify-content:center">
-            ${labels.map((l, i) => `
+            ${labels
+              .map(
+                (l, i) => `
               <div class="legend-item">
                 <span class="legend-dot" style="background:${colors[i]}"></span>
-                ${l} (${total ? Math.round(values[i]/total*100) : 0}%)
-              </div>`).join('')}
+                ${l} (${total ? Math.round((values[i] / total) * 100) : 0}%)
+              </div>`,
+              )
+              .join("")}
           </div>`;
 
-        const ctx = document.getElementById('paymentChart').getContext('2d');
+        const ctx = document.getElementById("paymentChart").getContext("2d");
         destroyChart(paymentChart);
         paymentChart = new Chart(ctx, {
-          type: 'doughnut',
+          type: "doughnut",
           data: {
             labels,
-            datasets: [{
-              data: values,
-              backgroundColor: colors.map(c => c + 'cc'),
-              borderColor: colors,
-              borderWidth: 2,
-              hoverBorderColor: '#fff',
-              hoverBorderWidth: 3,
-              hoverOffset: 8,
-            }]
+            datasets: [
+              {
+                data: values,
+                backgroundColor: colors.map((c) => c + "cc"),
+                borderColor: colors,
+                borderWidth: 2,
+                hoverBorderColor: "#fff",
+                hoverBorderWidth: 3,
+                hoverOffset: 8,
+              },
+            ],
           },
           options: {
-            cutout: '72%',
+            cutout: "72%",
             responsive: true,
             maintainAspectRatio: true,
             plugins: {
               legend: { display: false },
               tooltip: {
                 callbacks: {
-                  label: ctx => {
-                    const pct = total ? (ctx.parsed / total * 100).toFixed(1) : 0;
-                    return ' ' + ctx.label + ': ' + ghs(ctx.parsed) + ' (' + pct + '%)';
-                  }
-                }
-              }
+                  label: (ctx) => {
+                    const pct = total
+                      ? ((ctx.parsed / total) * 100).toFixed(1)
+                      : 0;
+                    return (
+                      " " +
+                      ctx.label +
+                      ": " +
+                      ghs(ctx.parsed) +
+                      " (" +
+                      pct +
+                      "%)"
+                    );
+                  },
+                },
+              },
             },
-            animation: { animateRotate: true, duration: 800 }
-          }
+            animation: { animateRotate: true, duration: 800 },
+          },
         });
       }
 
       /* ── 5. Hourly Heatmap ─────────────────────────────────── */
       async function loadHeatmap() {
-        document.getElementById('heatmapContainer').innerHTML =
+        document.getElementById("heatmapContainer").innerHTML =
           '<div class="skeleton skeleton-chart" style="height:180px"></div>';
 
-        const { data } = await db.from('sales').select('created_at');
+        const { data } = await db.from("sales").select("created_at");
         const sales = data || [];
 
         // [dayOfWeek 0=Mon..6=Sun][hour 0..23] = count
         const grid = Array.from({ length: 7 }, () => new Array(24).fill(0));
-        sales.forEach(s => {
+        sales.forEach((s) => {
           const d = new Date(s.created_at);
           let dow = d.getDay(); // 0=Sun..6=Sat
           dow = dow === 0 ? 6 : dow - 1; // convert to 0=Mon..6=Sun
@@ -1199,35 +1652,49 @@
         const allVals = grid.flat();
         const maxVal = Math.max(...allVals, 1);
 
-        const days = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
-        const tooltip = document.getElementById('hmTooltip');
+        const days = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
+        const tooltip = document.getElementById("hmTooltip");
 
         function lerpColor(t) {
           // #12103a → #6366f1
-          const r1 = 0x12, g1 = 0x10, b1 = 0x3a;
-          const r2 = 0x63, g2 = 0x66, b2 = 0xf1;
-          if (t <= 0) return '#0d0d1a';
+          const r1 = 0x12,
+            g1 = 0x10,
+            b1 = 0x3a;
+          const r2 = 0x63,
+            g2 = 0x66,
+            b2 = 0xf1;
+          if (t <= 0) return "#0d0d1a";
           const r = Math.round(r1 + (r2 - r1) * t);
           const g = Math.round(g1 + (g2 - g1) * t);
           const b = Math.round(b1 + (b2 - b1) * t);
-          return 'rgb(' + r + ',' + g + ',' + b + ')';
+          return "rgb(" + r + "," + g + "," + b + ")";
         }
 
         // Build HTML
-        let html = '';
+        let html = "";
 
         // Hour labels row
-        html += '<div class="heatmap-hours-row"><div class="heatmap-hour-label"></div>';
+        html +=
+          '<div class="heatmap-hours-row"><div class="heatmap-hour-label"></div>';
         for (let h = 0; h < 24; h++) {
-          html += '<div class="heatmap-hour-label">' + (h % 3 === 0 ? (h < 12 ? h + 'am' : h === 12 ? '12pm' : (h - 12) + 'pm') : '') + '</div>';
+          html +=
+            '<div class="heatmap-hour-label">' +
+            (h % 3 === 0
+              ? h < 12
+                ? h + "am"
+                : h === 12
+                  ? "12pm"
+                  : h - 12 + "pm"
+              : "") +
+            "</div>";
         }
-        html += '</div>';
+        html += "</div>";
 
         // Day rows
         html += '<div class="heatmap-grid">';
         days.forEach((day, di) => {
           html += '<div class="heatmap-row">';
-          html += '<div class="heatmap-day-label">' + day + '</div>';
+          html += '<div class="heatmap-day-label">' + day + "</div>";
           for (let h = 0; h < 24; h++) {
             const count = grid[di][h];
             const t = count / maxVal;
@@ -1237,58 +1704,64 @@
               style="background:${color};opacity:${opacity}"
               data-day="${day}" data-hour="${h}" data-count="${count}"></div>`;
           }
-          html += '</div>';
+          html += "</div>";
         });
-        html += '</div>';
+        html += "</div>";
 
-        document.getElementById('heatmapContainer').innerHTML = html;
+        document.getElementById("heatmapContainer").innerHTML = html;
 
         // Tooltip events
-        document.getElementById('heatmapContainer').querySelectorAll('.heatmap-cell').forEach(cell => {
-          cell.addEventListener('mousemove', e => {
-            const { day, hour, count } = cell.dataset;
-            const h = parseInt(hour);
-            const ampm = h < 12 ? 'am' : 'pm';
-            const h12 = h === 0 ? 12 : h > 12 ? h - 12 : h;
-            tooltip.style.display = 'block';
-            tooltip.style.left = (e.clientX + 14) + 'px';
-            tooltip.style.top = (e.clientY - 36) + 'px';
-            tooltip.innerHTML = `<strong>${day} ${h12}${ampm}</strong> &mdash; ${count} sale${count != 1 ? 's' : ''}`;
+        document
+          .getElementById("heatmapContainer")
+          .querySelectorAll(".heatmap-cell")
+          .forEach((cell) => {
+            cell.addEventListener("mousemove", (e) => {
+              const { day, hour, count } = cell.dataset;
+              const h = parseInt(hour);
+              const ampm = h < 12 ? "am" : "pm";
+              const h12 = h === 0 ? 12 : h > 12 ? h - 12 : h;
+              tooltip.style.display = "block";
+              tooltip.style.left = e.clientX + 14 + "px";
+              tooltip.style.top = e.clientY - 36 + "px";
+              tooltip.innerHTML = `<strong>${day} ${h12}${ampm}</strong> &mdash; ${count} sale${count != 1 ? "s" : ""}`;
+            });
+            cell.addEventListener("mouseleave", () => {
+              tooltip.style.display = "none";
+            });
           });
-          cell.addEventListener('mouseleave', () => {
-            tooltip.style.display = 'none';
-          });
-        });
 
         // Legend
-        const legendBar = document.getElementById('legendBar');
-        legendBar.innerHTML = '';
+        const legendBar = document.getElementById("legendBar");
+        legendBar.innerHTML = "";
         const steps = 8;
         for (let i = 0; i <= steps; i++) {
-          const div = document.createElement('div');
-          div.className = 'heatmap-legend-cell';
+          const div = document.createElement("div");
+          div.className = "heatmap-legend-cell";
           div.style.background = lerpColor(i / steps);
-          div.style.opacity = i === 0 ? '0.3' : (0.7 + (i / steps) * 0.3).toString();
+          div.style.opacity =
+            i === 0 ? "0.3" : (0.7 + (i / steps) * 0.3).toString();
           legendBar.appendChild(div);
         }
-        document.getElementById('heatmapLegend').style.display = 'flex';
+        document.getElementById("heatmapLegend").style.display = "flex";
       }
 
       /* ── 6. Low Stock ──────────────────────────────────────── */
       async function loadLowStock() {
-        document.getElementById('lowStockList').innerHTML =
+        document.getElementById("lowStockList").innerHTML =
           '<div class="skeleton skeleton-chart" style="height:140px"></div>';
 
-        const { data } = await db.from('products')
-          .select('name, stock')
-          .lt('stock', 10)
-          .order('stock', { ascending: true });
+        const { data } = await db
+          .from("products")
+          .select("name, stock")
+          .lt("stock", 10)
+          .order("stock", { ascending: true });
 
         const items = data || [];
-        document.getElementById('lowStockBadge').textContent = items.length + ' item' + (items.length !== 1 ? 's' : '');
+        document.getElementById("lowStockBadge").textContent =
+          items.length + " item" + (items.length !== 1 ? "s" : "");
 
         if (!items.length) {
-          document.getElementById('lowStockList').innerHTML = `
+          document.getElementById("lowStockList").innerHTML = `
             <div class="no-data">
               <svg width="36" height="36" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
                 <path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
@@ -1299,23 +1772,23 @@
         }
 
         const maxStock = 9; // threshold
-        let html = '';
-        items.forEach(p => {
+        let html = "";
+        items.forEach((p) => {
           const oos = p.stock === 0;
           const pct = Math.max(4, (p.stock / maxStock) * 100);
-          const barColor = oos ? '#991b1b' : '#f43f5e';
+          const barColor = oos ? "#991b1b" : "#f43f5e";
           html += `
             <div class="stock-item">
               <div class="stock-name" title="${p.name}">${p.name}</div>
               <div class="stock-bar-wrap">
                 <div class="stock-bar-fill" style="width:${pct}%;background:${barColor}"></div>
               </div>
-              <div class="stock-qty" style="color:${oos ? '#ef4444' : '#f43f5e'}">${p.stock}</div>
-              <span class="stock-badge ${oos ? 'oos' : 'low'}">${oos ? 'Out of Stock' : 'Low'}</span>
+              <div class="stock-qty" style="color:${oos ? "#ef4444" : "#f43f5e"}">${p.stock}</div>
+              <span class="stock-badge ${oos ? "oos" : "low"}">${oos ? "Out of Stock" : "Low"}</span>
             </div>`;
         });
 
-        document.getElementById('lowStockList').innerHTML = html;
+        document.getElementById("lowStockList").innerHTML = html;
       }
 
       /* ── Load All ──────────────────────────────────────────── */
@@ -1330,11 +1803,13 @@
       }
 
       /* ── Boot ──────────────────────────────────────────────── */
-      window.addEventListener('DOMContentLoaded', async () => {
+      window.addEventListener("DOMContentLoaded", async () => {
         initTheme();
-        document.getElementById('themeToggleBtn').addEventListener('click', toggleTheme);
+        document
+          .getElementById("themeToggleBtn")
+          .addEventListener("click", toggleTheme);
 
-        currentUser = await requireAuth(['admin', 'manager']);
+        currentUser = await requireAuth(["admin", "manager"]);
         if (!currentUser) return;
 
         populateSidebarUser(currentUser);
